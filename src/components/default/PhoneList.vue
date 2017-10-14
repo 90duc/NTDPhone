@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-        </transition> 
+        </transition>
         <div class="phone_list">
             <router-link :to='"/phoneDetail/"+phone.id' v-for="phone in phones" :key="phone.id">
                 <div class="phone_class" @mouseenter="enableDetail($event,phone)" @mouseout="clearTimer">
@@ -50,8 +50,15 @@ function clone(obj) {
     if (typeof obj !== "object") {
         return obj;
     }
+    if (obj instanceof Array) {
+        var newobj = [];
+        for (var i = 0; i < obj.length; i++) {
+            newobj[i] = clone(obj[i]);
+        }
+        return newobj;
+    }
+
     var newobj = {};
-    console.log(newobj);
     for (var attr in obj) {
         newobj[attr] = clone(obj[attr]);
     }
@@ -124,11 +131,11 @@ export default {
         }, enableDetail: function(e, p) {
 
             this.popBox.params = { e: e, p: p };
-            window.setTimeout(this.delay, 120);
+            //window.setTimeout(this.delay, 200);
 
-            // this.showDetail();
+             this.showDetail();
         }, delay: function() {
-            let time = window.setTimeout(this.showDetail, 1200);
+            let time = window.setTimeout(this.showDetail, 500);
             this.popBox.timer = time;
         }, showDetail: function() {
             this.popBox.showDetail = true;
@@ -144,7 +151,7 @@ export default {
 
             this.popBox.showDetail = false;
         }, clearTimer: function() {
-            window.clearTimeout(this.popBox.timer);
+           // window.clearTimeout(this.popBox.timer);
         }
 
     },
@@ -155,7 +162,7 @@ export default {
             let p = clone(phoneTemp);
             p.id = index;
             p.name = p.name + index;
-            p.rank = rate;
+            p.rank = rate;         
             this.phones.push(p);
         }
 
@@ -261,11 +268,12 @@ span.subject-rate {
 
 .more {
     margin: 0px auto 10px auto;
-    width: 180px;
+    /* width: 480px; */
     background: #f7f7f7;
     border-radius: 5px;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
+    margin-bottom: 60px;
 }
 
 .more:hover {

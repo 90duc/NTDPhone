@@ -1,38 +1,76 @@
 <template>
     <div class="meta">
-        <span :style="getRandomColor()" v-show="hoverPhone.core" v-for='c in hoverPhone.core' :key="c">{{c}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.coreRate" v-for='c in hoverPhone.coreRate' :key="c">{{c}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.coreType">{{hoverPhone.coreType}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.ROM" v-for='c in hoverPhone.ROM' :key="c">{{c}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.networkType" v-for='c in hoverPhone.networkType' :key="c">{{c}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.battery">{{hoverPhone.battery}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.batteryType">{{hoverPhone.batteryType}}</span>
-        <span :style="getRandomColor()" v-show="hoverPhone.year">{{hoverPhone.year}}</span>
+        <span v-for='name in tagAttr' :key="name">
+            <span v-if="has(hoverPhone,name)">
+                <span v-if="multiValue(hoverPhone,name)">
+                    <router-link :to="searchUrl+name+'/'+c" v-for='c in hoverPhone[name]' :key="c">
+                        <span class="tag_attr" :style="getRandomColor()">{{c}}</span>
+                    </router-link>
+                </span>
+                <span v-else>
+                    <router-link :to="searchUrl+name+'/'+hoverPhone[name]">
+                        <span class="tag_attr" :style="getRandomColor()">{{hoverPhone[name]}}</span>
+                    </router-link>
+                </span>
+            </span>
+        </span>
         <div class="clearfix"></div>
     </div>
 </template>
 <script>
 let colorSet = ['#6663BA', '#66c056', '#f60', '#e09015', 'gray', '#71AB67', '#36AD7D'];
+let tagAttr = ['core', 'coreRate', 'coreType', 'ROM', 'networkType', 'battery', 'batteryType', 'year'];
+let searchUrl = '/searchBy/';
 export default {
-    props:{
-        hoverPhone:{
-            required:true
+    props: {
+        hoverPhone: {
+            required: true
         },
-        autoColor:{
-            default:false
+        autoColor: {
+            default: false
         }
-    }, 
+    },
+    data() {
+        return {
+            tagAttr: tagAttr,
+            searchUrl: searchUrl
+        };
+    },
     methods: {
         getRandomColor: function() {
-            if(!this.autoColor)
-              return {};
-            let index =0;           
-            index= Math.floor(Math.random() * colorSet.length);
+            if (!this.autoColor)
+                return {};
+            let index = 0;
+            index = Math.floor(Math.random() * colorSet.length);
             return {
                 color: '#fff',
                 background: colorSet[index]
             }
+        },
+        multiValue: function(phone, name) {
+            let value = phone[name];
+            if (value) {
+                if (value instanceof Array)
+                    return value.length > 1;
+
+            }
+
+            return false;
+        },
+        has: function(phone, name) {
+            let value = phone[name];
+            if (value) {
+                if (value instanceof Array)
+                    return value.length > 0;
+                return true;
+            }
+
+            return false;
+
         }
+    },
+    created() {
+      
     }
 }
 </script>
@@ -44,7 +82,7 @@ export default {
 }
 
 
-.meta span {
+.meta .tag_attr {
     float: left;
     font-size: 13px;
     padding: 2px 10px 1px;
@@ -55,9 +93,9 @@ export default {
     word-break: keep-all;
     white-space: nowrap;
 }
-.meta span {
+
+.meta green {
     color: #fff;
     background: #66c056;
 }
-
 </style>

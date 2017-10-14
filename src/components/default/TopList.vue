@@ -60,11 +60,7 @@ export default {
 </script>
 
 <style scoped>
-.recom {
-    padding: 20px 0px 20px 0px;
-    width: calc(100% - 850px);
-    text-align: left;
-}
+
 
 .recom h2 {
     padding-bottom: 10px;

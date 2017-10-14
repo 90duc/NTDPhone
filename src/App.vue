@@ -1,7 +1,7 @@
 <template>
   <div id="app">
    
-      <Header></Header>
+      <my-header></my-header>
       
     <div class="content margin_auto">
       <transition name="tsfade" mode="out-in">
@@ -13,20 +13,19 @@
       </keep-alive>
     </transition> 
     </div>
-    <Footer></Footer>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Header from '@/components/header/Header.vue'
-import Footer from '@/components/footer/Footer.vue'
+import myHeader from '@/components/header/Header.vue'
+import myFooter from '@/components/footer/Footer.vue'
 
 //Vue.use(Header);
 export default {
-  name: 'app',
   components: {
-    Header, Footer
+    myHeader, myFooter
   }
 }
 </script>
@@ -41,7 +40,7 @@ export default {
   margin-top: 60px;
 }
  .margin_auto{
-    width:1075px;
+    width:1135px;
     margin: 0 auto;
     /* background: green; */
 }

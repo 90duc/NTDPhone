@@ -3,14 +3,14 @@
     <div class="margin_auto">
       <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
       <div class="float_right">
-        <el v-show="!login_info.isLogin">
+        <span v-show="!login_info.isLogin">
           <button @mousedown="login()">登陆</button>
           <button @mousedown="register()">注册</button>
-        </el>
-        <el v-show="login_info.isLogin">
+        </span>
+        <span v-show="login_info.isLogin">
           <router-link :to='login_info.user_info_path'><span class="user_link">用户</span></router-link>
           <button @mousedown="logout()">退出</button>
-        </el>
+        </span>
       </div>
     </div>
 
@@ -67,7 +67,7 @@ let  login_info={
 }
 
 export default {  
-    
+   
     data () {
       return {
         logo_info:logo_var,

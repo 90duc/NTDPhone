@@ -135,18 +135,11 @@
     <div class="float_left right_frame">
       <div class="tags">
         <h2>
-          <i class="">豆瓣成员常用的标签</i>
+          <i >手机常用的标签</i>
           · · · · · ·
         </h2>
         <div class="tags-body">
-          <a href="/tag/犯罪" class="">犯罪</a>
-          <a href="/tag/美国" class="">美国</a>
-          <a href="/tag/暴力" class="">暴力</a>
-          <a href="/tag/人性" class="">人性</a>
-          <a href="/tag/犯罪心理" class="">犯罪心理</a>
-          <a href="/tag/剧情" class="">剧情</a>
-          <a href="/tag/2017" class="">2017</a>
-          <a href="/tag/动作" class="">动作</a>
+         <tag-attr :hoverPhone='phone'></tag-attr>
         </div>
       </div>
     </div>
@@ -155,7 +148,12 @@
 </template>
 <<script>
 import config from './../../config/config.js'
+import TagAttr from '@/components/default/TagAttr.vue'
+
 export default {
+  components: {
+        TagAttr
+  },
   data () {
     return {
       id:this.$route.params.id,
@@ -198,7 +196,8 @@ export default {
     backcamera:'800万像素',
     battery:'1200mAh',
     batteryType:'不可拆卸式电池',
-    core:['四核','八核'],
+   // core:['四核','八核'],
+   core:[],
     coreType:'联发科 Helio P25',
     coreRate:['2.5GHz','1.4GZ'],
     ROM:['32G','64G'],
@@ -298,15 +297,15 @@ ul {
 .tags h2 {
     color: #007722;
     font: 16px Arial, Helvetica, sans-serif;
-    margin: 0 0 12px 0;
+    margin: 0 0 12px 10px;
     line-height: 150%;
+    text-align: left;
 }
 .tags h2 i{
   font-style:normal;  
 }
 .tags-body {
     line-height: 24px;
-    letter-spacing: -0.31em;
 }
 .tags-body a:link, .tags-body a:visited {
     background-color: #f5f5f5;
