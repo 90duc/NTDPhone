@@ -23,7 +23,7 @@
             <dt>主屏分辨率</dt>
             <dd>
               <ul>
-                <li v-for="p in phone.pixels" :key="p">{{p.x}}x{{p.y}}像素</li>
+                <li v-for="(p,i) in phone.pixels" :key="i">{{p.x}}x{{p.y}}像素</li>
               </ul>
             </dd>
             <div class="clearfix"></div>
@@ -148,7 +148,7 @@
 </template>
 <<script>
 import config from './../../config/config.js'
-import TagAttr from '@/components/default/TagAttr.vue'
+import TagAttr from '@/components/base/TagAttr.vue'
 
 export default {
   components: {

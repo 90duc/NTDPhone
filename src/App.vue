@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-   
-      <my-header></my-header>
-      
+
+    <my-header></my-header>
+
     <div class="content margin_auto">
       <transition name="tsfade" mode="out-in">
-      <router-view class="child-view" v-if="!$route.meta.keepAlive"></router-view>
-    </transition>
-    <transition name="tsfade" mode="out-in">
-      <keep-alive>
-        <router-view class="child-view" v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-    </transition> 
+        <router-view class="child-view" v-if="!$route.meta.keepAlive"></router-view>
+      </transition>
+      <transition name="tsfade" mode="out-in">
+        <keep-alive>
+          <router-view class="child-view" v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+      </transition>
     </div>
     <my-footer></my-footer>
   </div>
@@ -39,15 +39,19 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
- .margin_auto{
-    width:1135px;
-    margin: 0 auto;
-    /* background: green; */
+
+.margin_auto {
+  width: 1135px;
+  margin: 0 auto;
+  /* background: green; */
 }
-.content{
-   padding-top: 20px;
-   min-height: 100vh;/*calc(100vh - 150px);*/
+
+.content {
+  padding-top: 20px;
+  min-height: 100vh;
+  /*calc(100vh - 150px);*/
 }
+
 .tsfade-enter-active,
 .tsfade-leave-active {
   transition: opacity .4s
@@ -57,7 +61,9 @@ export default {
 .tsfade-leave-to {
   opacity: 0
 }
-a{
+
+a {
   text-decoration: none;
+  color: black;
 }
 </style>

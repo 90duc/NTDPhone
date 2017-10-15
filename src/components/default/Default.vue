@@ -32,11 +32,11 @@
 }
 </style>
 
-<<script>
-import Search from '@/components/default/Search.vue'
-import PhoneList from '@/components/default/PhoneList.vue'
-import TopList from '@/components/default/TopList.vue'
-import HobbyList from '@/components/phone/HobbyList.vue'
+<script>
+import Search from '@/components/base/Search.vue'
+import PhoneList from '@/components/phone/PhoneList.vue'
+import TopList from '@/components/base/TopList.vue'
+import HobbyList from '@/components/base/HobbyList.vue'
 
 export default {
   components: {

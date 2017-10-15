@@ -1,8 +1,8 @@
 <template>
     <div class="recom">
         <h2>热门推荐
-            <span>
-                <router-link to="/hobbyList">更多榜单»</router-link>
+            <span style="float:right;">
+                <router-link to="/topList">更多榜单»</router-link>
             </span>
         </h2>
         <div id="billboard">
