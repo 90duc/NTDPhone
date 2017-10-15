@@ -89,18 +89,6 @@ export default {
     padding: 7px 0px;
 }
 
-.allstar35 {
-    background: url(../../assets/middle_star.png) no-repeat;
-    width: 75px;
-    height: 15px;
-    display: inline-block;
-}
-
-
-span.subject-rate {
-    color: #e09015;
-}
-
 .phone_class {
     cursor: pointer;
     width: 120px;
@@ -135,7 +123,6 @@ span.subject-rate {
 
 span.subject-rate {
     color: #e09015;
-    padding-left: 2px;
 }
 
 .clearfix {

@@ -75,9 +75,8 @@ export default {
 <style scoped>
 .meta {
     padding-top: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
-
 
 .tag_attr {
     float: left;
@@ -98,7 +97,9 @@ export default {
     color: #fff;
     background: #66c056;
 }
-
+.clearfix {
+    clear: both;
+}
 .c0 {
     background: #36AD7D
 }

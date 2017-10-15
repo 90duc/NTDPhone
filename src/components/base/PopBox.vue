@@ -100,4 +100,15 @@ export default {
     padding: 20px 25px;
     text-align: left;
 }
+
+span.subject-rate {
+    color: #e09015;
+}
+
+.allstar35 {
+    background: url(../../assets/middle_star.png) no-repeat;
+    width: 75px;
+    height: 15px;
+    display: inline-block;
+}
 </style>

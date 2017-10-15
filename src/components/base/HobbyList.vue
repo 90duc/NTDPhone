@@ -173,4 +173,8 @@ export default {
   background: #eee;
   color: #37a;
 }
+
+span.subject-rate {
+    color: #e09015;
+}
 </style>

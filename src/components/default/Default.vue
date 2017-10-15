@@ -6,7 +6,7 @@
                 <phone-list></phone-list>
                 <hobby-list></hobby-list>
             </div>
-            <top-list class="float_left right_frame"></top-list>
+            <top-list class="float_left right_frame" title='热门推荐'></top-list>
             <div class="clearfix"></div>
         </div>
 
