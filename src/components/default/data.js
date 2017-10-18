@@ -26,7 +26,7 @@ function clone() {
 
 let phoneTemp = {
     id: 0,
-    image: '/static/1.webapp',
+    image: '/static/0.jpg',
     name: 'iphone 8s',
     company:'Apple',
     rank: 7.9,

@@ -6,14 +6,14 @@
         <span :class="i==title_index?'fouse_font':''" @click='selectTitle(i)' v-for="(title,i) in title_list" :key="title">{{title}}</span>
       </div>
       <div class="more_list">
-        <router-link :to="'/hobbyList/'+title_list[title_index]">更多»</router-link>
+        <router-link :to="paths.hobbyList+'/'+title_list[title_index]">更多»</router-link>
       </div>
       <div class="clearfix"></div>
     </h2>
     <div id="billboard">
       <pop-box ref='PopBox'></pop-box>
       <div class="phone_list">
-        <router-link :to='"/phoneDetail/"+phone.id' v-for="phone in curHobby" :key="phone.id">
+        <router-link :to='paths.phoneDetail+"/"+phone.id' v-for="phone in curHobby" :key="phone.id">
           <div class="phone_class" @mouseenter="enableDetail($event,phone)">
             <img :src="phone.image" />
             <div>
@@ -24,21 +24,23 @@
         </router-link>
         <div class="clearfix"></div>
       </div>
-     
+
     </div>
   </div>
 </template>
 <script>
 import PopBox from '@/components/base/PopBox.vue'
 import Data from '@/components/default/data.js'
+import Paths from '@/config/path.js'
 
-let title = ['4G全网通', '3G移动', '800万像素以上','高分辨率']
+let title = ['4G全网通', '3G移动', '800万像素以上', '高分辨率']
 export default {
   components: {
     PopBox
   },
   data() {
     return {
+      paths: Paths,
       title_list: title,
       title_index: 0,
       hobbyList: [],
@@ -47,9 +49,9 @@ export default {
   },
   methods: {
     enableDetail: function(e, p) {
-       this.$refs.PopBox.$emit('pop-box-show', e,p);
-    },selectTitle:function(index){
-        this.title_index=index;  
+      this.$refs.PopBox.$emit('pop-box-show', e, p);
+    }, selectTitle: function(index) {
+      this.title_index = index;
     }
 
   },
@@ -85,9 +87,11 @@ export default {
   color: #9B9B9B;
   cursor: pointer;
 }
+
 .recom h2 span:hover {
- 
-  color: white;;
+
+  color: white;
+  ;
   background-color: #37a;
 }
 
@@ -132,6 +136,7 @@ export default {
   /* height:200px;  */
   border: 1px solid transparent;
   color: black;
+  overflow: hidden;
 }
 
 .phone_class:hover {
@@ -141,8 +146,11 @@ export default {
 
 
 .phone_class img {
-  width: 120px;
-  height: 160px;
+  width: 160px;
+  height: 140px;
+  position: relative;
+  left: -20px;
+  z-index: -1;
 }
 
 .phone_class>div {
@@ -175,6 +183,6 @@ export default {
 }
 
 span.subject-rate {
-    color: #e09015;
+  color: #e09015;
 }
 </style>

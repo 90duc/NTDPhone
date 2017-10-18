@@ -1,15 +1,15 @@
 <template>
     <div class="meta">
         <span v-for='name in tagAttr' :key="name">
-            <span v-if="has(hoverPhone,name)">
-                <span v-if="multiValue(hoverPhone,name)">
-                    <router-link :to="searchUrl+name+'/'+c" v-for='c in hoverPhone[name]' :key="c">
+            <span v-if="has(phone,name)">
+                <span v-if="multiValue(phone,name)">
+                    <router-link :to="paths.searchBy+'/'+name+'/'+c" v-for='c in phone[name]' :key="c">
                         <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
                     </router-link>
                 </span>
                 <span v-else>
-                    <router-link :to="searchUrl+name+'/'+hoverPhone[name]">
-                        <span class="tag_attr" :class="getRandomColor()">{{hoverPhone[name]}}</span>
+                    <router-link :to="paths.searchBy+'/'+name+'/'+phone[name]">
+                        <span class="tag_attr" :class="getRandomColor()">{{phone[name]}}</span>
                     </router-link>
                 </span>
             </span>
@@ -18,12 +18,13 @@
     </div>
 </template>
 <script>
+import Paths from '@/config/path.js'
 
 let tagAttr = ['core', 'coreRate', 'coreType', 'ROM', 'networkType', 'battery', 'batteryType', 'year'];
-let searchUrl = '/searchBy/';
+
 export default {
     props: {
-        hoverPhone: {
+        phone: {
             required: true
         },
         autoColor: {
@@ -32,8 +33,8 @@ export default {
     },
     data() {
         return {
-            tagAttr: tagAttr,
-            searchUrl: searchUrl
+            paths: Paths,
+            tagAttr: tagAttr,         
         };
     },
     methods: {

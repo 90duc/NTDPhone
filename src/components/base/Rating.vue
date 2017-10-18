@@ -2,13 +2,13 @@
     <div id="interest_sectl">
         <div class="rating_wrap clearbox" rel="v:rating">
             <div class="rating_logo">
-                豆瓣评分
+                NTD评分
             </div>
             <div class="rating_self" typeof="v:Rating">
                 <strong class="ll rating_num" property="v:average">7.9</strong>
                 <span property="v:best" content="10.0"></span>
                 <div class="rating_right ">
-                    <div class="ll bigstar bigstar40"></div>
+                    <star type="m" :rank="7.9"></star>
                     <div class="rating_people">
                         <span>141417</span>人评价</a>
                     </div>
@@ -68,12 +68,17 @@
     </div>
 </template>
 <script>
+import Star from '@/components/base/Star.vue'
+
 export default {
-   methods:{
-       getLength:function(data){
-           return math.floor(156*data);
-       }
-   }
+    components: {
+        Star
+    },
+    methods: {
+        getLength: function(data) {
+            return math.floor(156 * data);
+        }
+    }
 }
 </script>
 <style scoped>
@@ -85,6 +90,7 @@ export default {
     border-left: 1px solid #eaeaea;
     color: #9b9b9b;
 }
+
 #interest_sectl .rating_wrap {
     padding-bottom: 15px;
     font-size: 12px;
@@ -138,6 +144,7 @@ export default {
     height: 15px;
     margin: 1px 0 0 0;
 }
+
 .rating_people {
     color: #37a;
     text-decoration: none;
@@ -147,9 +154,11 @@ export default {
     float: left;
 }
 
-.starstop, .stars {
+.starstop,
+.stars {
     margin-right: 5px;
 }
+
 .starstop {
     margin: 0;
 }

@@ -6,7 +6,7 @@
                 <phone-list></phone-list>
                 <hobby-list></hobby-list>
             </div>
-            <top-list class="float_left right_frame" title='热门推荐'></top-list>
+            <top-list class="float_left right_frame" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
             <div class="clearfix"></div>
         </div>
 
@@ -37,10 +37,16 @@ import Search from '@/components/base/Search.vue'
 import PhoneList from '@/components/phone/PhoneList.vue'
 import TopList from '@/components/base/TopList.vue'
 import HobbyList from '@/components/base/HobbyList.vue'
+import Top from '@/components/phone/Top.js'
 
 export default {
   components: {
     Search,PhoneList, TopList,HobbyList
+  },
+  data(){
+     return{
+         topInfo:Top.typeList
+     };
   },
   methods: {
       search:function (text){

@@ -59,7 +59,7 @@ export default {
             this.loadStatus.text = loadText.waiting;
         },
         enableDetail: function(e, p) {
-           this.$refs.PopBox.$emit('pop-box-show', e,p);
+            this.$refs.PopBox.$emit('pop-box-show', e,p);
         }
 
     },
@@ -70,7 +70,7 @@ export default {
             let p = Data.clone();
             p.id = index;
             p.name = p.name + index;
-            p.rank = rate;         
+            p.rank = rate;
             this.phones.push(p);
         }
 
@@ -82,9 +82,6 @@ export default {
 
 </script>
 <style scoped>
-
-
-
 .remark_bar {
     padding: 7px 0px;
 }
@@ -96,6 +93,7 @@ export default {
     padding: 5px 5px 8px;
     margin: 2px 12px 12px 2px;
     /* height:200px;  */
+    overflow: hidden;
     border: 1px solid transparent;
     color: black;
 }
@@ -107,8 +105,11 @@ export default {
 
 
 .phone_class img {
-    width: 120px;
-    height: 160px;
+    position: relative;
+    left:-20px;
+    z-index: -1;
+    width: 160px;
+    height: 140px;
 }
 
 .phone_class>div {

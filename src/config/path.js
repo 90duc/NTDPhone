@@ -1,5 +1,10 @@
+let defaultPath = '';
 export default {
-    phoneDetail: '/phoneDetail',
-    topPhone:'/topList',
-    searchBy:'/searchBy'
+    default: defaultPath + '/',
+    phoneDetail: defaultPath + '/phoneDetail',
+    topDetail: defaultPath + '/topList',
+    searchBy: defaultPath + '/searchBy',
+    hobbyList: defaultPath + '/hobbyList',
+    userInfo:defaultPath +'/userInfo'
 }
+

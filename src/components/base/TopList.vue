@@ -1,27 +1,20 @@
 <template>
     <div class="recom">
-        <h2>{{title}}
+        <h2>{{title}}· · · · · ·
             <span style="float:right;">
-                <router-link to="/topList">更多榜单»</router-link>
+                <router-link :to="paths.topDetail+'/'+type">更多榜单»</router-link>
             </span>
         </h2>
         <div id="billboard">
 
             <div v-for="(phone,i) in phones" :key="phone.id" class="tag">
                 <div>
-                    <span class="order">{{i}}</span>
+                    <span class="order fouse">{{i+1}}</span>
                     <span class="title">
-                        <router-link :to="'phoneDetail/'+phone.id">{{phone.name}}</router-link>
+                        <router-link :to="paths.phoneDetail+'/'+phone.id">{{phone.name}}</router-link>
                     </span>
                 </div>
-                <div class="detail">
-                    <p class="star">
-                        <span class="allstar35" :style="'background-position-y:'+phone.position+'px'"></span>
-                        <span class="subject-rate">{{phone.rank}}</span>
-                        <span>（
-                            <span>{{phone.commentSize}}</span>人评价）</span>
-                    </p>
-                </div>
+                <star-bar class="detail" type="s" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
 
             </div>
 
@@ -30,27 +23,25 @@
 </template>
 
 <script>
+import StarBar from '@/components/base/StarBar.vue'
 import Data from '@/components/default/data.js'
+import Paths from '@/config/path.js'
+
+
 export default {
-    props: {
-        title: {
-            required: true
-        }
+    components: {
+        StarBar
     },
+    props: ['title', 'type'],
     data() {
         return {
-            phones: []
+            paths: Paths,
+            phones: [],
+            listIndex: -1
         }
     },
     methods: {
-        cumputeStar: function(rank) {
-            let rate = 10;
-            if (Math.floor(rank) % 2 == 0)
-                rate = Math.ceil(rank);
-            else
-                rate = Math.floor(rank);
-            return -11 * (10 - rate);
-        }
+     
     },
     created() {
         //this.title='热门推荐';
@@ -58,7 +49,6 @@ export default {
             let rate = 10 - i * 0.4;
             let p = Data.clone();
             p.commentSize += Math.floor(Math.random() * 1500);
-            p.position = this.cumputeStar(rate);
             this.phones.push(p);
         }
 
@@ -67,9 +57,14 @@ export default {
 </script>
 
 <style scoped>
-.recom h2 {
+.recom {
+    padding-top: 10px;
     padding-bottom: 10px;
-    color: #111;
+}
+
+.recom h2 {
+    padding-left: 5px;
+    color:#072;
     padding-bottom: 10px;
     border-bottom: 1px solid #eaeaea;
     font: 16px Arial, Helvetica, sans-serif;
@@ -89,11 +84,19 @@ export default {
     text-decoration: none;
     background: #37a;
 }
-
+#billboard {
+    height:395px;
+}
 #billboard .order {
     width: 20px;
     font-size: 9px;
     text-align: center;
+    background: #afafaf;
+    display: inline-block;
+}
+
+#billboard .tag:hover .fouse {
+    background: #3eaf0e;
 }
 
 #billboard .title {
@@ -119,16 +122,5 @@ export default {
     line-height: 22px;
     width: 280px;
     font-size: 13px;
-}
-
-.allstar35 {
-    background: url(../../assets/star_rate.png) no-repeat;
-    width: 55px;
-    height: 11px;
-    display: inline-block;
-}
-
-span.subject-rate {
-    color: #e09015;
 }
 </style>

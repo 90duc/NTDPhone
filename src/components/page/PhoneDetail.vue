@@ -2,18 +2,28 @@
   <div>
     <div class="left_frame float_left">
       <div class="phone_title">
-        <span>{{phone.name}}</span>
+        <a href="/static/3d/index.html">
+          <span>{{phone.name}}</span>
+        </a>
         <span class="year">({{phone.year}})</span>
       </div>
       <div>
-        <div class="logo_frame float_left"><img :src="phone.image"></div>
+        <div class="logo_frame float_left">
+          <div class="left_arrow" @click="left"></div>        
+            <a>
+              <img :src="'/static/'+imageIndex+'.jpg'">
+            </a>
+          </transition>
+          <div class="right_arrow" @click="right"></div>
+
+        </div>
         <div class="float_left info_frame">
-         <div class="float_left info_detail_frame">
-           as
-        </div>
-        <div class="float_left remark_frame">
-          <rating></rating>
-        </div>
+          <div class="float_left info_detail_frame">
+            as
+          </div>
+          <div class="float_left remark_frame">
+            <rating></rating>
+          </div>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -23,11 +33,11 @@
     <div class="float_left right_frame">
       <div class="tags">
         <h2>
-          <i >手机常用的标签</i>
+          <i>手机常用的标签</i>
           · · · · · ·
         </h2>
         <div class="tags-body">
-         <tag-attr :hoverPhone='phone'></tag-attr>
+          <tag-attr :phone='phone'></tag-attr>
         </div>
       </div>
     </div>
@@ -39,6 +49,8 @@ import config from './../../config/config.js'
 import TagAttr from '@/components/base/TagAttr.vue'
 import TagList from '@/components/base/TagList.vue'
 import Rating from '@/components/base/Rating.vue'
+import Data from '@/components/default/data.js'
+
 
 export default {
   components: {
@@ -49,31 +61,33 @@ export default {
       id:this.$route.params.id,
       phone:{},
       remarks:[],
-      
+      imageIndex:0
     }
   },
+  methods:{
+      left:function () {
+         if(this.imageIndex==0)
+          this.imageIndex=3;
+        else
+         this.imageIndex--;
+      },
+      right:function () {
+          if(this.imageIndex==11)
+          this.imageIndex=0;
+        else
+         this.imageIndex++;
+      },
+      autoPlay:function () {
+         this.right();
+      },
 
+  },
   created () {
-
-    this.phone={image:'/static/1.webapp',
-    name:'iphone 8s',
-    rank:9,
-    screenSize:[4.4,3.2],
-    pixels:[{x:1080,y:1934},{x:423,y:296}],
-    forecamera:'400万像素',
-    backcamera:'800万像素',
-    battery:'1200mAh',
-    batteryType:'不可拆卸式电池',
-   // core:['四核','八核'],
-   core:[],
-    coreType:'联发科 Helio P25',
-    coreRate:['2.5GHz','1.4GZ'],
-    ROM:['32G','64G'],
-    networkType:['4G全网通','3G移动'],
-    bodyColor:['红色','白色'],
-    year:'2015'};
-
-
+    this.phone=Data.clone();
+    this.autoPlayTimer=setInterval(this.autoPlay,2000);
+  },
+  beforeDestroy () {
+    clearInterval(this.autoPlayTimer);
   }
 }
 </script>
@@ -82,7 +96,6 @@ export default {
 .left_frame {
   width: 830px;
   text-align: left;
- 
 }
 
 .float_left {
@@ -94,28 +107,65 @@ export default {
   padding-bottom: 20px;
 }
 
-.logo_frame {
-  padding-right: 25px;
-  padding-bottom: 10px;
+.left_arrow,
+.right_arrow {
+  position: absolute;
+  top: 200px;
+  width: 30px;
+  height: 52px;
+  z-index: 10;
+  cursor: pointer;
+  background: url(./../../assets/arrow.png);
+  display: none;
 }
 
-.logo_frame img {
-  width: 145px;
-  height: 220px;
+.logo_frame:hover .left_arrow,
+.logo_frame:hover .right_arrow {
+  display: block;
 }
+
+.logo_frame:hover .right_arrow {
+  left: 453px;
+  background-position-x: -40px;
+}
+
+.logo_frame:hover .right_arrow:hover {
+  background-position-x: -120px;
+}
+
+.logo_frame:hover .left_arrow {
+  background-position-x: 0px;
+}
+
+.logo_frame:hover .left_arrow:hover {
+
+  background-position-x: -80px;
+}
+
+.logo_frame {
+  margin-right: 25px;
+  margin-bottom: 10px;
+  /* overflow: hidden; */
+}
+
+.logo_frame,
+.logo_frame img {
+  width: 300px;
+  height: 200px;
+}
+
 
 .info_frame {
-  width: calc(100% - 170px);
- 
+  width: calc(100% - 425px);
 }
-.info_detail_frame{
-  width:50%;
+
+.info_detail_frame {
+  width: 50%;
 }
-.remark_frame{
-  width:calc(50% - 25px);
-  border-left:1px solid #eaeaea;
-  padding-left: 20px;
-  height:220px;
+
+.remark_frame {
+  width: calc(50% - 25px);
+  height: 220px;
 }
 
 
@@ -123,49 +173,58 @@ export default {
   clear: both;
 }
 
-.right_frame{
-  width:245px;
+.right_frame {
+  width: 245px;
 }
+
 .tags {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
+
 .tags h2 {
-    color: #007722;
-    font: 16px Arial, Helvetica, sans-serif;
-    margin: 0 0 12px 10px;
-    line-height: 150%;
-    text-align: left;
+  color: #007722;
+  font: 16px Arial, Helvetica, sans-serif;
+  margin: 0 0 12px 10px;
+  line-height: 150%;
+  text-align: left;
 }
-.tags h2 i{
-  font-style:normal;  
+
+.tags h2 i {
+  font-style: normal;
 }
+
 .tags-body {
-    line-height: 24px;
+  line-height: 24px;
 }
-.tags-body a:link, .tags-body a:visited {
-    background-color: #f5f5f5;
-    color: #37A;
+
+.tags-body a:link,
+.tags-body a:visited {
+  background-color: #f5f5f5;
+  color: #37A;
 }
 
 .tags-body a {
-    display: inline-block;
-    letter-spacing: normal;
-    margin: 0 8px 8px 0;
-    padding: 0 8px;
-    background-color: #f5f5f5;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
+  display: inline-block;
+  letter-spacing: normal;
+  margin: 0 8px 8px 0;
+  padding: 0 8px;
+  background-color: #f5f5f5;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
+
 .tags-body a:visited {
-    color: #666699;
-    text-decoration: none;
+  color: #666699;
+  text-decoration: none;
 }
+
 .tags-body a:link {
-    color: #37a;
-    text-decoration: none;
+  color: #37a;
+  text-decoration: none;
 }
+
 .tags-body a {
-    cursor: pointer;
+  cursor: pointer;
 }
 </style>

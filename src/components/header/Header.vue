@@ -8,7 +8,9 @@
           <button @mousedown="register()">注册</button>
         </span>
         <span v-show="login_info.isLogin">
-          <router-link :to='login_info.user_info_path'><span class="user_link">用户</span></router-link>
+          <router-link :to='login_info.user_info_path'>
+            <span class="user_link">用户</span>
+          </router-link>
           <button @mousedown="logout()">退出</button>
         </span>
       </div>
@@ -16,6 +18,52 @@
 
   </div>
 </template>
+<script>
+import Config from '@/config/config'
+import LogoPNG from '@/assets/logo3.png'
+import Paths from '@/config/path.js'
+
+let logo_var = {
+  logo_path: LogoPNG,
+  home_path: Paths.default
+}
+let login_info = {
+  user_info_path: Paths.userInfo,
+  isLogin: false,
+}
+
+export default {
+
+  data() {
+    return {
+      logo_info: logo_var,
+      login_info: login_info,
+    }
+  },
+  methods: {
+    login: function() {
+
+      this.login_info.isLogin = true;
+    },
+    logout: function() {
+
+      this.login_info.isLogin = false;
+    },
+    register: function() {
+
+      this.login_info.isLogin = true;
+    },
+    checkLogin: function() {
+      return true;
+    }
+  },
+  created() {
+    this.login_info.isLogin = this.checkLogin();
+
+  }
+
+}
+</script>
 <style lang="css" scoped>
 .header {
   position: fixed;
@@ -48,56 +96,12 @@
   cursor: pointer;
   box-sizing: border-box;
 }
-.header .user_link{
-  text-align: center; 
-  
+
+.header .user_link {
+  text-align: center;
 }
 </style>
-<<script>
-import Config from '@/config/config'
-import LogoPNG from '@/assets/logo3.png'
 
-let logo_var={
-      logo_path:LogoPNG,
-      home_path:'/'
-}
-let  login_info={
-    user_info_path:'user_info',
-        isLogin:false,
-}
-
-export default {  
-   
-    data () {
-      return {
-        logo_info:logo_var,
-        login_info:login_info,
-      }
-    },
-    methods: {
-      login:function() {
-
-        this.login_info.isLogin=true;
-      },
-      logout:function() {
-
-        this.login_info.isLogin=false;
-      },
-      register:function () {
-        
-         this.login_info.isLogin=true;
-      },
-      checkLogin:function() {
-         return true;
-      }
-    },
-    created () {
-       this.login_info.isLogin=this.checkLogin();
-      
-    }
-
-}
-</script>
 
 
 

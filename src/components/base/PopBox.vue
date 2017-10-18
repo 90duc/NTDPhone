@@ -1,36 +1,37 @@
 <template>
     <transition name='fade' v-if="popBox.showDetail">
         <div id='popBox' class="detail_pop" :style="popBox.position" @mouseleave="disableDetail($event)">
-            <router-link :to="'/phoneDetail/'+hoverPhone.id">
+            <router-link :to="paths.phoneDetail+'/'+phone.id">
                 <div class="phone_frame"></div>
             </router-link>
             <div class="wrap">
                 <div class="info">
                     <h3>
-                        <router-link :to="'/phoneDetail/'+hoverPhone.id">{{hoverPhone.name}}</router-link>
+                        <router-link :to="'/phoneDetail/'+phone.id">{{phone.name}}</router-link>
                     </h3>
-                    <p class="remark_bar">
-                        <span class="allstar35" :style="'background-position-y:'+computeMiddleStar(hoverPhone.rank)+'px'"></span>
-                        <span class="subject-rate">{{hoverPhone.rank.toFixed(1)}}</span>
-                    </p>
-                    <tag-attr :hoverPhone='hoverPhone' auto-color='true'></tag-attr>
+                    <star-bar class="detail" type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
+                    <tag-attr :phone='phone' auto-color='true'></tag-attr>
                 </div>
             </div>
         </div>
     </transition>
 </template>
 <script>
+import StarBar from '@/components/base/StarBar.vue'
 import TagAttr from '@/components/base/TagAttr.vue'
 import Data from '@/components/default/data.js'
-import config from './../../config/config.js'
+import config from '@/config/config.js'
+import Paths from '@/config/path.js'
+
 export default {
     components: {
-        TagAttr
+        TagAttr,StarBar
     },
     data() {
         return {
-            hoverPhone: {},
-            popBox: { showDetail: false, position: {} }
+            phone: {},
+            popBox: { showDetail: false, position: {} },
+            paths:Paths
         }
     },
     methods: {
@@ -54,7 +55,7 @@ export default {
             let x = e.clientX - e.offsetX - 5;
             let y = e.clientY - e.offsetY + document.body.scrollTop - 2;
             this.popBox.position = { left: x + 'px', top: y + 'px' };
-            this.hoverPhone = p;
+            this.phone = p;
         }, disableDetail: function(e1) {
 
             this.popBox.showDetail = false;
@@ -90,7 +91,7 @@ export default {
     margin: 1px 0px 0px 4px;
     padding-bottom: 13px;
     width: 130px;
-    min-height: 210px;
+    min-height: 185px;
     cursor: pointer;
     border: 1px solid gray;
     border-radius: 5px;
