@@ -9,7 +9,7 @@
 
             <div v-for="(phone,i) in phones" :key="phone.id" class="tag">
                 <div>
-                    <span class="order fouse">{{i+1}}</span>
+                    <span class="order fouse" :class="'order'+(i+1)">{{i+1}}</span>
                     <span class="title">
                         <router-link :to="paths.phoneDetail+'/'+phone.id">{{phone.name}}</router-link>
                     </span>
@@ -93,6 +93,7 @@ export default {
     text-align: center;
     background: #afafaf;
     display: inline-block;
+    color: white;
 }
 
 #billboard .tag:hover .fouse {
@@ -101,6 +102,15 @@ export default {
 
 #billboard .title {
     width: 100%;
+}
+#billboard .order1{
+    background-color: #ff6517;
+}
+#billboard .order2{
+    background-color: #ff8547;
+}
+#billboard .order3{
+    background-color: #ffac38;
 }
 
 #billboard .tag {

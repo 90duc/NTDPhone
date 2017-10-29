@@ -8,12 +8,11 @@
         <span class="year">({{phone.year}})</span>
       </div>
       <div>
-        <div class="logo_frame float_left">
-          <div class="left_arrow" @click="left"></div>        
-            <a>
-              <img :src="'/static/'+imageIndex+'.jpg'">
-            </a>
-          </transition>
+        <div class="logo_frame float_left" id='logo'>
+          <div class="left_arrow" @click="left"></div>
+          <a v-for="index in 11" :key="index" class="default_img" ref='images'>
+            <img :src="'/static/'+index+'.jpg'">
+          </a>
           <div class="right_arrow" @click="right"></div>
 
         </div>
@@ -50,7 +49,7 @@ import TagAttr from '@/components/base/TagAttr.vue'
 import TagList from '@/components/base/TagList.vue'
 import Rating from '@/components/base/Rating.vue'
 import Data from '@/components/default/data.js'
-
+import 'jquery'
 
 export default {
   components: {
@@ -61,30 +60,53 @@ export default {
       id:this.$route.params.id,
       phone:{},
       remarks:[],
-      imageIndex:0
+      images:[],
+      imageIndex:0,
+      speed:400
     }
   },
   methods:{
       left:function () {
+         var $old=$(this.images[this.imageIndex]);        
          if(this.imageIndex==0)
           this.imageIndex=3;
         else
          this.imageIndex--;
+         var $new=$(this.images[this.imageIndex]);
+         $new.css('left','300px');
+         $new.show();
+         $new.animate({left: '0px'}, this.speed);
+         $old.animate({left: '-300px'},this.speed,function () {
+             $old.hide();
+         });
+         
       },
       right:function () {
+         var $old=$(this.images[this.imageIndex]);       
           if(this.imageIndex==11)
           this.imageIndex=0;
         else
          this.imageIndex++;
+
+         var $new=$(this.images[this.imageIndex]);
+         $new.css('left','-300px');
+         $new.show();
+         $new.animate({left: '0px'}, this.speed);
+         $old.animate({left: '300px'}, this.speed,function () {
+             $old.hide();
+         });
       },
       autoPlay:function () {
          this.right();
       },
 
   },
-  created () {
+ mounted () {  
+ 
     this.phone=Data.clone();
-    this.autoPlayTimer=setInterval(this.autoPlay,2000);
+    this.images=this.$refs.images;
+    this.images[this.imageIndex].style.display='inline';
+   // this.autoPlayTimer=setInterval(this.autoPlay,2000);
   },
   beforeDestroy () {
     clearInterval(this.autoPlayTimer);
@@ -110,7 +132,7 @@ export default {
 .left_arrow,
 .right_arrow {
   position: absolute;
-  top: 200px;
+  top: 70px;
   width: 30px;
   height: 52px;
   z-index: 10;
@@ -125,7 +147,7 @@ export default {
 }
 
 .logo_frame:hover .right_arrow {
-  left: 453px;
+  left: 270px;
   background-position-x: -40px;
 }
 
@@ -145,15 +167,23 @@ export default {
 .logo_frame {
   margin-right: 25px;
   margin-bottom: 10px;
-  /* overflow: hidden; */
+  
 }
-
+#logo{
+  overflow: hidden;
+  position: relative;
+}
 .logo_frame,
 .logo_frame img {
   width: 300px;
   height: 200px;
 }
 
+.default_img {
+  display: none;
+  position: absolute;
+  left: 0px;
+}
 
 .info_frame {
   width: calc(100% - 425px);
