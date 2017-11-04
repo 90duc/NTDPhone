@@ -1,3 +1,12 @@
+<!--显示评分组件
+   prop：  type 值为s  显示小星星
+                值为m  显示中星星
+                值为b  显示大星星
+
+           rank 值为Number类型 表示星星的等级数
+
+           commentSize 值为Number类型 表示评论人数
+ -->
 <template>
     <div :class="clas">
         <star :type="type" :rank="rank"></star>

@@ -1,6 +1,7 @@
 <template>
   <div id='header' class="header">
-    <div class="margin_auto">
+    <div class="container">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
       <div class="float_right">
         <span v-show="!login_info.isLogin">
@@ -13,44 +14,46 @@
           </router-link>
           <button @mousedown="logout()">退出</button>
         </span>
+        </div>
       </div>
     </div>
-
+    <login-box v-if="loginBoxShow" v-model="loginBoxShow"></login-box>
   </div>
 </template>
 <script>
-import Config from '@/config/config'
-import LogoPNG from '@/assets/logo3.png'
-import Paths from '@/config/path.js'
+import Config from "@/config/config";
+import LogoPNG from "@/assets/logo3.png";
+import Paths from "@/config/path.js";
+import LoginBox from "@/components/phone/LoginBox.vue";
 
 let logo_var = {
   logo_path: LogoPNG,
   home_path: Paths.default
-}
+};
 let login_info = {
   user_info_path: Paths.userInfo,
-  isLogin: false,
-}
+  isLogin: false
+};
 
 export default {
-
+  components: {
+    LoginBox
+  },
   data() {
     return {
       logo_info: logo_var,
       login_info: login_info,
-    }
+      loginBoxShow: false
+    };
   },
   methods: {
     login: function() {
-
       this.login_info.isLogin = true;
     },
     logout: function() {
-
       this.login_info.isLogin = false;
     },
     register: function() {
-
       this.login_info.isLogin = true;
     },
     checkLogin: function() {
@@ -59,26 +62,37 @@ export default {
   },
   created() {
     this.login_info.isLogin = this.checkLogin();
-
+    var that = this;
+    // that.loginBoxShow=true;
+    this.$root.$on("request-login", function(fun) {
+      that.loginBoxShow = true;
+    });
+    this.$root.$on("login", function() {
+      that.loginBoxShow = false;
+    });
+  },
+  beforeDestroy() {
+    this.$root.$off("request-login");
+    this.$root.$off("login");
   }
-
-}
+};
 </script>
 <style lang="css" scoped>
 .header {
   position: fixed;
   left: 0px;
   top: 0px;
-  width: 100vw;
+  width: 100%;
   border-bottom: 1px solid #e6e6e6;
   background: #fafaf5;
   text-align: left;
   padding: 5px 0px;
-  z-index: 100;
+  z-index: 50;
+  font-size: 1em;
 }
 
 .header img {
-  width: 40px;
+  width: 2.8em;
 }
 
 .header .float_right {
@@ -87,10 +101,10 @@ export default {
 }
 
 .header .float_right button {
-  width: 60px;
-  height: 25px;
+  width: 3.75em;
+  height: 1.56em;
   margin: 8px 0px 8px 6px;
-  background-color: #FBB03B;
+  background-color: #fbb03b;
   border-radius: 4px;
   text-align: center;
   cursor: pointer;

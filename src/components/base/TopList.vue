@@ -1,3 +1,10 @@
+<!--排名组件
+  props:  title  字符串  标题名字
+           
+          type   值为hot
+                 值为top
+                 值为new
+-->
 <template>
     <div class="recom">
         <h2>{{title}}· · · · · ·
@@ -59,7 +66,9 @@ export default {
 <style scoped>
 .recom {
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 4em;
+    text-align: left;
+    font-size: 1.2em;
 }
 
 .recom h2 {
@@ -89,7 +98,7 @@ export default {
 }
 #billboard .order {
     width: 20px;
-    font-size: 9px;
+    line-height: 1em;
     text-align: center;
     background: #afafaf;
     display: inline-block;
@@ -129,8 +138,6 @@ export default {
 
 #billboard .tag p {
     margin: 0;
-    line-height: 22px;
-    width: 280px;
-    font-size: 13px;
+    line-height: 1.4em;
 }
 </style>

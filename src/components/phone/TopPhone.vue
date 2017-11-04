@@ -6,24 +6,25 @@
             <table width="100%">
                 <tbody>
                     <tr class="item">
-                        <td width="120" valign="top">
-                             <router-link class="nbg" :to="paths.phoneDetail+'/'+phone.id">
-                                <img :src="phone.image" width="100">
+                        <td class="col-xs-5 col-sm-4 col-md-4 col-lg-4 " valign="top" style="padding-left:0px;">
+                             <router-link :to="paths.phoneDetail+'/'+phone.id">
+                                <img :src="phone.image" width="100%">
                             </router-link>
                         </td>
-                        <td valign="top">
+                        <td  class="col-xs-7 col-sm-8 col-md-8 col-lg-8 no_padding" valign="top">
                             <div class="pl2">
                                <span  class="no_class">No{{i+1}}</span>
                                 <router-link :to="paths.phoneDetail+'/'+phone.id" >
                                     {{phone.company}} /
-                                    <span style="font-size:13px;">{{phone.name}}</span>
+                                    <span >{{phone.name}}</span>
                                 </router-link>
-                                <span style="font-size: 13px; padding-left: 3px; color: #00A65F;">[{{phone.year}}]</span>
+                                <span style="padding-left: 3px; color: #00A65F;">[{{phone.year}}]</span>
                                 <div class="pl">
                                     <tag-attr :phone="phone" autoColor="true"></tag-attr>
                                 </div>
-                                <star-bar type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
+                                <div class="clearfix"></div> 
                             </div>
+                            <star-bar type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
                         </td>
                     </tr>
                 </tbody>
@@ -100,15 +101,20 @@ export default {
 }
 </script>
 <style scoped>
+.no_padding{
+    padding:0px;
+}
 .top_phone_content > h2 {
-    font: 16px Arial, Helvetica, sans-serif;
+    font: 1.1em Arial, Helvetica, sans-serif;
     color: #072;
     padding-left: 10px;
-    line-height: 150%;
+    margin: 0px;
+    line-height: 100%;
 }
 
 .top_phone_content {
     text-align: left;
+    font-size: 1.3em;
 }
 
 .ul {
@@ -143,14 +149,14 @@ table {
 td,
 th {
     font: 12px Helvetica, Arial, sans-serif;
-    line-height: 1.62;
+    line-height: 1.62em;
 }
 
 a {
     color: #37a;
-    padding-left: 13px;
     position:relative;
     top:-1px;
+    font-size: 1.2em;
 }
 
 a:link {
@@ -159,18 +165,18 @@ a:link {
 }
 .no_class{
     /* padding-left:15px; */
-    font-size:16px;
+    font-size:1em;
     font-weight:bold;
     /* color:green; */
 }
 .pl2 {
-    font: 14px Arial, Helvetica, sans-serif;
+    font: 1.2em Arial, Helvetica, sans-serif;
     line-height: 150%;
     color: #666666;
 }
 
 .pl {
-    font: 12px Arial, Helvetica, sans-serif;
+    font: 0.9em Arial, Helvetica, sans-serif;
     line-height: 150%;
     color: #666666;
     /* padding-top:10px; */
@@ -187,8 +193,7 @@ a:link {
     background: #f7f7f7;
     border-radius: 5px;
     text-align: center;
-    line-height: 30px;
-    margin-bottom: 60px;
+    line-height: 1.4em;
 }
 
 .more:hover {

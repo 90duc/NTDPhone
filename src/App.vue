@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-
+ <div class="container">
     <my-header></my-header>
-
     <div class="content margin_auto">
       <transition name="tsfade" mode="out-in">
         <router-view class="child-view" v-if="!$route.meta.keepAlive"></router-view>
@@ -13,26 +12,28 @@
         </keep-alive>
       </transition>
     </div>
-    <my-footer></my-footer>
+  </div>
+   <my-footer></my-footer>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import myHeader from '@/components/header/Header.vue'
-import myFooter from '@/components/footer/Footer.vue'
+import Vue from "vue";
+import myHeader from "@/components/header/Header.vue";
+import myFooter from "@/components/footer/Footer.vue";
 
 //Vue.use(Header);
 export default {
   components: {
-    myHeader, myFooter
+    myHeader,
+    myFooter
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -40,26 +41,19 @@ export default {
   margin-top: 60px;
 }
 
-.margin_auto {
-  width: 1135px;
-  margin: 0 auto;
-  /* background: green; */
-}
-
 .content {
-  padding-top: 20px;
   min-height: 100vh;
   /*calc(100vh - 150px);*/
 }
 
 .tsfade-enter-active,
 .tsfade-leave-active {
-  transition: opacity .4s
+  transition: opacity 0.4s;
 }
 
 .tsfade-enter,
 .tsfade-leave-to {
-  opacity: 0
+  opacity: 0;
 }
 
 a {

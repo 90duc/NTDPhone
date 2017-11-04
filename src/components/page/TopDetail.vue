@@ -1,15 +1,13 @@
 <template>
     <div>
         <div class="title">NTD Phone排行榜</div>
-        <div>
-            <top-phone :title="type.name+'推荐榜'" :type="type.type" class="left_frame float_left"></top-phone>
-            <div class="float_left right_frame">
+        <div class="row">
+            <top-phone :title="type.name+'推荐榜'" :type="type.type" class="col-xs-12 col-sm-12 col-md-9 col-lg-9"></top-phone>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                 <div v-for="t in topInfo" :key="t.name" v-if='t!=type'>
                     <top-list :title="t.name+'推荐'" :type="t.type"></top-list>
-                </div>
-               
+                </div>              
             </div>
-
             <div class="clearfix"></div>
         </div>
 
@@ -45,25 +43,10 @@ export default {
 </script>
 <style scoped>
 .title {
-    font-size: 26px;
+    font-size: 1.8em;
     padding-left: 3px;
     padding-bottom: 10px;
     text-align: left;
-}
-
-.left_frame {
-    width: 720px;
-    padding-right: 50px;
-}
-
-.right_frame {
-    padding: 20px 0px 20px 0px;
-    width: calc(100% - 770px);
-    text-align: left;
-}
-
-.float_left {
-    float: left;
 }
 
 .clearfix {

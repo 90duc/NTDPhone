@@ -1,6 +1,3 @@
-export default{
-    clone:clone
-}
 function clone1(obj) {
     if (typeof obj !== "object") {
         return obj;
@@ -45,3 +42,7 @@ let phoneTemp = {
     bodyColor: ['红色', '白色'],
     year: '2015'
 };
+export default{
+    clone: clone,
+    cloneObject: clone1
+}

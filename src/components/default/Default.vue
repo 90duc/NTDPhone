@@ -1,18 +1,21 @@
 <template>
     <div>
-        <search v-on:searchevent="search"></search>
+        <search v-on:searchevent="search" class="search"></search>
         <div>
-            <div class="left_frame float_left">
+            <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
                 <phone-list></phone-list>
                 <hobby-list></hobby-list>
             </div>
-            <top-list class="float_left right_frame" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
+            <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
             <div class="clearfix"></div>
         </div>
 
     </div>
 </template>
 <style scoped>
+.search{
+   padding:10px 0px;
+}
 .left_frame {
     width: 880px;
 }
