@@ -5,8 +5,8 @@
       <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
       <div class="float_right">
         <span v-show="!login_info.isLogin">
-          <button @mousedown="login()">登陆</button>
-          <button @mousedown="register()">注册</button>
+          <router-link :to="login_info.login_path"><button>登陆</button></router-link>
+          <router-link :to="login_info.register_path"><button>注册</button></router-link>
         </span>
         <span v-show="login_info.isLogin">
           <router-link :to='login_info.user_info_path'>
@@ -28,10 +28,12 @@ import LoginBox from "@/components/phone/LoginBox.vue";
 
 let logo_var = {
   logo_path: LogoPNG,
-  home_path: Paths.default
+  home_path: Paths.home
 };
 let login_info = {
   user_info_path: Paths.userInfo,
+  login_path:Paths.login,
+  register_path:Paths.login,
   isLogin: false
 };
 
@@ -48,7 +50,8 @@ export default {
   },
   methods: {
     login: function() {
-      this.login_info.isLogin = true;
+      //this.login_info.isLogin = true;
+
     },
     logout: function() {
       this.login_info.isLogin = false;
@@ -57,7 +60,7 @@ export default {
       this.login_info.isLogin = true;
     },
     checkLogin: function() {
-      return true;
+      return false;
     }
   },
   created() {
@@ -87,7 +90,7 @@ export default {
   background: #fafaf5;
   text-align: left;
   padding: 5px 0px;
-  z-index: 50;
+  z-index: 100;
   font-size: 1em;
 }
 

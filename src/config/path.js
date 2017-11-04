@@ -1,10 +1,12 @@
-let defaultPath = '';
+let homePath = '/home';
 export default {
-    default: defaultPath + '/',
-    phoneDetail: defaultPath + '/phoneDetail',
-    topDetail: defaultPath + '/topList',
-    searchBy: defaultPath + '/searchBy',
-    hobbyList: defaultPath + '/hobbyList',
-    userInfo:defaultPath +'/userInfo'
+    default:'/',
+    login:'/login',
+    home: homePath + '/',
+    phoneDetail: homePath + '/phoneDetail',
+    topDetail: homePath + '/topList',
+    searchBy: homePath + '/searchBy',
+    hobbyList: homePath + '/hobbyList',
+    userInfo:homePath +'/userInfo'
 }
 

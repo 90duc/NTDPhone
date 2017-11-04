@@ -1,25 +1,30 @@
 <template>
-  <div >
-     <div>
-       <button class="btn btn-success" @click="wantBuy">想买</button>
-       <button class="btn btn-warning" @click="hasBuy">已买</button>
-       <score-star type='hover'></score-star>
-       <remark-box v-if="remarkBoxShow" v-model="remarkBoxShow"></remark-box>
+  <div>
+    <div>
+      <button class="btn btn-success" @click="wantBuy">想买</button>
+      <button class="btn btn-warning" @click="hasBuy">已买</button>
+      <score-star type='hover' @on-click="hasBuy"></score-star>
+      <remark-box v-if="remarkBoxShow" v-model="remarkBoxShow" :phone="phone"></remark-box>
     </div>
-     <div class="title_remark"><span>{{phone.name}}的短评 · · · · · · </span><div>我要写短评</div></div>
-     <div class="item_frame">
-       <div class="item_remark" v-for="r in remarks" :key='r.name'>
-         <div class="remark_header">
-           <span>
-           <span class="r_blue">{{r.name}}</span>&nbsp;{{types[r.type]}}&nbsp;
-           <star type='s' :rank="r.rank"></star>&nbsp;
-           <span class="r_time">{{r.time}}</span>
-           </span>
-           <div class="r_agree">{{r.agree}}&nbsp;<span class="r_blue" @click="agree(r)">有用</span></div>
-         </div>
-         <div class="r_text">{{r.text}}</div>
+    <div class="title_remark">
+      <span>{{phone.name}}的短评 · · · · · · </span>
+      <div>我要写短评</div>
+    </div>
+    <div class="item_frame">
+      <div class="item_remark" v-for="r in remarks" :key='r.name'>
+        <div class="remark_header">
+          <span>
+            <span class="r_blue">{{r.name}}</span>&nbsp;{{types[r.type]}}&nbsp;
+            <star type='s' :rank="r.rank"></star>&nbsp;
+            <span class="r_time">{{r.time}}</span>
+          </span>
+          <div class="r_agree">{{r.agree}}&nbsp;
+            <span class="r_blue" @click="agree(r)">有用</span>
+          </div>
         </div>
-     </div>
+        <div class="r_text">{{r.text}}</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -30,12 +35,14 @@ import Data from "@/components/default/data.js";
 
 export default {
   components: {
-    Star,ScoreStar,RemarkBox
+    Star,
+    ScoreStar,
+    RemarkBox
   },
   props: ["phone"],
   data() {
     return {
-      remarkBoxShow:true,
+      remarkBoxShow: false,
       remarks: [],
       types: ["想买", "已买"]
     };
@@ -44,11 +51,9 @@ export default {
     agree: function(r) {
       r.agree++;
     },
-    wantBuy:function(){     
-       
-    },
-    hasBuy:function(c){
-       this.remarkBoxShow=true;
+    wantBuy: function() {},
+    hasBuy: function(c) {
+      this.remarkBoxShow = true;
     }
   },
   mounted() {
@@ -68,8 +73,8 @@ export default {
 };
 </script>
 <style scoped>
-.btn{
-  padding:2px 5px;
+.btn {
+  padding: 2px 5px;
 }
 .title_remark {
   padding-top: 20px;

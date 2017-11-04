@@ -1,16 +1,20 @@
 <template>
-   <div  class='lb_form'>
-    <div  class='col-xs-8 col-sm-6 col-md-5  col-lg-5' style="max-width:35em"> 
+  <div class='lb_form'>
+    <div class='col-xs-8 col-sm-6 col-md-5  col-lg-5' style="max-width:35em">
       <div class="lb_border"></div>
       <div class='lb_box'>
-       <a  class="j_close_dialog dui-dialog-close" @click="close">X</a>     
-         <div class="lb_title">评价{{title}}</div>
-         <div class="lb_field">
-           <span>评分：</span><score-star></score-star>
-         </div> 
-         
+        <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
+        <div class="lb_title">评价{{phone.name+'/'+phone.company}}</div>
+        <div class="lb_field">
+          <div class="score">
+            <span>评分：</span>
+            <score-star></score-star>
+          </div>
+          <div>写下你的评论：</div>
+          <textarea :placeholder='phone.name'></textarea>
+        </div>
         <div class="lb_save">
-          <button class="btn btn-success">保存</button>
+          <button class="btn btn-success" @click="finish">保存</button>
         </div>
       </div>
     </div>
@@ -18,19 +22,19 @@
 </template>
 <script>
 import ScoreStar from "@/components/base/ScoreStar.vue";
-var title = "NTD Phone";
+
 
 export default {
-   components: {
+  components: {
     ScoreStar
   },
   model: {
     prop: "loginBoxShow",
     event: "loginBoxShow"
   },
+  props:['phone'],
   data() {
     return {
-      title: title
     };
   },
   methods: {
@@ -40,6 +44,9 @@ export default {
     check: function() {},
     close: function() {
       this.$emit("loginBoxShow", false);
+    },
+    finish: function() {
+      this.close();
     }
   }
 };
@@ -49,11 +56,11 @@ export default {
   width: calc(100% + 14px);
   height: calc(25em + 14px);
   position: absolute;
-  top:calc(50vh - 12.5em - 7px);
-  left:calc(50vw - 50% - 7px);
+  top: calc(50vh - 12.5em - 7px);
+  left: calc(50vw - 50% - 7px);
   border-radius: 6px;
   background-color: #333;
-  padding:15px;
+  padding: 15px;
   opacity: 0.2;
   z-index: 100;
 }
@@ -70,8 +77,8 @@ export default {
   width: 100%;
   height: 25em;
   position: absolute;
-  top:calc(50vh - 12.5em);
-  left:calc(50vw - 50%);
+  top: calc(50vh - 12.5em);
+  left: calc(50vw - 50%);
   border-radius: 6px;
   z-index: 103;
   background-color: #ffffff;
@@ -100,26 +107,36 @@ export default {
   color: #072;
 }
 .lb_field {
-  padding:0px 15px;
+  padding:10px 20px;
   height: calc(100% - 6em);
   overflow: hidden;
 }
-
-.lb_field .btn.btn-movie {
-  background-color: green;
+.lb_field .score{
+  padding-bottom:10px;
+  vertical-align: center;
+  
+}
+textarea{
+  margin-top:5px;
+  width: 100%;
+  height: 13em;
+  resize: none;
+  border-radius:4px; 
+  padding: 2px 5px;
+  
 }
 
-.lb_save{
+.lb_save {
   width: 100%;
   height: 3em;
   padding: 6px 20px;
   background: #ebf5ea;
 }
-.lb_save button{
+.lb_save button {
   float: right;
-  padding:2px 10px;
+  padding: 2px 10px;
 }
-a{
+a {
   text-decoration: none;
 }
 </style>

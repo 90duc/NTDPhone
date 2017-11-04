@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Default from '@/components/default/Default.vue'
+import Login from '@/components/login/Login.vue'
+import Home from '@/components/page/Home.vue'
 import PhoneDetail from '@/components/page/PhoneDetail.vue'
 import TopDetail from '@/components/page/TopDetail.vue'
 import SearchBy from '@/components/page/SearchBy.vue'
@@ -8,11 +10,12 @@ import HobbyList from '@/components/page/HobbyList.vue'
 import Paths from '@/config/path.js'
 
 Vue.use(Router);
-let routes= [
+let chidRoutes= [
+
   {
-    path: Paths.default,
-    name: 'default',
-    component: Default
+    path: Paths.home,
+    name: 'home',
+    component: Home
   },
   {
     path: Paths.phoneDetail+'/:id',
@@ -37,6 +40,21 @@ let routes= [
 
 ];
 
+
+let routes=[
+    {
+      path: '/',
+      name: 'default',
+      component: Default,
+      redirect: Paths.home,
+      children:chidRoutes
+    },
+    {
+      path: Paths.login,
+      name: 'login',
+      component: Login,
+    }
+];
 
 export default new Router({
   routes:routes

@@ -1,60 +1,30 @@
 <template>
     <div>
-        <search v-on:searchevent="search" class="search"></search>
-        <div>
-            <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
-                <phone-list></phone-list>
-                <hobby-list></hobby-list>
+        <div class="container">
+            <my-header></my-header>
+            <div class="content">
+                <transition name="tsfade" mode="out-in">
+                    <router-view class="child-view" v-if="!$route.meta.keepAlive"></router-view>
+                </transition>
+                <transition name="tsfade" mode="out-in">
+                    <keep-alive>
+                        <router-view class="child-view" v-if="$route.meta.keepAlive"></router-view>
+                    </keep-alive>
+                </transition>
             </div>
-            <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
-            <div class="clearfix"></div>
         </div>
-
+        <my-footer></my-footer>
     </div>
 </template>
-<style scoped>
-.search{
-   padding:10px 0px;
-}
-.left_frame {
-    width: 880px;
-}
-
-.right_frame {
-    padding: 20px 0px 20px 0px;
-    width: calc(100% - 880px);
-    text-align: left;
-}
-
-.float_left {
-    float: left;
-}
-
-.clearfix {
-    clear: both;
-}
-</style>
-
 <script>
-import Search from '@/components/base/Search.vue'
-import PhoneList from '@/components/phone/PhoneList.vue'
-import TopList from '@/components/base/TopList.vue'
-import HobbyList from '@/components/base/HobbyList.vue'
-import Top from '@/components/phone/Top.js'
+import myHeader from "@/components/header/Header.vue";
+import myFooter from "@/components/footer/Footer.vue";
 
 export default {
-  components: {
-    Search,PhoneList, TopList,HobbyList
-  },
-  data(){
-     return{
-         topInfo:Top.typeList
-     };
-  },
-  methods: {
-      search:function (text){
-          alert(text);
-      }
+ components: {
+    myHeader,
+    myFooter
   }
-}
+};
 </script>
+

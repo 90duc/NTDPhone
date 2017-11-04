@@ -4,7 +4,7 @@
  -->
 <template>
 <span>
-  <span @mouseout="clear" style="position:relative;top:2px;">
+  <span @mouseout="clear" style="position:relative;top:-1px;">
          <img :src="starWhite" v-for='i in 5' :key='i' ref='stars' @mouseover="fouse(i)" @click='select(i)'>
       </span>
       <span style="font-size:12px;">{{rangeText[rangeIndex]}}</span>
@@ -35,8 +35,11 @@ export default {
       }
     },
     select: function(i) {
-      if(this.type=='hover')
-         return;
+      if(this.type=='hover'){
+        this.$emit('on-click');      
+        return;
+      }
+        
       this.fouseIndex = i;
       this.fouse(i);
     },

@@ -73,7 +73,7 @@ export default {
   position: absolute;
   z-index: 99;
   width: 100%;
-  height:100%;
+  /* height:100%; */
 }
 a{
   text-decoration:none;

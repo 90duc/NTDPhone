@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-      CopyRight © {{time}}-{{time+1}} {{name}},All Rights Reserved. 版权所有 {{owner}}
+      CopyRight © {{time}}-{{time+1}} {{name}}, All Rights Reserved. 版权所有者{{owner}}
   </div>
 </template>
 <style scoped>
