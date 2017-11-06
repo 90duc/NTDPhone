@@ -1,7 +1,8 @@
 
-"use strict";
-
-(function () {
+"use strict"
+import ge1doot2 from './imageTransform3D.js'
+var ge1doot0 = ge1doot2.ge1doot;
+function ready(ge1doot) {
     /* ==== definitions ==== */
     var diapo = [], layers = [], ctx, pointer, scr, camera, light, fps = 0, quality = [1, 2],
         // ---- poly constructor ----
@@ -53,6 +54,7 @@
         // ---- init section ----
         init = function (json) {
             // draw poly primitive
+            ge1doot.destroyed=false;
             Poly.prototype.drawPoly = ge1doot.transform3D.drawPoly;
             // ---- init screen ----
             scr = new ge1doot.Screen({
@@ -124,7 +126,12 @@
                 );
             }
             // ---- start engine ---- >>>
-            setInterval(function () {
+            var clearEngine=setInterval(function () {
+                if(ge1doot.destroyed){
+                  clearInterval(clearEngine);
+                  return;
+                }
+
                 quality = (fps > 50) ? [2, 3] : [1, 2];
                 fps = 0;
             }, 1000);
@@ -152,6 +159,9 @@
             }
             // ---- loop ----
             fps++;
+            if(ge1doot.destroyed){              
+                return;
+              }
             requestAnimFrame(run);
         };
     /* ==== prototypes ==== */
@@ -217,15 +227,114 @@
     return {
         // --- load data ----
         load: function (data) {
-            window.addEventListener('load', function () {
-                ge1doot.loadJS(
-                    "js/imageTransform3D.js",
-                    init, data
-                );
-            }, false);
+            init(data);
         }
     }
-})().load({
+};
+var images = [
+    // north
+    {
+      img: "images/1.jpg",
+      x: -1000,
+      y: 0,
+      z: 1500,
+      nx: 0,
+      nz: 1
+    },
+    {
+      img: "images/2.jpg",
+      x: 0,
+      y: 0,
+      z: 1500,
+      nx: 0,
+      nz: 1
+    },
+    {
+      img: "images/3.jpg",
+      x: 1000,
+      y: 0,
+      z: 1500,
+      nx: 0,
+      nz: 1
+    },
+    // east
+    {
+      img: "images/4.jpg",
+      x: 1500,
+      y: 0,
+      z: 1000,
+      nx: -1,
+      nz: 0
+    },
+    {
+      img: "images/5.jpg",
+      x: 1500,
+      y: 0,
+      z: 0,
+      nx: -1,
+      nz: 0
+    },
+    {
+      img: "images/6.jpg",
+      x: 1500,
+      y: 0,
+      z: -1000,
+      nx: -1,
+      nz: 0
+    },
+    // south
+    {
+      img: "images/7.jpg",
+      x: 1000,
+      y: 0,
+      z: -1500,
+      nx: 0,
+      nz: -1
+    },
+    {
+      img: "images/8.jpg",
+      x: 0,
+      y: 0,
+      z: -1500,
+      nx: 0,
+      nz: -1
+    },
+    {
+      img: "images/9.jpg",
+      x: -1000,
+      y: 0,
+      z: -1500,
+      nx: 0,
+      nz: -1
+    },
+    // west
+    {
+      img: "images/10.jpg",
+      x: -1500,
+      y: 0,
+      z: -1000,
+      nx: 1,
+      nz: 0
+    },
+    {
+      img: "images/11.jpg",
+      x: -1500,
+      y: 0,
+      z: 0,
+      nx: 1,
+      nz: 0
+    },
+    {
+      img: "images/12.jpg",
+      x: -1500,
+      y: 0,
+      z: 1000,
+      nx: 1,
+      nz: 0
+    }
+  ];
+
+var json = {
     imgdata:images,
     structure: [
         {
@@ -317,6 +426,40 @@
         }
     ],
     options: {
-        imagesPath:imagesPath
+
     }
-});
+};
+function clone(obj) {
+    if (typeof obj !== "object") {
+        return obj;
+    }
+    if (obj instanceof Array) {
+        var newobj = [];
+        for (var i = 0; i < obj.length; i++) {
+            newobj[i] = clone(obj[i]);
+        }
+        return newobj;
+    }
+
+    var newobj = {};
+    for (var attr in obj) {
+        newobj[attr] = clone(obj[attr]);
+    }
+    return newobj;
+}
+function getData(){
+    return clone(json);
+}
+
+function init(images, imagesPath){
+    var  data=getData();
+    for (var i in images) {
+        data.imgdata[i].img = images[i];
+      }
+    data.options.imagesPath = imagesPath;
+    var ge1doot=ge1doot0();
+    ready(ge1doot).load(data);
+}
+export default {
+    init: init,
+}

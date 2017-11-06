@@ -5,8 +5,8 @@
       <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
       <div class="float_right">
         <span v-show="!login_info.isLogin">
-          <router-link :to="login_info.login_path"><button>登陆</button></router-link>
-          <router-link :to="login_info.register_path"><button>注册</button></router-link>
+          <router-link :to="login_info.login_path"><button class='btn btn-primary'>登陆</button></router-link>
+          <router-link :to="login_info.register_path"><button class='btn btn-primary'>注册</button></router-link>
         </span>
         <span v-show="login_info.isLogin">
           <router-link :to='login_info.user_info_path'>
@@ -33,7 +33,7 @@ let logo_var = {
 let login_info = {
   user_info_path: Paths.userInfo,
   login_path:Paths.login,
-  register_path:Paths.login,
+  register_path:Paths.register,
   isLogin: false
 };
 
@@ -101,17 +101,11 @@ export default {
 .header .float_right {
   float: right;
   vertical-align: center;
+  padding-top:.5em;
 }
-
-.header .float_right button {
-  width: 3.75em;
-  height: 1.56em;
-  margin: 8px 0px 8px 6px;
-  background-color: #fbb03b;
-  border-radius: 4px;
-  text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
+.btn{
+  padding:2px 10px;
+  font-size: 1em;
 }
 
 .header .user_link {

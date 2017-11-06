@@ -1,6 +1,6 @@
 <template>
   <div class='lb_form'>
-    <div class='col-xs-8 col-sm-6 col-md-5  col-lg-5' style="max-width:35em">
+    <div class='col-xs-10 col-sm-6 col-md-5  col-lg-5' style="max-width:35em">
       <div class="lb_border"></div>
       <div class='lb_box'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>

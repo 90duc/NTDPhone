@@ -1,12 +1,7 @@
 <template>
   <div id="app">
     <transition name="tsfade" mode="out-in">
-      <router-view  v-if="!$route.meta.keepAlive"></router-view>
-    </transition>
-    <transition name="tsfade" mode="out-in">
-      <keep-alive>
-        <router-view  v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
+      <router-view  ></router-view>
     </transition>
   </div>
 </template>
@@ -14,9 +9,12 @@
 <script>
 import Vue from "vue";
 
-//Vue.use(Header);
 export default {
-  
+  data(){
+    return {
+      login:null
+    }
+  }
 };
 </script>
 

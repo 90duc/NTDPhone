@@ -7,6 +7,7 @@ import PhoneDetail from '@/components/page/PhoneDetail.vue'
 import TopDetail from '@/components/page/TopDetail.vue'
 import SearchBy from '@/components/page/SearchBy.vue'
 import HobbyList from '@/components/page/HobbyList.vue'
+import Picture3D from '@/components/page/3d/Picture3D.vue'
 import Paths from '@/config/path.js'
 
 Vue.use(Router);
@@ -36,7 +37,8 @@ let chidRoutes= [
     path: Paths.hobbyList+'/:type',
     name: 'hobbyList',
     component: HobbyList
-  },
+  }
+
 
 ];
 
@@ -53,7 +55,12 @@ let routes=[
       path: Paths.login,
       name: 'login',
       component: Login,
-    }
+    },
+    {
+      path: Paths.picture3D,
+      name: '3d',
+      component: Picture3D
+    },
 ];
 
 export default new Router({

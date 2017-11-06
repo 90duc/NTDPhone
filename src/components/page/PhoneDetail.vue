@@ -4,7 +4,7 @@
       <div class="phone_title"> 
           <span>{{phone.name}}</span>     
         <span class="year">({{phone.year}})</span>
-         <a href="/static/3d/index.html"><span style="color:green;padding-left:5px;font-size:.8em;">3D展示</span></a>
+         <router-link :to='pic3DPath'><span style="color:green;padding-left:5px;font-size:.8em;">3D展示</span></router-link>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 logo_frame" id='logo'>
@@ -52,7 +52,7 @@ import TagList from '@/components/base/TagList.vue'
 import Rating from '@/components/base/Rating.vue'
 import Remark from '@/components/phone/Remark.vue'
 import Data from '@/components/default/data.js'
-import 'jquery'
+import Paths from "@/config/path.js";
 
 export default {
   components: {
@@ -66,7 +66,8 @@ export default {
       images:[],
       imageSize:12,
       imageIndex:0,
-      speed:600
+      speed:600,
+      pic3DPath:Paths.picture3D
     }
   },
   methods:{

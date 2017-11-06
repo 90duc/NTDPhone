@@ -3,7 +3,7 @@
     <div class="container text_left ">
       <div class='row '>
         <div class='col-xs-12 col-sm-6 col-md-4 col-lg-4 col-md-offset-1 col-lg-offset-1 none_padding'>
-          <router-link :to='homePath'>
+          <router-link :to='path.homePath'>
             <img :src="logo">
           </router-link>
           <div class='title'>
@@ -22,13 +22,13 @@
             <input type="password" class="form-control " id="password" placeholder="请输入密码" />
           </div>
           <div class='row none_margin  top_padding'>
-            <button type="button" class="btn btn-success col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-10 col-sm-8 col-md-8 col-lg-8">提交</button>
+            <button @click="login" class="btn btn-success col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-10 col-sm-8 col-md-8 col-lg-8">提交</button>
           </div>
           <div class='row none_margin  top_padding'>
             <router-link to=''>
               <span class='col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-5 col-sm-4 col-md-3 col-lg-3 none_padding'>忘记密码</span>
             </router-link>
-            <router-link to=''>
+            <router-link :to='path.registerPath'>
               <span class='col-xs-5 col-sm-4 col-md-5 col-lg-5 none_padding' style='text-align:right'>注册</span>
             </router-link>
           </div>
@@ -43,6 +43,11 @@
 import myFooter from "@/components/footer/Footer.vue";
 import logo from "@/assets/logo_account.png";
 import Paths from "@/config/path.js";
+
+let path ={
+  homePath: Paths.home,
+  registerPath:Paths.register
+};
 export default {
   components: {
     myFooter
@@ -50,8 +55,14 @@ export default {
   data() {
     return {
       logo: logo,
-      homePath: Paths.home
+      path: path
     };
+  },methods: {
+    login:function(){
+        this.$router.go(-1);
+        //this.$router.push({path:'/'});
+      
+    }
   }
 };
 </script>

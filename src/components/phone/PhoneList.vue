@@ -2,7 +2,7 @@
     <div>
         <pop-box ref='PopBox'></pop-box>
         <div class="row">
-            <router-link :to='"/phoneDetail/"+phone.id' v-for="(phone,i) in phones" :key="i">
+            <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in phones" :key="i">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
                     <div class="image">
                       <img :src="phone.image" />
@@ -27,6 +27,7 @@ import Data from "@/components/default/data.js";
 import Icon from "@/assets/logo3.png";
 import config from "./../../config/config.js";
 import PopBox from "@/components/base/PopBox.vue";
+import Paths from "@/config/path.js";
 
 let loadText = { loading: "载入中...", waiting: "加载更多" };
 
@@ -39,7 +40,8 @@ export default {
       phones: [],
       loadStatus: { status: true, text: loadText.waiting },
       hoverPhone: {},
-      popBox: { showDetail: false, position: {} }
+      popBox: { showDetail: false, position: {} },
+      phoneDetailPath:Paths.phoneDetail
     };
   },
   methods: {
