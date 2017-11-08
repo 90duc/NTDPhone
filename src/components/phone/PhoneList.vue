@@ -1,6 +1,6 @@
 <template>
     <div>
-        <pop-box ref='PopBox'></pop-box>
+        <pop-box ref='popBox'></pop-box>
         <div class="row">
             <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in phones" :key="i">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
@@ -63,7 +63,7 @@ export default {
       this.loadStatus.text = loadText.waiting;
     },
     enableDetail: function(e, p,i) {
-      this.$refs.PopBox.$emit("pop-box-show", e, p,this.$refs.phoneList[i]);
+      this.$refs.popBox.$emit("pop-box-show", e, p,this.$refs.phoneList[i]);
     }
   },
   created() {
@@ -99,7 +99,7 @@ export default {
   margin: 10px 0px;
 }
 
-.phone_class:hover {
+.phone_class1:hover {
   border-color: gray;
   border-radius: 5px;
 }

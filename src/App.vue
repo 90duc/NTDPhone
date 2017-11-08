@@ -51,4 +51,11 @@ export default {
 .text_left{
   text-align: left;
 }
+.like_a{
+    color: #337ab7;
+    cursor: pointer;
+}
+.like_a:hover{
+    color: #23527c;
+}
 </style>

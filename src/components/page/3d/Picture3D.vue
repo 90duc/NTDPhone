@@ -53,6 +53,7 @@ export default {
   cursor: pointer;
   border: 1px solid transparent;
   color: gray;
+  padding: 2px 5px;
 }
 
 #return_bt:hover {

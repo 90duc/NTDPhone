@@ -5,8 +5,8 @@
       <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
       <div class="float_right">
         <span v-show="!login_info.isLogin">
-          <router-link :to="login_info.login_path"><button class='btn btn-primary'>登陆</button></router-link>
-          <router-link :to="login_info.register_path"><button class='btn btn-primary'>注册</button></router-link>
+         <button class='btn btn-primary' @click="login">登陆</button>
+         <button class='btn btn-primary' @click="register">注册</button>
         </span>
         <span v-show="login_info.isLogin">
           <router-link :to='login_info.user_info_path'>
@@ -32,9 +32,6 @@ let logo_var = {
 };
 let login_info = {
   user_info_path: Paths.userInfo,
-  login_path:Paths.login,
-  register_path:Paths.register,
-  isLogin: false
 };
 
 export default {
@@ -50,14 +47,14 @@ export default {
   },
   methods: {
     login: function() {
-      //this.login_info.isLogin = true;
+      this.$router.push({name:'login',params:{redirect:this.$route}});
 
     },
     logout: function() {
       this.login_info.isLogin = false;
     },
     register: function() {
-      this.login_info.isLogin = true;
+      this.$router.push({name:'register',params:{redirect:this.$route}});
     },
     checkLogin: function() {
       return false;

@@ -121,7 +121,7 @@ export default {
 }
 
 .recom h2 .fouse_font {
-  color: black;
+  color: green;
 }
 
 .recom a:hover {
@@ -164,7 +164,7 @@ export default {
   height: 2.5em;
   overflow: hidden;
   text-align: left;
-  color:black;
+  /* color:black; */
 }
 
 .clearfix {

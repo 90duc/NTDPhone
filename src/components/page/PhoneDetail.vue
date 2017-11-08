@@ -4,7 +4,7 @@
       <div class="phone_title"> 
           <span>{{phone.name}}</span>     
         <span class="year">({{phone.year}})</span>
-         <router-link :to='pic3DPath'><span style="color:green;padding-left:5px;font-size:.8em;">3D展示</span></router-link>
+         <router-link :to='pic3DPath'><span style="color:green;padding-left:5px;font-size:.5em;">3D展示</span></router-link>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 logo_frame" id='logo'>
