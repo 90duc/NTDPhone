@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
             <p>厂商：{{phone.company}}</p>
-            参考报价：￥1999
+            参考报价：<span class='price'>￥{{phone.price}}</span>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               <rating :phone="phone"></rating>
@@ -28,6 +28,7 @@
         </div>
         <div class="clearfix"></div>
       </div>
+      <remark-score :phone="phone" class="remark-score"></remark-score>
       <tag-list :phone='phone'></tag-list>
       <remark :phone="phone" style="padding-top:10px;"></remark>
     </div>
@@ -50,13 +51,14 @@ import config from './../../config/config.js'
 import TagAttr from '@/components/base/TagAttr.vue'
 import TagList from '@/components/base/TagList.vue'
 import Rating from '@/components/base/Rating.vue'
+import RemarkScore from '@/components/phone/RemarkScore.vue'
 import Remark from '@/components/phone/Remark.vue'
 import Data from '@/components/default/data.js'
 import Paths from "@/config/path.js";
 
 export default {
   components: {
-        TagAttr,TagList,Rating,Remark
+        TagAttr,TagList,Rating,Remark,RemarkScore
   },
   data () {
     return {
@@ -213,12 +215,19 @@ export default {
 .info_detail_frame {
   width: 50%;
 }
-
+.price{
+  color:red;
+  font-size: 1.1em;
+  font-weight: bold;
+}
 .remark_frame {
   width: calc(50% - 25px);
   height: 220px;
 }
 
+.remark-score{
+  margin: 10px 0px;
+}
 .clearfix {
   clear: both;
 }

@@ -71,11 +71,13 @@ export default {
   },
   methods: {
     login: function() {
-      if (!this.check()) return;
+      //if (!this.check()) return;
+      this.$root.login({name:'张三',account:'24489'});
 
       var url = this.$route.params.redirect;
       if (url) this.$router.push({ path: url.path, query: url.query });
       else this.$router.push({ path: "/" });
+      
     },
     register: function() {
       var url = this.$route.params.redirect;

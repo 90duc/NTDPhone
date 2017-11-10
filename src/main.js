@@ -13,5 +13,31 @@ Vue.config.productionTip = false
 new Vue({
   router,
   template: '<App/>',
+  data() {
+    return {
+      loginInfo: null
+    }
+  },
+  methods: {
+    requestLogin: function () {
+      if (!this.checkLogin()) {
+        this.$emit('request-login');
+        return false;
+      }
+      return true;
+    },
+    checkLogin: function () {
+      return this.loginInfo != null;
+    },
+    login: function (data) {
+      this.loginInfo = data;
+    },
+    logout: function () {
+     this.loginInfo = null;
+    },
+    getUser: function () {
+      return this.loginInfo;
+    }
+  },
   components: { App }
 }).$mount('#apps');

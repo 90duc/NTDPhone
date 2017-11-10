@@ -4,10 +4,10 @@
       <div class="lb_border"></div>
       <div class='lb_box'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
-        <div class="lb_title">评价{{phone.name+'/'+phone.company}}</div>
+        <div class="lb_title">期望{{phone.name+'/'+phone.company}}</div>
         <div class="lb_field">
           <div class="score">
-            <span>评分：</span>
+            <span>期望：</span>
             <score-star></score-star>
           </div>
           <div>写下你的评论：</div>
@@ -29,8 +29,8 @@ export default {
     ScoreStar
   },
   model: {
-    prop: "remarkBoxShow",
-    event: "remarkBoxShow"
+    prop: "WantBoxShow",
+    event: "WantBoxShow"
   },
   props:['phone'],
   data() {
@@ -40,7 +40,7 @@ export default {
   methods: {
     check: function() {},
     close: function() {
-      this.$emit("remarkBoxShow", false);
+      this.$emit("WantBoxShow", false);
     },
     finish: function() {
       this.close();

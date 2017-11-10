@@ -1,19 +1,19 @@
 <template>
-   <div>
+  <div>
     <div class="lb_b">
     </div>
-    <div class='lb_form'> 
-    <div class='lb_box'>
-       <a  class="j_close_dialog dui-dialog-close" @click="close">X</a>
-       <div class='lb_content'>
-         <div class="lb_title">欢迎来到{{title}}，请登录</div>
-         <div class="lb_field">
-           <input type="text" name="name"  placeholder="邮箱">
-         </div>
-         <div class="lb_field">
-           <input class="login_pwd" type="password" name="password" placeholder="密码">
-         </div> 
-         <div class="lb_field" style="padding-top:25px;">
+    <div class='lb_form '>
+      <div class='lb_box col-xs-offset-1 col-sm-offset-3 col-md-offset-3 col-lg-offset-4 col-xs-10 col-sm-6 col-md-5 col-lg-4'>
+        <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
+        <div class='lb_content'>
+          <div class="lb_title">欢迎来到{{title}}，请登录</div>
+          <div class="lb_field">
+            <input type="text" name="name" placeholder="邮箱">
+          </div>
+          <div class="lb_field">
+            <input class="login_pwd" type="password" name="password" placeholder="密码">
+          </div>
+          <div class="lb_field">
             <input class="btn btn-movie" type="submit" value="登录" @click="login">
           </div>
           <div class="lb_field lb_field-remember">
@@ -21,8 +21,8 @@
               <input type="checkbox" name="remember"> 下次自动登录
             </label>
           </div>
-        </div> 
-    </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -30,9 +30,9 @@
 var title = "NTD Phone";
 
 export default {
-  model:{
-      prop: 'loginBoxShow',
-      event: 'loginBoxShow'
+  model: {
+    prop: "loginBoxShow",
+    event: "loginBoxShow"
   },
   data() {
     return {
@@ -41,11 +41,12 @@ export default {
   },
   methods: {
     login: function() {
-      this.$root.$emit("login");
+      this.$root.login({name:'张三',account:'244831.@qq.com'});
+      this.close();
     },
     check: function() {},
-    close:function(){
-       this.$emit('loginBoxShow', false);
+    close: function() {
+      this.$emit("loginBoxShow", false);
     }
   }
 };
@@ -71,42 +72,42 @@ export default {
   overflow: hidden;
 }
 .lb_box {
-  position: relative;
-  margin: 0px auto;
-  width: 478px;
-  height: 422px;
-  margin-top: calc((100vh - 422px) / 2);
+
+  height: 25em;
+  margin-top: calc((100vh - 30em) / 2);
   /* margin-bottom: calc((100vh - 422px) / 2); */
   background: white;
   border: 1px solid #bbb;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 .lb_box > a {
   position: absolute;
-  top: 10px;
-  right: 12px;
-  font-size: 13px;
+  top: 1em;
+  right:1.1em;
+  font-size: 1.2em;
   color: #b4b4b4;
+  padding:2px 7px;
+  cursor: pointer;
 }
 .lb_box > a:hover {
- color: #fab0b6;
+  color: #fab0b6;
 }
 .lb_content {
-  width: 358px;
-  height: 100%;
-  padding: 60px 60px 50px 60px;
+  height: 70%;
+  width: 80%;
+  margin: 15% auto;
 }
 .lb_title {
   width: 100%;
   text-align: center;
   text-align: center;
-  font-size: 25px;
+  font-size: 1.5em;
   font-weight: normal;
   margin-bottom: 30px;
   line-height: 1em;
 }
 .lb_field {
-  height: 40px;
+  height: 3em;
   margin-top: 10px;
   overflow: hidden;
 }
@@ -114,9 +115,8 @@ export default {
 .lb_field input[type="text"],
 .lb_field input[type="password"] {
   border: 1px solid #ccc;
-  width: 336px;
-  height: 14px;
-  line-height: 14px;
+  width: 100%;
+  height: 2.5em;
   padding: 12px 40px 12px 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -130,9 +130,10 @@ export default {
   background-color: green;
 }
 .lb_field .btn {
+  margin-top: 10px;
   border: none;
   width: 100%;
-  height: 40px;
+  height: 2.5em;
   border-radius: 3px;
   background-color: #00ae1c;
   color: white;

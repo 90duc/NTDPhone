@@ -3,7 +3,7 @@
         <search v-on:searchevent="search" class="search"></search>
         <div>
             <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
-                <phone-list></phone-list>
+                <phone-list :url='url'></phone-list>
                 <hobby-list></hobby-list>
             </div>
             <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
@@ -48,12 +48,13 @@ export default {
   },
   data(){
      return{
-         topInfo:Top.typeList
+         topInfo:Top.typeList,
+         url:'all'
      };
   },
   methods: {
       search:function (text){
-          alert(text);
+          this.url='url/'+text;
       }
   }
 }

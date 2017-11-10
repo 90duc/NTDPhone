@@ -1,14 +1,9 @@
 <template>
   <div>
-    <div>
-      <button class="btn btn-success" @click="wantBuy">想买</button>
-      <button class="btn btn-warning" @click="hasBuy">已买</button>
-      <score-star type='hover' @on-click="hasBuy"></score-star>
-      <remark-box v-if="remarkBoxShow" v-model="remarkBoxShow" :phone="phone"></remark-box>
-    </div>
+    
     <div class="title_remark">
       <span>{{phone.name}}的短评 · · · · · · </span>
-      <div>我要写短评</div>
+      <div @click="remark" >我要写短评</div>
     </div>
     <div class="item_frame">
       <div class="item_remark" v-for="r in remarks" :key='r.name'>
@@ -29,20 +24,15 @@
 </template>
 <script>
 import Star from "@/components/base/Star.vue";
-import ScoreStar from "@/components/base/ScoreStar.vue";
-import RemarkBox from "@/components/phone/RemarkBox.vue";
 import Data from "@/components/default/data.js";
 
 export default {
   components: {
-    Star,
-    ScoreStar,
-    RemarkBox
+    Star
   },
   props: ["phone"],
   data() {
-    return {
-      remarkBoxShow: false,
+    return {    
       remarks: [],
       types: ["想买", "已买"]
     };
@@ -51,9 +41,8 @@ export default {
     agree: function(r) {
       r.agree++;
     },
-    wantBuy: function() {},
-    hasBuy: function(c) {
-      this.remarkBoxShow = true;
+    remark:function(){
+       this.$root.$emit('show-remark-box');
     }
   },
   mounted() {
@@ -73,9 +62,7 @@ export default {
 };
 </script>
 <style scoped>
-.btn {
-  padding: 2px 5px;
-}
+
 .title_remark {
   padding-top: 20px;
 }
@@ -91,6 +78,7 @@ export default {
   line-height: 26px;
   color: #ca6445;
   background: #fae9da;
+  cursor:pointer;
 }
 .title_remark div:hover {
   color: #d9896a;

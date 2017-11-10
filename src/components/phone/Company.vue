@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     getRandomColor: function() {
-      if (!this.autoColor) return "default_color";
+     // if (!this.autoColor) return "default_color";
       let index = 0;
       index = Math.floor(Math.random() * 6);
       return "c" + index;
@@ -35,6 +35,9 @@ export default {
       this.companys.push('中兴');
       this.companys.push('小米');
       this.companys.push('锤子');
+      this.companys.push('vivo');
+      this.companys.push('oppo');
+      this.companys.push('有米');
   }
 };
 </script>
@@ -51,14 +54,15 @@ export default {
     color:#072;
     border-bottom: 1px solid #eaeaea;
     font-size: 1.2em ;
+    margin-bottom: 20px;
 }
 .tag_attr {
   float: left;
-  font-size: 13px;
-  padding: 2px 10px 1px;
+  font-size: 1em;
+  padding: 5px 12px;
   background: #f5f5f5;
-  margin: 0 8px 8px 0;
-  border-radius: 12px;
+  margin: 0 12px 12px 0;
+  border-radius: 16px;
   color: #f6f6f6;
   word-break: keep-all;
   white-space: nowrap;

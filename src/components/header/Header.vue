@@ -1,19 +1,24 @@
 <template>
   <div id='header' class="header">
     <div class="container">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
-      <div class="float_right">
-        <span v-show="!login_info.isLogin">
-         <button class='btn btn-primary' @click="login">登陆</button>
-         <button class='btn btn-primary' @click="register">注册</button>
-        </span>
-        <span v-show="login_info.isLogin">
-          <router-link :to='login_info.user_info_path'>
-            <span class="user_link">用户</span>
-          </router-link>
-          <button @mousedown="logout()">退出</button>
-        </span>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 none_padding">
+        <router-link :to='logo_info.home_path'><img :src="logo_info.logo_path"></router-link>
+        <div class="float_right">
+          <span v-if="!checkLogin()">
+            <button class='btn btn-primary' @click="login">登陆</button>
+            <button class='btn btn-primary' @click="register">注册</button>
+          </span>
+          <div v-else class="login_box">
+            <button class="user_link like_a" @click="click($event)" @blur="clearBox">{{getUser().name}}的账号
+              <span class='arrow'></span>
+            </button>
+            <div class='login_item' ref='userItem'>
+              <router-link :to='userInfoPath'>
+                <div>个人主页</div>
+              </router-link>
+              <div class='like_a' @click="logout">退出</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -30,10 +35,8 @@ let logo_var = {
   logo_path: LogoPNG,
   home_path: Paths.home
 };
-let login_info = {
-  user_info_path: Paths.userInfo,
-};
 
+let requestLoginBox = "request-login";
 export default {
   components: {
     LoginBox
@@ -41,39 +44,49 @@ export default {
   data() {
     return {
       logo_info: logo_var,
-      login_info: login_info,
+      userInfoPath: Paths.userInfo,
       loginBoxShow: false
     };
   },
   methods: {
     login: function() {
-      this.$router.push({name:'login',params:{redirect:this.$route}});
-
+      this.$router.push({ name: "login", params: { redirect: this.$route } });
     },
     logout: function() {
-      this.login_info.isLogin = false;
+      this.$root.logout();
     },
     register: function() {
-      this.$router.push({name:'register',params:{redirect:this.$route}});
+      this.$router.push({
+        name: "register",
+        params: { redirect: this.$route }
+      });
     },
     checkLogin: function() {
-      return false;
+      return this.$root.checkLogin();
+    },
+    getUser: function() {
+      return this.$root.getUser();
+    },
+    showBox: function() {
+      $(this.$refs.userItem).fadeIn("slow");
+    },
+    clearBox: function() {
+      $(this.$refs.userItem).fadeOut("slow");
+    },
+    click: function(e) {
+      if ($(this.$refs.userItem).is(":hidden")) this.showBox();
+      else e.target.blur();
     }
   },
   created() {
-    this.login_info.isLogin = this.checkLogin();
     var that = this;
     // that.loginBoxShow=true;
-    this.$root.$on("request-login", function(fun) {
+    this.$root.$on(requestLoginBox, function(fun) {
       that.loginBoxShow = true;
-    });
-    this.$root.$on("login", function() {
-      that.loginBoxShow = false;
     });
   },
   beforeDestroy() {
-    this.$root.$off("request-login");
-    this.$root.$off("login");
+    this.$root.$off(requestLoginBox);
   }
 };
 </script>
@@ -98,15 +111,51 @@ export default {
 .header .float_right {
   float: right;
   vertical-align: center;
-  padding-top:.5em;
+  padding-top: 0.5em;
 }
-.btn{
-  padding:2px 10px;
+.btn {
+  padding: 2px 10px;
   font-size: 1em;
 }
-
-.header .user_link {
+.login_box {
+  position: relative;
+}
+.user_link {
   text-align: center;
+  padding: 5px 0px 5px 0px;
+  border: none;
+  background: transparent;
+}
+.user_link:focus {
+  outline: none;
+}
+.user_link:focus .arrow {
+  border-width: 7px 5px 0 5px;
+  border-color: gray transparent transparent transparent;
+}
+.login_item {
+  display: none;
+  position: absolute;
+  top: 2.6em;
+  right: 0;
+  width: 6em;
+  padding: 15px 0px 5px 0px;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  z-index: -1;
+}
+.login_item div {
+  width: 70%;
+  margin: 0px auto;
+  padding-bottom: 10px;
+}
+.arrow {
+  width:10px;
+  display: inline-block;
+  vertical-align: middle;
+  border-style: solid dashed dashed dashed;
+  border-width: 5px 0px 5px 7px;
+  border-color: transparent transparent transparent gray;
 }
 </style>
 

@@ -40,7 +40,8 @@ let phoneTemp = {
     ROM: ['32G', '64G'],
     networkType: ['4G全网通', '3G移动'],
     bodyColor: ['红色', '白色'],
-    year: '2015'
+    year: '2015',
+    price:7999
 };
 export default{
     clone: clone,

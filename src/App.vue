@@ -12,8 +12,11 @@ import Vue from "vue";
 export default {
   data(){
     return {
-      login:null
+      login:false
     }
+  },
+  created () {
+    
   }
 };
 </script>
@@ -42,7 +45,7 @@ export default {
   text-decoration: none;
 }
 
-.none_padding{
+#app .none_padding{
   padding:0px;
 }
 .none_margin{

@@ -81,7 +81,7 @@ export default {
 
 .tag_attr {
     float: left;
-    font-size: 13px;
+    font-size: 1em;
     padding: 2px 10px 1px;
     background: #f5f5f5;
     margin: 0 8px 8px 0;

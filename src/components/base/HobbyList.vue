@@ -1,19 +1,19 @@
 <template>
   <div class="recom">
     <h2>
-      <div class="float_left">最近热门手机</div>
-      <div class="title_list">
+      <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 none_padding"><span class='title'>最近热门手机</span></div>
+      <div class="title_list col-xs-12 col-sm-8 col-md-8 col-lg-5">
         <span :class="i==title_index?'fouse_font':''" @click='selectTitle(i)' v-for="(title,i) in title_list" :key="title">{{title}}</span>
       </div>
       <div class="more_list">
-        <router-link :to="paths.hobbyList+'/'+title_list[title_index]">更多»</router-link>
+        <router-link :to="hobbyListPath+'/'+title_list[title_index]">更多»</router-link>
       </div>
       <div class="clearfix"></div>
     </h2>
     <div id="billboard">
       <pop-box ref='PopBox'></pop-box>
       <div class="row">
-            <router-link :to='"/phoneDetail/"+phone.id' v-for="(phone,i) in hobbyList" :key="i">
+            <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in hobbyList" :key="i">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
                     <div class="image">
                       <img :src="phone.image" />
@@ -41,7 +41,8 @@ export default {
   },
   data() {
     return {
-      paths: Paths,
+      phoneDetailPath: Paths.phoneDetail,
+      hobbyListPath:Paths.hobbyList,
       title_list: title,
       title_index: 0,
       hobbyList: [],
@@ -80,20 +81,23 @@ export default {
 .recom {
   text-align: left;
 }
-
+.title{
+  display: inline-block;
+  padding:0px 0px 0.5em 10px;
+}
 .recom h2 {
-  padding-bottom: 10px;
+  position: relative;
   color: #111;
-  padding-bottom: 10px;
   border-bottom: 1px solid #eaeaea;
   font: 16px Arial, Helvetica, sans-serif;
 }
 
-.recom h2 span {
-  font-size: 12px;
-  margin-left: 12px;
+.title_list span {
+  font-size: 1.2em;
+  margin-right: 1em;
   color: #9B9B9B;
   cursor: pointer;
+  display: inline-block;
 }
 
 .recom h2 span:hover {
@@ -106,18 +110,10 @@ export default {
   color: #37a;
 }
 
-.title_list {
-  width: calc(100% - 120px);
-  margin-left: 20px;
-  margin-right: -41px;
-  vertical-align: bottom;
-  line-height: 20px;
+h2 .title_list {
+  font-size: 0.7em;
   overflow: hidden;
-}
-
-.float_left,
-.title_list {
-  float: left;
+  padding:0px 0px .5em 10px;
 }
 
 .recom h2 .fouse_font {
@@ -131,7 +127,9 @@ export default {
 }
 
 .more_list {
-  float: right;
+  position: absolute;
+  top:0px;
+  right:0px;
 }
 
 .phone_class {
@@ -141,10 +139,7 @@ export default {
   margin: 10px 0px;
 }
 
-.phone_class:hover {
-  border-color: gray;
-  border-radius: 5px;
-}
+
 .phone_class div.image{
     width: 100%;
     height: 9em;

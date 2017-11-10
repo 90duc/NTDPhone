@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <pop-box ref='popBox'></pop-box>
-        <div class="row">
-            <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in phones" :key="i">
-                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
-                    <div class="image">
-                      <img :src="phone.image" />
-                    </div>
-                    <div>
-                        <span class="phone_name">{{phone.name}}</span>
-                        <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
-                    </div>
-                </div>
-            </router-link>
-            <div class="clearfix"></div>
+  <div>
+    <pop-box ref='popBox'></pop-box>
+    <div class="row">
+      <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in phones" :key="i">
+        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
+          <div class="image">
+            <img :src="phone.image" />
+          </div>
+          <div>
+            <span class="phone_name">{{phone.name}}</span>
+            <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
+          </div>
         </div>
-        <div class="more" @mousedown="loadMore()" v-if="loadStatus.status">
-            {{loadStatus.text}}
-        </div>
-
+      </router-link>
+      <div class="clearfix"></div>
     </div>
+    <div class="more" @mousedown="loadMore()" v-if="loadStatus.status">
+      {{loadStatus.text}}
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -35,13 +35,14 @@ export default {
   components: {
     PopBox
   },
+  props: ["url"],
   data() {
     return {
       phones: [],
       loadStatus: { status: true, text: loadText.waiting },
       hoverPhone: {},
       popBox: { showDetail: false, position: {} },
-      phoneDetailPath:Paths.phoneDetail
+      phoneDetailPath: Paths.phoneDetail
     };
   },
   methods: {
@@ -62,8 +63,8 @@ export default {
 
       this.loadStatus.text = loadText.waiting;
     },
-    enableDetail: function(e, p,i) {
-      this.$refs.popBox.$emit("pop-box-show", e, p,this.$refs.phoneList[i]);
+    enableDetail: function(e, p, i) {
+       this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
     }
   },
   created() {
@@ -77,6 +78,11 @@ export default {
     }
 
     this.hoverPhone = Data.clone();
+  },
+  watch: {
+    url:function(o,n){
+      //alert(o+n);
+    }
   }
 };
 </script>
@@ -84,9 +90,9 @@ export default {
 .col-xs-3,
 .col-sm-3,
 .col-md-2,
-.col-lg-2{
- padding-left: 8px;
- padding-right:8px;
+.col-lg-2 {
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .remark_bar {
   padding: 7px 0px;
@@ -103,10 +109,10 @@ export default {
   border-color: gray;
   border-radius: 5px;
 }
-.phone_class div.image{
-    width: 100%;
-    height: 9em;
-    overflow: hidden;
+.phone_class div.image {
+  width: 100%;
+  height: 9em;
+  overflow: hidden;
 }
 .phone_class img {
   position: relative;
