@@ -74,11 +74,7 @@ export default {
   padding: 8px 0px;
   cursor: pointer;
 }
-@media (min-width: 768px) {
-  .uc_nav > .container > div {
-    width: 6em;
-  }
-}
+
 @media (min-width: 768px) {
   .uc_nav > .container > div {
     width: 7em;
