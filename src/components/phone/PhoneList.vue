@@ -24,7 +24,7 @@
 
 <script>
 import Data from "@/components/default/data.js";
-import Icon from "@/assets/logo3.png";
+import Icon from "@/assets/logo.png";
 import config from "./../../config/config.js";
 import PopBox from "@/components/base/PopBox.vue";
 import Paths from "@/config/path.js";
@@ -64,6 +64,7 @@ export default {
       this.loadStatus.text = loadText.waiting;
     },
     enableDetail: function(e, p, i) {
+      if(this.$refs.popBox)
        this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
     }
   },

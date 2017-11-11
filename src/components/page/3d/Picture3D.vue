@@ -12,7 +12,7 @@ var images=[];
 for (var i=0;i<12;i++) {
   images[i] = i + ".jpg";
 }
-var imagesPath = "/static/";
+var imagesPath = "./static/";
 import Pic from "./js/init.js";
 
 export default {

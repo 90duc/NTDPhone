@@ -30,7 +30,7 @@ export default {
   components: {
     Star
   },
-  props: ["phone"],
+  props: ["phone",'showBox'],
   data() {
     return {    
       remarks: [],
@@ -42,7 +42,7 @@ export default {
       r.agree++;
     },
     remark:function(){
-       this.$root.$emit('show-remark-box');
+       this.$root.$emit(this.showBox);
     }
   },
   mounted() {

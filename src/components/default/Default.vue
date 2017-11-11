@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container">
+        <div class="container min_height">
             <my-header></my-header>
             <div class="content">
                 <transition name="tsfade" mode="out-in">
@@ -27,10 +27,12 @@ export default {
   }
 };
 </script>
-<style lang="css" scoped>
-.container{
-    min-height: calc(100vh - 11.4em);
+<style scoped>
+.content{
+    margin-top: 10px;
 }
 </style>
+
+
 
 

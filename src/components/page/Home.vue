@@ -29,10 +29,6 @@
 .float_left {
     float: left;
 }
-
-.clearfix {
-    clear: both;
-}
 </style>
 
 <script>

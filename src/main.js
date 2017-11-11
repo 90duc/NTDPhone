@@ -15,7 +15,10 @@ new Vue({
   template: '<App/>',
   data() {
     return {
-      loginInfo: null
+      loginInfo: {
+        status: false,
+        user: null
+      }
     }
   },
   methods: {
@@ -26,16 +29,30 @@ new Vue({
       }
       return true;
     },
+    toLogin: function (route) {
+      this.$router.push({ name: "login", params: { redirect: route } });
+    },
+    toRegister: function (route) {
+      this.$router.push({
+        name: "register",
+        params: { redirect: route }
+      });
+    },
     checkLogin: function () {
-      return this.loginInfo != null;
+      return this.loginInfo.status;
     },
     login: function (data) {
-      this.loginInfo = data;
+      this.loginInfo.status = true;
+      this.loginInfo.user = data;
     },
     logout: function () {
-     this.loginInfo = null;
+      this.loginInfo.status = false;
+      this.$emit('logout');
     },
     getUser: function () {
+      return this.loginInfo.user;
+    },
+    getLoginInfo: function () {
       return this.loginInfo;
     }
   },

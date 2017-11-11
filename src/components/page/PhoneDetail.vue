@@ -1,16 +1,18 @@
 <template>
   <div class="detail">
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-      <div class="phone_title"> 
-          <span>{{phone.name}}</span>     
+      <div class="phone_title">
+        <span>{{phone.name}}</span>
         <span class="year">({{phone.year}})</span>
-         <router-link :to='pic3DPath'><span style="color:green;padding-left:5px;font-size:.5em;">3D展示</span></router-link>
+        <router-link :to='pic3DPath'>
+          <span style="color:green;padding-left:5px;font-size:.5em;">3D展示</span>
+        </router-link>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 logo_frame" id='logo'>
           <div class="left_arrow" @click="left"></div>
           <a v-for="index in 12" :key="index" class="default_img" ref='images'>
-            <img :src="'/static/'+(index-1)+'.jpg'">
+            <img :src="'./static/'+(index-1)+'.jpg'">
           </a>
           <div class="right_arrow" @click="right"></div>
           <div class="page_size">{{imageIndex+1}}/{{imageSize}}</div>
@@ -18,8 +20,9 @@
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <p>厂商：{{phone.company}}</p>
-            参考报价：<span class='price'>￥{{phone.price}}</span>
+              <p>厂商：{{phone.company}}</p>
+              参考报价：
+              <span class='price'>￥{{phone.price}}</span>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               <rating :phone="phone"></rating>
@@ -30,7 +33,8 @@
       </div>
       <remark-score :phone="phone" class="remark-score"></remark-score>
       <tag-list :phone='phone'></tag-list>
-      <remark :phone="phone" style="padding-top:10px;"></remark>
+      <remark :phone="phone" :showBox='showRemarkBox' style="padding-top:10px;"></remark>
+      <remark :phone="phone" :showBox='showWantBox' style="padding-top:10px;"></remark>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="tags">
@@ -69,7 +73,9 @@ export default {
       imageSize:12,
       imageIndex:0,
       speed:600,
-      pic3DPath:Paths.picture3D
+      pic3DPath:Paths.picture3D,
+      showRemarkBox:'show-remark-box',
+      showWantBox:'show-want-box'
     }
   },
   methods:{
@@ -178,7 +184,6 @@ export default {
 
 .logo_frame {
   margin-bottom: 10px;
-
 }
 #logo {
   overflow: hidden;
@@ -215,8 +220,8 @@ export default {
 .info_detail_frame {
   width: 50%;
 }
-.price{
-  color:red;
+.price {
+  color: red;
   font-size: 1.1em;
   font-weight: bold;
 }
@@ -225,7 +230,7 @@ export default {
   height: 220px;
 }
 
-.remark-score{
+.remark-score {
   margin: 10px 0px;
 }
 .clearfix {

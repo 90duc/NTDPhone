@@ -27,7 +27,7 @@
 </template>
 <script>
 import Config from "@/config/config";
-import LogoPNG from "@/assets/logo3.png";
+import LogoPNG from "@/assets/logo.png";
 import Paths from "@/config/path.js";
 import LoginBox from "@/components/phone/LoginBox.vue";
 
@@ -45,27 +45,25 @@ export default {
     return {
       logo_info: logo_var,
       userInfoPath: Paths.userInfo,
-      loginBoxShow: false
+      loginBoxShow: false,
+      util:this.$root
     };
   },
   methods: {
     login: function() {
-      this.$router.push({ name: "login", params: { redirect: this.$route } });
+      this.util.toLogin(this.$route);
     },
     logout: function() {
-      this.$root.logout();
+      this.util.logout();
     },
     register: function() {
-      this.$router.push({
-        name: "register",
-        params: { redirect: this.$route }
-      });
+       this.util.toRegister(this.$route);
     },
     checkLogin: function() {
-      return this.$root.checkLogin();
+      return this.util.checkLogin();
     },
     getUser: function() {
-      return this.$root.getUser();
+      return this.util.getUser();
     },
     showBox: function() {
       $(this.$refs.userItem).fadeIn("slow");
@@ -81,12 +79,12 @@ export default {
   created() {
     var that = this;
     // that.loginBoxShow=true;
-    this.$root.$on(requestLoginBox, function(fun) {
+    this.util.$on(requestLoginBox, function(fun) {
       that.loginBoxShow = true;
     });
   },
   beforeDestroy() {
-    this.$root.$off(requestLoginBox);
+    this.util.$off(requestLoginBox);
   }
 };
 </script>

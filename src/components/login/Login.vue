@@ -47,6 +47,7 @@
 import myFooter from "@/components/footer/Footer.vue";
 import logo from "@/assets/logo_account.png";
 import Paths from "@/config/path.js";
+import Data from "@/components/default/data.js";
 
 let path = {
   homePath: Paths.home,
@@ -66,13 +67,14 @@ export default {
         account: "",
         password: ""
       },
-      tipInfo: ""
+      tipInfo: "",
+      util:this.$root
     };
   },
   methods: {
     login: function() {
       //if (!this.check()) return;
-      this.$root.login({name:'张三',account:'24489'});
+      this.util.login(Data.user);
 
       var url = this.$route.params.redirect;
       if (url) this.$router.push({ path: url.path, query: url.query });
@@ -81,8 +83,7 @@ export default {
     },
     register: function() {
       var url = this.$route.params.redirect;
-
-      this.$router.push({ name: "register", params: { redirect: url } });
+      this.util.toRegister(url);
     },
     check: function() {
       let result = true;

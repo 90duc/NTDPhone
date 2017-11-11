@@ -26,8 +26,8 @@
             <button @click="register" class="btn btn-success col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-10 col-sm-8 col-md-8 col-lg-8">提交</button>
           </div>
           <div class='row none_margin  top_padding'>
-            <span @click='login' class='col-xs-offset-6 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xs-5 col-sm-5 col-md-5 col-lg-5 none_padding' style='text-align:right;padding-right:10px;'>
-              <span class='like_a '>已注册，请登录</span>
+            <span class='col-xs-offset-6 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xs-5 col-sm-5 col-md-5 col-lg-5 none_padding' style='text-align:right;padding-right:10px;'>
+              <span class='like_a '  @click='login'>已注册，请登录</span>
             </span>
           </div>
         </div>
@@ -59,6 +59,7 @@ export default {
     return {
       logo: logo,
       path: path,
+      util:this.$root,
       focusItem: null,
       dataInfo: {
         email: {
@@ -101,10 +102,12 @@ export default {
     };
   },
   methods: {
-    login: function() {},
+    login: function() {
+       var url = this.$route.params.redirect;
+      this.util.toLogin(url);
+    },
     register: function() {
-      if (!this.check()) return;
-
+     // if (!this.check()) return;
       var url = this.$route.params.redirect;
       if (url) this.$router.push({ path: url.path, query: url.query });
       else this.$router.push({ path: "/" });

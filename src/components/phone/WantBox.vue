@@ -4,13 +4,13 @@
       <div class="lb_border"></div>
       <div class='lb_box'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
-        <div class="lb_title">期望{{phone.name+'/'+phone.company}}</div>
+        <div class="lb_title">想买{{phone.name+'/'+phone.company}}</div>
         <div class="lb_field">
           <div class="score">
-            <span>期望：</span>
+            <span>期望值：</span>
             <score-star></score-star>
           </div>
-          <div>写下你的评论：</div>
+          <div>写下你的期盼：</div>
           <textarea :placeholder='phone.name'></textarea>
         </div>
         <div class="lb_save">

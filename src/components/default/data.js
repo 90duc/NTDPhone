@@ -23,7 +23,7 @@ function clone() {
 
 let phoneTemp = {
     id: 0,
-    image: '/static/0.jpg',
+    image: './static/0.jpg',
     name: 'iphone 8s',
     company:'Apple',
     rank: 7.9,
@@ -43,7 +43,14 @@ let phoneTemp = {
     year: '2015',
     price:7999
 };
+
+let user ={
+    name:'张三',
+    account:'244831349@qq.com',
+    image:'./static/11.jpg'
+}
 export default{
     clone: clone,
-    cloneObject: clone1
+    cloneObject: clone1,
+    user:user
 }

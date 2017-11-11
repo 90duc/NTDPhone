@@ -17,9 +17,13 @@
             <input class="btn btn-movie" type="submit" value="登录" @click="login">
           </div>
           <div class="lb_field lb_field-remember">
-            <label>
-              <input type="checkbox" name="remember"> 下次自动登录
-            </label>
+            <div class=' relative'>
+              <label>
+                <input type="checkbox" name="remember">
+                <span>下次自动登录</span>
+              </label>
+              <div @click='register' class='register like_a'>注册</div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,6 +32,7 @@
 </template>
 <script>
 var title = "NTD Phone";
+import Data from "@/components/default/data.js";
 
 export default {
   model: {
@@ -36,17 +41,23 @@ export default {
   },
   data() {
     return {
-      title: title
+      title: title,
+      util:this.$root
     };
   },
   methods: {
     login: function() {
-      this.$root.login({name:'张三',account:'244831.@qq.com'});
+      this.util.login(Data.user);
       this.close();
     },
-    check: function() {},
+    check: function() {
+      
+    },
     close: function() {
       this.$emit("loginBoxShow", false);
+    },
+    register:function(){     
+      this.util.toRegister(this.$route);
     }
   }
 };
@@ -72,7 +83,6 @@ export default {
   overflow: hidden;
 }
 .lb_box {
-
   height: 25em;
   margin-top: calc((100vh - 30em) / 2);
   /* margin-bottom: calc((100vh - 422px) / 2); */
@@ -83,10 +93,10 @@ export default {
 .lb_box > a {
   position: absolute;
   top: 1em;
-  right:1.1em;
+  right: 1.1em;
   font-size: 1.2em;
   color: #b4b4b4;
-  padding:2px 7px;
+  padding: 2px 7px;
   cursor: pointer;
 }
 .lb_box > a:hover {
@@ -109,7 +119,7 @@ export default {
 .lb_field {
   height: 3em;
   margin-top: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .lb_field input[type="text"],
@@ -144,5 +154,15 @@ export default {
   padding-top: 10px;
   color: #666;
   font-size: 14px;
+  width: 100%;
+}
+.relative {
+  width: 100%;
+}
+.register {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  font-size: 1em;
 }
 </style>
