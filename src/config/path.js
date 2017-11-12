@@ -12,6 +12,9 @@ export default {
     userInfo: userPath,
     userHome: userPath + '/home',
     userNickname: userPath + '/nickname',
+    userSecurity: userPath + '/security',
+    userPerson: userPath + '/person',
+    userHelp: userPath + '/help',
     picture3D: '/3d'
 }
 

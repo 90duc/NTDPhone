@@ -11,6 +11,7 @@ import HobbyList from '@/components/page/HobbyList.vue'
 import UserInfo from '@/components/user/UserInfo.vue'
 import UserHome from "@/components/user/UserHome.vue";
 import UserNickname from "@/components/user/NickName.vue";
+import UserSecurity from "@/components/user/Security.vue";
 import Picture3D from '@/components/page/3d/Picture3D.vue'
 
 import Paths from '@/config/path.js'
@@ -57,6 +58,11 @@ let userRoutes = [
     path: Paths.userNickname,
     name: 'userNickname',
     component: UserNickname
+  },
+  {
+    path: Paths.userSecurity,
+    name: 'userSecurity',
+    component: UserSecurity
   }
 ];
 

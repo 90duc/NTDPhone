@@ -47,7 +47,12 @@ let phoneTemp = {
 let user ={
     name:'张三',
     account:'244831349@qq.com',
-    image:'./static/11.jpg'
+    image:'./static/11.jpg',
+    sex:'男',
+    age:18,
+    animal:'未羊',
+    birthday:'1995-2-3',
+    star:'水平座'
 }
 export default{
     clone: clone,

@@ -24,7 +24,7 @@
 <script>
 import myHeader from "@/components/header/Header.vue";
 import myFooter from "@/components/footer/Footer.vue";
-
+import Paths from "@/config/path.js";
 
 let title_list = ["首页", "账号安全", "账号信息", "帮助中心"];
 export default {
@@ -36,7 +36,7 @@ export default {
     return {
       fousedIndex: 0,
       titles: title_list,
-       util: this.$root,
+      util: this.$root,
     };
   },
   methods: {
@@ -47,6 +47,26 @@ export default {
       let clas = "";
       if (this.fousedIndex == i) clas = "current";
       return clas;
+    }
+  },
+  watch: {
+    fousedIndex:function(old,news){
+      let path=Paths.userHome;
+      switch(news){
+        case 0:
+          path=Paths.userHome;
+          break;
+        case  1:
+           path=Paths.userSecurity;
+        break;
+         case  2:
+           path=Paths.userPerson;
+        break;
+         case  3:
+          path=Paths.userHelp;
+        break;
+      }
+        this.$router.push({path:path});
     }
   },
   created () {

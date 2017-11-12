@@ -39,10 +39,11 @@
       </div>
     </div>
     <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 right_info'>
-      <div><span>性 别：</span></div>
-      <div><span>年 龄：</span></div>
-      <div><span>生 肖：</span></div>
-      <div><span>星 座：</span></div>
+      <div><span>性 别：</span><span>{{user.sex}}</span></div>
+      <div><span>生 日：</span><span>{{user.birthday}}</span></div>
+      <div><span>年 龄：</span><span>{{user.age}}</span></div>
+      <div><span>生 肖：</span><span>{{user.animal}}</span></div>
+      <div><span>星 座：</span><span>{{user.star}}</span></div>
     </div>
   </div>
 </template>
