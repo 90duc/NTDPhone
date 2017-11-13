@@ -41,8 +41,8 @@ export default {
   },
   data() {
     return {
-      phoneDetailPath: Paths.phoneDetail,
-      hobbyListPath:Paths.hobbyList,
+      phoneDetailPath: Paths.pages.phoneDetail,
+      hobbyListPath:Paths.pages.hobbyList,
       title_list: title,
       title_index: 0,
       hobbyList: [],
@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     enableDetail: function(e, p,i) {
+      if(this.$refs.PopBox)
       this.$refs.PopBox.$emit('pop-box-show', e, p,this.$refs.phoneList[i]);
     }, selectTitle: function(index) {
       this.title_index = index;

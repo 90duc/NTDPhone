@@ -42,7 +42,7 @@ export default {
       loadStatus: { status: true, text: loadText.waiting },
       hoverPhone: {},
       popBox: { showDetail: false, position: {} },
-      phoneDetailPath: Paths.phoneDetail
+      phoneDetailPath: Paths.pages.phoneDetail
     };
   },
   methods: {

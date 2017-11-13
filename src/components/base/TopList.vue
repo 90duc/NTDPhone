@@ -9,7 +9,7 @@
     <div class="recom">
         <h2>{{title}}· · · · · ·
             <span style="float:right;">
-                <router-link :to="paths.topDetail+'/'+type">更多榜单»</router-link>
+                <router-link :to="topDetailPath+'/'+type">更多榜单»</router-link>
             </span>
         </h2>
         <div id="billboard">
@@ -18,7 +18,7 @@
                 <div>
                     <span class="order fouse" :class="'order'+(i+1)">{{i+1}}</span>
                     <span class="title">
-                        <router-link :to="paths.phoneDetail+'/'+phone.id">{{phone.name}}</router-link>
+                        <router-link :to="phoneDetailPath+'/'+phone.id">{{phone.name}}</router-link>
                     </span>
                 </div>
                 <star-bar class="detail" type="s" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
@@ -42,7 +42,8 @@ export default {
     props: ['title', 'type'],
     data() {
         return {
-            paths: Paths,
+            topDetailPath: Paths.pages.topDetail,
+            phoneDetailPath: Paths.pages.phoneDetail,
             phones: [],
             listIndex: -1
         }

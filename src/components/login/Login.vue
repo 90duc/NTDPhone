@@ -50,8 +50,8 @@ import Paths from "@/config/path.js";
 import Data from "@/components/default/data.js";
 
 let path = {
-  homePath: Paths.home,
-  registerPath: Paths.register
+  homePath: Paths.pages.home,
+  registerPath: Paths.roots.register
 };
 
 let texts = ["账号不存在", "密码错误"];

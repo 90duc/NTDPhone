@@ -25,6 +25,7 @@
 import myHeader from "@/components/header/Header.vue";
 import myFooter from "@/components/footer/Footer.vue";
 import Paths from "@/config/path.js";
+import Data from "@/components/default/data.js";
 
 let title_list = ["首页", "账号安全", "账号信息", "帮助中心"];
 export default {
@@ -36,7 +37,7 @@ export default {
     return {
       fousedIndex: 0,
       titles: title_list,
-      util: this.$root,
+      util: this.$root
     };
   },
   methods: {
@@ -50,34 +51,44 @@ export default {
     }
   },
   watch: {
-    fousedIndex:function(old,news){
-      let path=Paths.userHome;
-      switch(news){
+    fousedIndex: function(news, old) {
+      let Users = Paths.users;
+      let path = Users.userHome;
+     
+      switch (news) {
         case 0:
-          path=Paths.userHome;
+          path = Users.userHome;
           break;
-        case  1:
-           path=Paths.userSecurity;
-        break;
-         case  2:
-           path=Paths.userPerson;
-        break;
-         case  3:
-          path=Paths.userHelp;
-        break;
+        case 1:
+          path = Users.userSecurity;
+          break;
+        case 2:
+          path = Users.userPerson;
+          break;
+        case 3:
+          path = Users.userHelp;
+          break;
       }
-        this.$router.push({path:path});
+      this.$router.push({ path: path });
     }
   },
-  created () {
-     let that=this;
-     this.util.$on('logout',()=>{
-        that.util.toLogin(that.$route);
-     });
-  },beforeDestroy () {
-      this.utl.$off('logout');
+  created() {
+    if (!this.util.checkLogin()) {
+      this.util.toLogin(this.$route);
+      return;
+    }
+    //this.fousedIndex=1;
+    //this.util.login(Data.user);
+
+
+    let that = this;
+    this.util.$on("logout", () => {
+      that.util.toLogin(that.$route);
+    });
+  },
+  beforeDestroy() {
+    this.util.$off("logout");
   }
-  
 };
 </script>
 <style scoped>

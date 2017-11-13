@@ -2,7 +2,7 @@
     <div class="meta">
          <h2>{{title}}· · · · · · </h2>
         <span v-for='c in companys' :key="c">
-            <router-link :to="paths.searchBy+'/'+c"  >
+            <router-link :to="searchByPath+'/'+c"  >
                 <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
             </router-link>
         </span>
@@ -15,7 +15,7 @@ import Paths from "@/config/path.js";
 export default {
   data() {
     return {
-      paths: Paths,
+      searchByPath: Paths.pages.searchBy,
       title:'喜欢关注的厂商',
       companys: []
     };

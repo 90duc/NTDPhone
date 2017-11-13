@@ -39,11 +39,26 @@
       </div>
     </div>
     <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 right_info'>
-      <div><span>性 别：</span><span>{{user.sex}}</span></div>
-      <div><span>生 日：</span><span>{{user.birthday}}</span></div>
-      <div><span>年 龄：</span><span>{{user.age}}</span></div>
-      <div><span>生 肖：</span><span>{{user.animal}}</span></div>
-      <div><span>星 座：</span><span>{{user.star}}</span></div>
+      <div>
+        <span>性 别：</span>
+        <span>{{user.sex}}</span>
+      </div>
+      <div>
+        <span>生 日：</span>
+        <span>{{user.birthday}}</span>
+      </div>
+      <div>
+        <span>年 龄：</span>
+        <span>{{user.age}}</span>
+      </div>
+      <div>
+        <span>生 肖：</span>
+        <span>{{user.animal}}</span>
+      </div>
+      <div>
+        <span>星 座：</span>
+        <span>{{user.star}}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -53,16 +68,12 @@ import Paths from "@/config/path.js";
 export default {
   data() {
     return {
-      nicknamePath: Paths.userNickname,
+      nicknamePath: Paths.users.userNickname,
       user: null,
       util: this.$root
     };
   },
   created() {
-    if (!this.util.checkLogin()) {
-      this.util.toLogin(this.$route);
-      return;
-    }
     this.user = this.util.getUser();
   }
 };
@@ -87,7 +98,7 @@ export default {
 .info {
   padding: 0px;
 }
-@media (max-width:768px) {
+@media (max-width: 768px) {
   .info {
     padding-left: 10px;
   }
@@ -141,14 +152,14 @@ a:hover {
 .email {
   background-position: 0 -32px;
 }
-.right_info{
+.right_info {
   margin-top: 1.2em;
-  padding:0px 3%;
+  padding: 0px 3%;
   color: #666;
   font-size: 1.2em;
 }
 
-.right_info>div{
-  padding:5px;
+.right_info > div {
+  padding: 5px;
 }
 </style>

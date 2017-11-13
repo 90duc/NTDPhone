@@ -2,13 +2,13 @@
     <transition name='fade' v-if="popBox.showDetail">
         <div id='popBox' class="detail_pop container" :style="popBox.position">
             <div  @mouseleave="disableDetail($event)">
-              <router-link :to="paths.phoneDetail+'/'+phone.id">
+              <router-link :to="phoneDetailPath+'/'+phone.id">
                 <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_frame"></div>
               </router-link>
               <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 wrap">
                 <div class="info">
                     <h3>
-                        <router-link :to="'/phoneDetail/'+phone.id">{{phone.name}}</router-link>
+                        <router-link :to="phoneDetailPath+'/'+phone.id">{{phone.name}}</router-link>
                     </h3>
                     <star-bar class="detail" type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
                     <tag-attr :phone='phone' auto-color='true'></tag-attr>
@@ -34,7 +34,7 @@ export default {
     return {
       phone: {},
       popBox: { showDetail: false, position: {} },
-      paths: Paths
+      phoneDetailPath: Paths.pages.phoneDetail
     };
   },
   methods: {

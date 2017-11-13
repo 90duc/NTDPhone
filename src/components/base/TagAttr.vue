@@ -3,12 +3,12 @@
         <span v-for='name in tagAttr' :key="name">
             <span v-if="has(phone,name)">
                 <span v-if="multiValue(phone,name)">
-                    <router-link :to="paths.searchBy+'/'+name+'/'+c" v-for='c in phone[name]' :key="c">
+                    <router-link :to="searchByPath+'/'+name+'/'+c" v-for='c in phone[name]' :key="c">
                         <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
                     </router-link>
                 </span>
                 <span v-else>
-                    <router-link :to="paths.searchBy+'/'+name+'/'+phone[name]">
+                    <router-link :to="searchByPath+'/'+name+'/'+phone[name]">
                         <span class="tag_attr" :class="getRandomColor()">{{phone[name]}}</span>
                     </router-link>
                 </span>
@@ -33,7 +33,7 @@ export default {
     },
     data() {
         return {
-            paths: Paths,
+            searchByPath: Paths.pages.searchBy,
             tagAttr: tagAttr,         
         };
     },

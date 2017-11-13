@@ -73,7 +73,7 @@ export default {
       imageSize:12,
       imageIndex:0,
       speed:600,
-      pic3DPath:Paths.picture3D,
+      pic3DPath:Paths.roots.picture3D,
       showRemarkBox:'show-remark-box',
       showWantBox:'show-want-box'
     }

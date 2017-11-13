@@ -33,7 +33,7 @@ import LoginBox from "@/components/phone/LoginBox.vue";
 
 let logo_var = {
   logo_path: LogoPNG,
-  home_path: Paths.home
+  home_path: Paths.pages.home
 };
 
 let requestLoginBox = "request-login";
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       logo_info: logo_var,
-      userInfoPath: Paths.userInfo,
+      userInfoPath: Paths.roots.userInfo,
       loginBoxShow: false,
       util:this.$root
     };

@@ -21,13 +21,11 @@
   </div>
 </template>
 <script>
-import Paths from '@/config/path.js'
-
-let classIcons = ["password", "email", "login", "warn"];
+let classIcons = ["help", "safe",  "other"];
 export default {
   data() {
     return {
-      labels: ["修改密码", "登录邮箱", "登录记录", "敏感操作"],
+      labels: ["账号问题", "账号卫士", "其他问题"],
       focusedIndex: 0
     };
   },
@@ -44,46 +42,20 @@ export default {
     focus: function(i) {
       this.focusedIndex = i;
     }
-  },
-  watch: {
-    focusedIndex: function(news, old) {
-      let UserSecuritys = Paths.userSecuritys;
-      let path = UserSecuritys.userPassword;
-      switch (news) {
-        case 0:
-          path = UserSecuritys.userPassword;
-          break;
-        case 1:
-          path = UserSecuritys.userEmail;
-          break;
-        case 2:
-          path = UserSecuritys.userLoginInfo;
-          break;
-        case 3:
-          path = UserSecuritys.userOperate;
-          break;
-      }
-      this.$router.push({ path: path });
-    }
-  },
-  created () {
-    //this.focusedIndex=1;
   }
 };
 </script>
 <style lang="scss" scoped>
  @import './default.scss';
+ 
+.help {
+    background-position: 0 -460px;
+}
+.safe {
+    background-position: 0 -522px;
+}
+.other {
+    background-position: 0 -496px;
+}
 
-.password {
-  background-position: 0 -211px;
-}
-.email {
-  background-position: 0 -282px;
-}
-.login {
-  background-position: 0 -388px;
-}
-.warn {
-  background-position: 0 -424px;
-}
 </style>
