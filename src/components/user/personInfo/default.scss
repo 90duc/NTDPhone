@@ -1,7 +1,4 @@
-a:hover {
-  color: #1eb009;
-  cursor: pointer;
-}
+
 .right_frame {
     margin-left: 5%;
     padding-left: 5%;
@@ -13,10 +10,16 @@ a:hover {
     .right_frame {
       border: 1px solid #eeeded;
       padding-bottom: 20px;
+      padding-top:2em;
     }
+    
   }
   .right_frame > h3 {
     color: #333;
+    margin-top: 0;
+    font-weight: bold;
+    color: #666;
+    font-size: 1em;
   }
   .cbtn {
     background: #71c62b;
@@ -25,7 +28,7 @@ a:hover {
     border-radius: 2px;
     height: 2.5em;
     width: 6em;
-    margin: 2em 0px;
+    margin: 1em 0px;
   }
   .cbtn:hover {
     background: #61b62b;
@@ -42,27 +45,4 @@ a:hover {
   }
   p {
     color: #999;
-  }
-
-  .table2 {
-    border-left: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
-    margin-top: 2em;
-  }
-  .table2 th,
-  .table2 td {
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-    padding:5px 2px;
-  }
-  .table2 td {
-    word-break: break-all;
-    word-wrap: break-word;
-  }
-  
-  .table2 th {
-    background: #f0f0f0;
-    border-top: 1px solid #e0e0e0;
-    font-size: 14px;
-    height: 34px;
   }

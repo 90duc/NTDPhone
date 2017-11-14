@@ -6,24 +6,19 @@
       <div class='lb_box col-xs-offset-1 col-sm-offset-3 col-md-offset-3 col-lg-offset-4 col-xs-10 col-sm-6 col-md-5 col-lg-4'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
         <div class='lb_content'>
-          <div class="lb_title">欢迎来到{{title}}，请登录</div>
+          <div class="lb_title">修改密码</div>
           <div class="lb_field">
-            <input type="text" name="name" placeholder="邮箱">
+            <input type="password" name="name" placeholder="旧密码">
           </div>
           <div class="lb_field">
-            <input class="login_pwd" type="password" name="password" placeholder="密码">
+            <input class="login_pwd" type="password" name="password" placeholder="新密码">
           </div>
           <div class="lb_field">
-            <input class="btn btn-movie" type="submit" value="登录" @click="login">
+            <input class="login_pwd" type="password" name="password" placeholder="确认密码">
           </div>
-          <div class="lb_field lb_field-remember">
-            <div class=' relative'>
-              <label>
-                <input type="checkbox" name="remember">
-                <span>下次自动登录</span>
-              </label>
-              <div @click='register' class='register like_a'>注册</div>
-            </div>
+          <div class='warn'>{{text}}</div>
+          <div class="lb_field">
+            <input class="btn btn-movie" type="button" value="修改" @click="modify">
           </div>
         </div>
       </div>
@@ -31,33 +26,31 @@
   </div>
 </template>
 <script>
-var title = "NTD Phone";
+
 import Data from "@/components/default/data.js";
 
 export default {
   model: {
-    prop: "loginBoxShow",
-    event: "loginBoxShow"
+    prop: "passwordBoxShow",
+    event: "passwordBoxShow"
   },
   data() {
     return {
-      title: title,
-      util:this.$root
+      util: this.$root,
+      text:''
     };
   },
   methods: {
-    login: function() {
-      this.util.login(Data.user);
-      this.close();
+    modify: function() {
+      this.check();
+      //this.close();
     },
-    check: function() {
-      
+    check:function(){
+       this.text='密码不正确';
     },
     close: function() {
-      this.$emit("loginBoxShow", false);
-    },
-    register:function(){     
-      this.util.toRegister(this.$route);
+     
+      this.$emit("passwordBoxShow", false);
     }
   }
 };
@@ -105,7 +98,7 @@ export default {
 .lb_content {
   height: 70%;
   width: 80%;
-  margin: 15% auto;
+  margin: 8% auto;
 }
 .lb_title {
   width: 100%;
@@ -140,7 +133,7 @@ export default {
   background-color: green;
 }
 .lb_field .btn {
-  margin-top: 10px;
+  margin-top: 5px;
   border: none;
   width: 100%;
   height: 2.5em;
@@ -150,19 +143,8 @@ export default {
   cursor: pointer;
 }
 
-.lb_field-remember {
-  padding-top: 10px;
-  color: #666;
-  font-size: 14px;
-  width: 100%;
-}
-.relative {
-  width: 100%;
-}
-.register {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  font-size: 1em;
+.warn{
+  color: red;
+  padding-left: 1em;
 }
 </style>

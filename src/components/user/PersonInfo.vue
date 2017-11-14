@@ -21,12 +21,20 @@
   </div>
 </template>
 <script>
+import Paths from '@/config/path.js'
+
 let classIcons = ["image", "user", "userInfo", "userDetail"];
 export default {
   data() {
     return {
       labels: ["我的头像", "用户昵称", "基本资料", "详细资料"],
-      focusedIndex: 0
+      focusedIndex: 0,
+      paths: [
+        Paths.userInfos.userIcon,
+        Paths.userInfos.userNickname,
+        Paths.userInfos.userInfo,
+        Paths.userInfos.userDetail
+      ]
     };
   },
   methods: {
@@ -41,12 +49,30 @@ export default {
     },
     focus: function(i) {
       this.focusedIndex = i;
+      this.$router.push({ path: this.paths[i] });
+    },
+    getIndex: function(rpath) {
+      for (var i in this.paths) {
+        if (rpath.indexOf(this.paths[i]) == 0) {
+          return i;
+        }
+      }
+      return 0;
     }
+  },
+  watch: {
+    $route:function(news,old){
+        this.focusedIndex = this.getIndex(this.$route.path);
+    }
+  },
+  created() {
+    
+    //this.focusedIndex=1;
   }
 };
 </script>
 <style lang="scss" scoped>
- @import './default.scss';
+@import "./default.scss";
 
 .image {
   background-position: 0 -0px;

@@ -28,7 +28,13 @@ export default {
   data() {
     return {
       labels: ["修改密码", "登录邮箱", "登录记录", "敏感操作"],
-      focusedIndex: 0
+      focusedIndex: 0,
+       paths: [
+        Paths.userSecuritys.userPassword,
+        Paths.userSecuritys.userEmail,
+        Paths.userSecuritys.userLoginInfo,
+        Paths.userSecuritys.userOperate
+      ]
     };
   },
   methods: {
@@ -43,30 +49,24 @@ export default {
     },
     focus: function(i) {
       this.focusedIndex = i;
+       this.$router.push({ path: this.paths[i] });
+    },
+    getIndex: function(rpath) {
+      for (var i in this.paths) {
+        if (rpath.indexOf(this.paths[i]) == 0) {
+          return i;
+        }
+      }
+      return 0;
     }
   },
-  watch: {
-    focusedIndex: function(news, old) {
-      let UserSecuritys = Paths.userSecuritys;
-      let path = UserSecuritys.userPassword;
-      switch (news) {
-        case 0:
-          path = UserSecuritys.userPassword;
-          break;
-        case 1:
-          path = UserSecuritys.userEmail;
-          break;
-        case 2:
-          path = UserSecuritys.userLoginInfo;
-          break;
-        case 3:
-          path = UserSecuritys.userOperate;
-          break;
-      }
-      this.$router.push({ path: path });
+   watch: {
+    $route:function(news,old){
+         this.focusedIndex = this.getIndex(this.$route.path);
     }
   },
   created () {
+   
     //this.focusedIndex=1;
   }
 };

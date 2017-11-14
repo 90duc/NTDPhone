@@ -1,11 +1,11 @@
 <template>
   <div class='right_frame'>
     <h3>
-      <span class='login_ico'></span<span>您的帐号近期没有异常登录</span>
+      <span class='login_ico'></span><span>您的帐号近期没有异常登录</span>
     </h3>
     <div class='info'>
       <span>由于您的宽带运营商会不定期调整网络，我们获取的IP所在地可能不准确，请您通过登录时间与产品判断是否为您本人操作；如确定非您本人登录，建议您</span>
-      <a>修改密码</a>。
+      <router-link :to='modfiyPasswordPath'>修改密码</router-link>。
     </div>
     <div>
       <table class="table2" width="100%">
@@ -32,9 +32,12 @@
   </div>
 </template>
 <script>
+import Paths from '@/config/path.js'
+
 export default {
   data() {
     return {
+      modfiyPasswordPath:Paths.userSecuritys.userPassword,
       user: null,
       util: this.$root,
       loginInfos:[]

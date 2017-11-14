@@ -35,51 +35,49 @@ export default {
   },
   data() {
     return {
-      fousedIndex: 0,
+      focusedIndex: 0,
       titles: title_list,
-      util: this.$root
+      util: this.$root,
+      paths: [
+        Paths.users.userHome,
+        Paths.users.userSecurity,
+        Paths.users.userPerson,
+        Paths.users.userHelp
+      ]
     };
   },
   methods: {
     select: function(i) {
-      this.fousedIndex = i;
+      this.focusedIndex = i;
+      this.$router.push({ path: this.paths[i] });
     },
     getClass: function(i) {
       let clas = "";
-      if (this.fousedIndex == i) clas = "current";
+      if (this.focusedIndex == i) clas = "current";
       return clas;
+    },
+    getIndex: function(rpath) {
+      for (var i in this.paths) {
+        if (rpath.indexOf(this.paths[i]) == 0) {
+          return i;
+        }
+      }
+      return 0;
     }
   },
   watch: {
-    fousedIndex: function(news, old) {
-      let Users = Paths.users;
-      let path = Users.userHome;
-     
-      switch (news) {
-        case 0:
-          path = Users.userHome;
-          break;
-        case 1:
-          path = Users.userSecurity;
-          break;
-        case 2:
-          path = Users.userPerson;
-          break;
-        case 3:
-          path = Users.userHelp;
-          break;
-      }
-      this.$router.push({ path: path });
+    $route:function(news,old){
+         this.focusedIndex = this.getIndex(this.$route.path);
     }
   },
   created() {
-    if (!this.util.checkLogin()) {
-      this.util.toLogin(this.$route);
-      return;
-    }
-    //this.fousedIndex=1;
-    //this.util.login(Data.user);
-
+    // if (!this.util.checkLogin()) {
+    //   this.util.toLogin(this.$route);
+    //   return;
+    // }
+    
+    //this.focusedIndex = 1;
+    this.util.login(Data.user);
 
     let that = this;
     this.util.$on("logout", () => {

@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       logo_info: logo_var,
-      userInfoPath: Paths.roots.userInfo,
+      userInfoPath: Paths.roots.user,
       loginBoxShow: false,
       util:this.$root
     };

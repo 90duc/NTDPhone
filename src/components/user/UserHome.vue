@@ -8,7 +8,7 @@
           <router-link :to='nicknamePath'>
             <div>修改昵称</div>
           </router-link>
-          <router-link :to='nicknamePath'>
+          <router-link :to='userInfoPath'>
             <div>修改个人信息</div>
           </router-link>
         </div>
@@ -21,7 +21,7 @@
             <span class='icon'></span>登录密码</h3>
           <div>
             <div class='col-xs-offset-1 col-xs-9 none_padding text'>定期修改密码，能提高帐号安全等级</div>
-            <router-link :to="''">
+            <router-link :to="userPasswordPath">
               <div class='col-xs-2 none_padding modify'>修改</div>
             </router-link>
           </div>
@@ -31,7 +31,7 @@
             <span class='icon email'></span>登录邮箱</h3>
           <div>
             <div class='col-xs-offset-1 col-xs-9 none_padding text'>{{user.account}}</div>
-            <router-link :to="''">
+            <router-link :to="userEmailPath">
               <div class='col-xs-2 none_padding modify'>修改</div>
             </router-link>
           </div>
@@ -68,7 +68,10 @@ import Paths from "@/config/path.js";
 export default {
   data() {
     return {
-      nicknamePath: Paths.users.userNickname,
+      nicknamePath: Paths.userInfos.userNickname,
+      userInfoPath:Paths.userInfos.userInfo,
+      userEmailPath: Paths.userSecuritys.userEmail,
+      userPasswordPath: Paths.userSecuritys.userPassword,
       user: null,
       util: this.$root
     };

@@ -3,7 +3,8 @@
     <h3>登录邮箱</h3>
     <div class='email'>
       <span class='green'>{{user.account}}</span>
-      <a>修改</a>
+      <a @click="modify">修改</a>
+      <email-box v-if='emailBoxShow' v-model="emailBoxShow"></email-box>
     </div>
     <div class='info'>登录邮箱可以用来登录您的NTD Phone帐号与找回密码</div>
     <div class='bdf'>
@@ -17,14 +18,26 @@
   </div>
 </template>
 <script>
+import EmailBox from "@/components/user/security/EmailBox.vue";
+
 export default {
+  components: {
+    EmailBox
+  },
   data() {
     return {
       user: null,
-      util: this.$root
+      util: this.$root,
+      emailBoxShow:false
     };
   },
+  methods: {
+    modify:function(){
+      this.emailBoxShow=true;
+    }
+  },
   created() {
+    //this.emailBoxShow=true;
     this.user = this.util.getUser();
   }
 };

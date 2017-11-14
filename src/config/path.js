@@ -6,7 +6,7 @@ let roots={
     login: '/login',
     register: '/register',
     picture3D: '/3d',
-    userInfo: userPath
+    user: userPath
 };
 let pages={
     home: homePath + '/',
@@ -19,7 +19,6 @@ let pages={
 let users={
     
     userHome: userPath + '/home',
-    userNickname: userPath + '/nickname',
     userSecurity: userPath + '/security',
     userPerson: userPath + '/person',
     userHelp: userPath + '/help',
@@ -30,11 +29,17 @@ let userSecuritys={
     userLoginInfo: users.userSecurity + '/loginInfo',
     userOperate: users.userSecurity + '/operate'
 }
-
+let userInfos ={
+    userIcon: users.userPerson + '/icon',
+    userNickname: users.userPerson + '/nickname',
+    userInfo: users.userPerson + '/info',
+    userDetail: users.userPerson + '/detail'
+}
 export default {
    roots:roots,
    pages:pages,
    users:users,
-   userSecuritys:userSecuritys
+   userSecuritys:userSecuritys,
+   userInfos:userInfos
 }
 
