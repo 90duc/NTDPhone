@@ -1,5 +1,5 @@
 let homePath = '/home';
-let userPath = '/userInfo';
+let userPath = '/user';
 
 let roots={
     default: '/',

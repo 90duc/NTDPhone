@@ -38,26 +38,28 @@
         </div>
       </div>
     </div>
-    <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 right_info'>
-      <div>
-        <span>性 别：</span>
-        <span>{{user.sex}}</span>
-      </div>
-      <div>
-        <span>生 日：</span>
-        <span>{{user.birthday}}</span>
-      </div>
-      <div>
-        <span>年 龄：</span>
-        <span>{{user.age}}</span>
-      </div>
-      <div>
-        <span>生 肖：</span>
-        <span>{{user.animal}}</span>
-      </div>
-      <div>
-        <span>星 座：</span>
-        <span>{{user.star}}</span>
+    <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 '>
+      <div class='right_info'>
+        <div>
+          <span>性 别：</span>
+          <span>{{user.sex}}</span>
+        </div>
+        <div>
+          <span>生 日：</span>
+          <span>{{user.birthday}}</span>
+        </div>
+        <div>
+          <span>年 龄：</span>
+          <span>{{user.age}}</span>
+        </div>
+        <div>
+          <span>生 肖：</span>
+          <span>{{user.animal}}</span>
+        </div>
+        <div>
+          <span>星 座：</span>
+          <span>{{user.star}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +71,7 @@ export default {
   data() {
     return {
       nicknamePath: Paths.userInfos.userNickname,
-      userInfoPath:Paths.userInfos.userInfo,
+      userInfoPath: Paths.userInfos.userInfo,
       userEmailPath: Paths.userSecuritys.userEmail,
       userPasswordPath: Paths.userSecuritys.userPassword,
       user: null,
@@ -160,8 +162,20 @@ a:hover {
   padding: 0px 3%;
   color: #666;
   font-size: 1.2em;
+  padding-left: 5%;
+  padding-right: 3%;
+  color: #666;
 }
 
+@media (min-width: 800px) {
+  .right_info {
+    border: 1px solid #eeeded;
+    padding-bottom: 2em;
+    padding-top: 2em;
+    padding-left: 15%;
+    padding-right: 13%;
+  }
+}
 .right_info > div {
   padding: 5px;
 }

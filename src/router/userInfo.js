@@ -1,7 +1,7 @@
 import UserIcon from "@/components/user/personInfo/Icon.vue";
 import Nickname from "@/components/user/personInfo/NickName.vue";
-import UserInfo from "@/components/user/personInfo/userInfo.vue";
-import UserDetail from "@/components/user/personInfo/userInfo.vue";
+import UserInfo from "@/components/user/personInfo/UserInfo.vue";
+import UserDetail from "@/components/user/personInfo/UserDetail.vue";
 
 import Paths from '@/config/path.js'
 let userInfos=Paths.userInfos;

@@ -63,11 +63,14 @@ export default {
         }
       }
       return 0;
+    },
+    init: function() {
+      this.focusedIndex = this.getIndex(this.$route.path);
     }
   },
   watch: {
     $route:function(news,old){
-         this.focusedIndex = this.getIndex(this.$route.path);
+         this.init();
     }
   },
   created() {
@@ -75,7 +78,7 @@ export default {
     //   this.util.toLogin(this.$route);
     //   return;
     // }
-    
+    this.init();
     //this.focusedIndex = 1;
     this.util.login(Data.user);
 

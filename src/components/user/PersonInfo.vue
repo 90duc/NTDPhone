@@ -58,15 +58,18 @@ export default {
         }
       }
       return 0;
+    },
+    init:function(){
+           this.focusedIndex = this.getIndex(this.$route.path);
     }
   },
   watch: {
-    $route:function(news,old){
-        this.focusedIndex = this.getIndex(this.$route.path);
+    $route:function(){
+       this.init();
     }
   },
   created() {
-    
+     this.init();
     //this.focusedIndex=1;
   }
 };
