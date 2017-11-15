@@ -41,24 +41,28 @@
     <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 '>
       <div class='right_info'>
         <div>
-          <span>性 别：</span>
+          <span>性别</span><span>：</span>
           <span>{{user.sex}}</span>
         </div>
         <div>
-          <span>生 日：</span>
+          <span>生日</span><span>：</span>
           <span>{{user.birthday}}</span>
         </div>
         <div>
-          <span>年 龄：</span>
-          <span>{{user.age}}</span>
+          <span>年龄</span><span>：</span>
+          <span>{{dataInfo.age}}</span>
         </div>
         <div>
-          <span>生 肖：</span>
-          <span>{{user.animal}}</span>
+          <span>生肖</span><span>：</span>
+          <span>{{dataInfo.animal}}</span>
         </div>
         <div>
-          <span>星 座：</span>
-          <span>{{user.star}}</span>
+          <span>星座</span><span>：</span>
+          <span>{{dataInfo.star}}</span>
+        </div>
+        <div>
+          <span>个人签名</span><span>：</span>
+          <span>{{user.info}}</span>
         </div>
       </div>
     </div>
@@ -66,6 +70,7 @@
 </template>
 <script>
 import Paths from "@/config/path.js";
+import DateInfo from "./personInfo/DateInfo.js";
 
 export default {
   data() {
@@ -74,12 +79,24 @@ export default {
       userInfoPath: Paths.userInfos.userInfo,
       userEmailPath: Paths.userSecuritys.userEmail,
       userPasswordPath: Paths.userSecuritys.userPassword,
+      util: this.$root,
       user: null,
-      util: this.$root
+      dataInfo: {}
     };
+  },
+  methods: {
+    init: function() {
+      if (this.user.birthday == null || this.user.birthday == "") return;
+      let d=new Date(this.user.birthday);
+
+      this.dataInfo.age = DateInfo.getAge(d.getFullYear());
+      this.dataInfo.animal = DateInfo.getAnimal(d.getFullYear());
+      this.dataInfo.star = DateInfo.getStar(d.getMonth(),d.getDay());
+    }
   },
   created() {
     this.user = this.util.getUser();
+    this.init();
   }
 };
 </script>
@@ -172,11 +189,17 @@ a:hover {
     border: 1px solid #eeeded;
     padding-bottom: 2em;
     padding-top: 2em;
-    padding-left: 15%;
-    padding-right: 13%;
+    padding-left: 10%;
+    padding-right: 10%;
   }
 }
 .right_info > div {
   padding: 5px;
+}
+.right_info >div>span:first-child{
+  display: inline-block;
+  width: 4em;
+  text-align:justify-all;
+  text-align-last:justify;
 }
 </style>

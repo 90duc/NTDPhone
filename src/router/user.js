@@ -8,9 +8,11 @@ import Paths from '@/config/path.js'
 let users=Paths.users;
 import UserSecurityRoutes from "./userSecurity.js";
 import UserInfos from './userInfo.js'
+import UserHelps from './userHelp.js'
 
 let securityRoutes=UserSecurityRoutes.routes;
 let userInfoRoutes = UserInfos.routes;
+let userHelpRoutes = UserHelps.routes;
 let user=[
     {
       path: users.userHome,
@@ -35,7 +37,9 @@ let user=[
     {
       path: users.userHelp,
       name: 'userHelp',
-      component: UserHelp
+      component: UserHelp,
+      redirect: Paths.userHelps.account,
+      children:userHelpRoutes
     }
   ];
   

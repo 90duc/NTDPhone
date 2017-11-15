@@ -2,7 +2,7 @@
     <div class="meta">
          <h2>{{title}}· · · · · · </h2>
         <span v-for='c in companys' :key="c">
-            <router-link :to="searchByPath+'/'+c"  >
+            <router-link :to="searchByPath+'/company/'+c"  >
                 <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
             </router-link>
         </span>

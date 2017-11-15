@@ -66,6 +66,7 @@ ul {
   margin-left: 1.5em;
 }
 li {
-  padding-top: 1em;
+  cursor: pointer;
+  margin-top: 1em;
 }
 </style>

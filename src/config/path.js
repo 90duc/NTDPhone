@@ -35,11 +35,18 @@ let userInfos ={
     userInfo: users.userPerson + '/info',
     userDetail: users.userPerson + '/detail'
 }
+
+let userHelps={
+    account:users.userHelp+'/account',
+    safe:users.userHelp+'/safe',
+    other:users.userHelp+'/other'
+}
 export default {
    roots:roots,
    pages:pages,
    users:users,
    userSecuritys:userSecuritys,
-   userInfos:userInfos
+   userInfos:userInfos,
+   userHelps:userHelps
 }
 

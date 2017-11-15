@@ -50,9 +50,8 @@ let user ={
     image:'./static/11.jpg',
     sex:'男',
     age:18,
-    animal:'未羊',
     birthday:'1995-2-3',
-    star:'水平座'
+    info:'一生有你'
 }
 export default{
     clone: clone,

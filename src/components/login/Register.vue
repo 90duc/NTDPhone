@@ -43,8 +43,8 @@ import logo from "@/assets/logo_account.png";
 import Paths from "@/config/path.js";
 
 let path = {
-  homePath: Paths.home,
-  registerPath: Paths.register
+  homePath: Paths.pages.home,
+  registerPath: Paths.roots.register
 };
 let colors = {
   default: "default",

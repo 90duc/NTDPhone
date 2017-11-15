@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import Paths from '@/config/path.js'
+import Paths from "@/config/path.js";
 
 let classIcons = ["image", "user", "userInfo", "userDetail"];
 export default {
@@ -59,17 +59,17 @@ export default {
       }
       return 0;
     },
-    init:function(){
-           this.focusedIndex = this.getIndex(this.$route.path);
+    init: function() {
+      this.focusedIndex = this.getIndex(this.$route.path);
     }
   },
   watch: {
-    $route:function(){
-       this.init();
+    $route: function() {
+      this.init();
     }
   },
   created() {
-     this.init();
+    this.init();
     //this.focusedIndex=1;
   }
 };

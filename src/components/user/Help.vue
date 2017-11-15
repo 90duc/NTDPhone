@@ -21,12 +21,20 @@
   </div>
 </template>
 <script>
-let classIcons = ["help", "safe",  "other"];
+import Paths from "@/config/path.js";
+
+let classIcons = ["help", "safe", "other"];
 export default {
   data() {
     return {
       labels: ["账号问题", "账号卫士", "其他问题"],
-      focusedIndex: 0
+      focusedIndex: 0,
+      paths: [
+        Paths.userHelps.account,
+        Paths.userHelps.safe,
+        Paths.userHelps.other
+      ]
+
     };
   },
   methods: {
@@ -41,21 +49,41 @@ export default {
     },
     focus: function(i) {
       this.focusedIndex = i;
+      this.$router.push({ path: this.paths[i] });
+    },
+    getIndex: function(rpath) {
+      for (var i in this.paths) {
+        if (rpath.indexOf(this.paths[i]) == 0) {
+          return i;
+        }
+      }
+      return 0;
+    },
+    init: function() {
+      this.focusedIndex = this.getIndex(this.$route.path);
     }
+  },
+  watch: {
+    $route: function() {
+      this.init();
+    }
+  },
+  created() {
+    this.init();
+    //this.focusedIndex=1;
   }
 };
 </script>
 <style lang="scss" scoped>
- @import './default.scss';
- 
+@import "./default.scss";
+
 .help {
-    background-position: 0 -460px;
+  background-position: 0 -460px;
 }
 .safe {
-    background-position: 0 -522px;
+  background-position: 0 -522px;
 }
 .other {
-    background-position: 0 -496px;
+  background-position: 0 -496px;
 }
-
 </style>
