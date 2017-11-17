@@ -2,8 +2,8 @@
     <div class="meta">
         <span v-for='name in tagAttr' :key="name">
             <span v-if="has(phone,name)">
-                <span v-if="multiValue(phone,name)">
-                    <router-link :to="searchByPath+'/'+name+'/'+c" v-for='c in phone[name]' :key="c">
+                <span v-if="multiValue(getData(phone[name]))">
+                    <router-link :to="searchByPath+'/'+name+'/'+c" v-for='c in getData(phone[name])' :key="c">
                         <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
                     </router-link>
                 </span>
@@ -20,7 +20,7 @@
 <script>
 import Paths from '@/config/path.js'
 
-let tagAttr = ['core', 'coreRate', 'coreType', 'ROM', 'networkType', 'battery', 'batteryType', 'year'];
+let tagAttr = ['core', 'coreRate', 'coreType', 'rom', 'ram', 'battery', 'batteryType', 'year'];
 
 export default {
     props: {
@@ -45,8 +45,7 @@ export default {
             index = Math.floor(Math.random() * 6);
             return 'c'+index;
         },
-        multiValue: function(phone, name) {
-            let value = phone[name];
+        multiValue: function(value) {
             if (value) {
                 if (value instanceof Array)
                     return value.length > 1;
@@ -65,6 +64,9 @@ export default {
 
             return false;
 
+        },
+        getData(v){
+            return v.split(',');
         }
     },
     created() {

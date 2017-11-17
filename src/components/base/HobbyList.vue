@@ -34,7 +34,7 @@ import PopBox from '@/components/base/PopBox.vue'
 import Data from '@/components/default/data.js'
 import Paths from '@/config/path.js'
 
-let title = ['4G全网通', '3G移动', '800万像素以上', '高分辨率']
+let title = [ "高分辨率","多核","电池容量大", "运行内存大"];
 export default {
   components: {
     PopBox

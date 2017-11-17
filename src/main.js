@@ -3,10 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios';
+import Config from '@/config/config.js';
 import '@/assets/bootstrap/js/bootstrap.min.js'
 import '@/assets/bootstrap/css/bootstrap.min.css'
 import 'babel-polyfill'
 
+axios.defaults.withCredentials = true;
+Vue.prototype.$post = function (url, func) {
+  axios.post(url).then(func)
+    .catch(function (error) {
+      console.error(error);
+    });
+}
+Vue.prototype.$get = axios.get;
+Vue.prototype.$config = Config;
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -56,5 +67,10 @@ new Vue({
       return this.loginInfo;
     }
   },
-  components: { App }
+  components: { App },
+  created() {
+     // $('base').attr('href',this.$config.rootURL);
+     
+  }
+
 }).$mount('#apps');

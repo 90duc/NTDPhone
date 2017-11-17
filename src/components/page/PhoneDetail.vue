@@ -20,7 +20,7 @@
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-              <p>厂商：{{phone.company}}</p>
+              <p>品牌：{{phone.company}}</p>
               参考报价：
               <span class='price'>￥{{phone.price}}</span>
             </div>

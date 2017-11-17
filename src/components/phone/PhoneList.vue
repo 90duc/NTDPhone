@@ -2,7 +2,7 @@
   <div>
     <pop-box ref='popBox'></pop-box>
     <div class="row">
-      <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in phones" :key="i">
+      <router-link :to='phoneDetailPath+"/"+phone.pid' v-for="(phone,i) in phones" :key="i">
         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
           <div class="image">
             <img :src="phone.image" />
@@ -64,8 +64,17 @@ export default {
       this.loadStatus.text = loadText.waiting;
     },
     enableDetail: function(e, p, i) {
-      if(this.$refs.popBox)
-       this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
+      if (this.$refs.popBox)
+        this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
+    },
+    init() {
+      let url = this.$config.dataURL + "/p";
+      let that = this;
+      this.$post(url, function(res) {
+        res.data.image=that.$config.rootURL+'/'+res.data.image;
+        that.phones = [res.data];
+       
+      });
     }
   },
   created() {
@@ -79,9 +88,10 @@ export default {
     }
 
     this.hoverPhone = Data.clone();
+   // this.init();
   },
   watch: {
-    url:function(o,n){
+    url: function(o, n) {
       //alert(o+n);
     }
   }

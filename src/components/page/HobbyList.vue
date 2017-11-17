@@ -19,7 +19,7 @@ import PhoneList from "@/components/phone/PhoneList.vue";
 import Company from "@/components/phone/Company.vue";
 import Paths from "@/config/path.js";
 
-let types = ["3G移动", "4G全网通", "800万像素以上", "高分辨率"];
+let types = [ "高分辨率","多核","电池容量大", "运行内存大"];
 export default {
   components: {
     PhoneList,

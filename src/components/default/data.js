@@ -22,24 +22,25 @@ function clone() {
 }
 
 let phoneTemp = {
-    id: 0,
+    pid: 0,
     image: './static/0.jpg',
     name: 'iphone 8s',
     company:'Apple',
     rank: 7.9,
     commentSize:1790,
-    screenSize: [4.4, 3.2],
-    pixels: [{ x: 1080, y: 1934 }, { x: 423, y: 296 }],
+    screenSize: '5.2英寸,3.2英寸',
+    pixels: '1080x1934像素,423x296像素',
     forecamera: '400万像素',
     backcamera: '800万像素',
     battery: '1200mAh',
     batteryType: '不可拆卸式电池',
-    core: ['四核', '八核'],
+    core: '四核,八核',
     coreType: '联发科 Helio P25',
-    coreRate: ['2.5GHz', '1.4GZ'],
-    ROM: ['32G', '64G'],
-    networkType: ['4G全网通', '3G移动'],
-    bodyColor: ['红色', '白色'],
+    coreRate: '2.5GHz,1.4GZ',
+    rom: '32G,64G',
+    ram:'4G',
+    density: '401ppi',
+    weight: '153g',
     year: '2015',
     price:7999
 };

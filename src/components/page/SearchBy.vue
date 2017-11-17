@@ -19,7 +19,7 @@ import PhoneList from "@/components/phone/PhoneList.vue";
 import Company from "@/components/phone/Company.vue";
 
 let types = [
-  "厂商",
+  "品牌",
   "CPU核数",
   "CPU频率",
   "CPU品牌",

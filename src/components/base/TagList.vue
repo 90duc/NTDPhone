@@ -1,120 +1,11 @@
 <template>
     <div class="row" style="padding-left:10px;">
         <!-- 主屏尺寸 -->
-        <dl class="info_item col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.screenSize)">
-            <dt>主屏尺寸</dt>
+        <dl class="info_item col-xs-12 col-sm-6 col-md-6 col-lg-6" v-for='(item,i) in items' :key='item' v-if='has(phone[item])':class="multiValue(getData(phone[item]))">
+            <dt>{{itemNames[i]}}</dt>
             <dd>
                 <ul>
-                    <li v-for="size in phone.screenSize" :key="size">{{size}}英寸</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!-- 主屏分辨率 -->
-        <dl v-show="has(phone.screenSize)" class="info_item col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.screenSize)">
-            <dt>主屏分辨率</dt>
-            <dd>
-                <ul>
-                    <li v-for="(p,i) in phone.pixels" :key="i">{{p.x}}x{{p.y}}像素</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!--后置摄像头-->
-        <dl v-show="has(phone.backcamera)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.backcamera)">
-            <dt>后置摄像头</dt>
-            <dd>
-                <ul>
-                    <li>{{phone.backcamera}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!--前置摄像头-->
-        <dl v-show="has(phone.forecamera)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <dt>前置摄像头</dt>
-            <dd>
-                <ul>
-                    <li>{{phone.forecamera}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-
-        <!--电池容量-->
-        <dl v-show="has(phone.battery)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <dt>电池容量</dt>
-            <dd>
-                <ul>
-                    <li>{{phone.battery}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!--电池类型-->
-        <dl v-show="has(phone.batteryType)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <dt>电池类型</dt>
-            <dd>
-                <ul>
-                    <li>{{phone.batteryType}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!-- 核心数 -->
-        <dl v-show="has(phone.core)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.core)">
-            <dt>核心数</dt>
-            <dd>
-                <ul>
-                    <li v-for="p in phone.core" :key="p">{{p}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!-- CPU型号 -->
-        <dl v-show="has(phone.coreType)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <dt>CPU型号</dt>
-            <dd>
-                <ul>
-                    <li>{{phone.coreType}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!--CPU频率 -->
-        <dl v-show="has(phone.coreRate)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.coreRate)">
-            <dt>CPU频率</dt>
-            <dd>
-                <ul>
-                    <li v-for="p in phone.coreRate" :key="p">{{p}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <!--ROM容量 -->
-        <dl v-show="has(phone.ROM)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.ROM)">
-            <dt>ROM容量</dt>
-            <dd>
-                <ul>
-                    <li v-for="p in phone.ROM" :key="p">{{p}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <dl v-show="has(phone.networkType)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.networkType)">
-            <dt>网络类型</dt>
-            <dd>
-                <ul>
-                    <li v-for="p in phone.networkType" :key="p">{{p}}</li>
-                </ul>
-            </dd>
-            <div class="clearfix"></div>
-        </dl>
-        <dl v-show="has(phone.bodyColor)" class="info_item  col-xs-12 col-sm-6 col-md-6 col-lg-6" :class="multiValue(phone.bodyColor)">
-            <dt>机身颜色</dt>
-            <dd>
-                <ul>
-                    <li v-for="p in phone.bodyColor" :key="p">{{p}}</li>
+                    <li v-for="size in getData(phone[item])" :key="size">{{size}}</li>
                 </ul>
             </dd>
             <div class="clearfix"></div>
@@ -123,10 +14,47 @@
     </div>
 </template>
 <script>
+let items=[
+    'screenSize', 
+    'pixels',
+    'forecamera',
+    'backcamera',
+    'battery',
+    'batteryType',
+    'core',
+    'coreType',
+    'coreRate',
+    'rom',
+    'ram',
+    'density',
+    'weight'
+    ];
+
+let itemNames=[
+    '主屏尺寸', 
+    '主屏分辨率',
+    '后置摄像头',
+    '前置摄像头',
+    '电池容量',
+    '电池类型',
+    '核心数',
+    'CPU型号',
+    'CPU频率',
+    'ROM容量',
+    '内存',
+    '屏幕密度',
+    '重量'
+];
 export default {
     props: {
        phone:{
            required:true
+       }
+    },
+    data(){
+       return{
+           items:items,
+           itemNames:itemNames
        }
     },
     methods: {
@@ -144,13 +72,16 @@ export default {
         has: function(value) {
 
             if (value) {
-                if (value instanceof Array)
-                    return value.length > 0;
+             
                 return true;
             }
 
             return false;
 
+        },
+        getData(v){
+           
+            return v.split(',');
         }
     },
 }

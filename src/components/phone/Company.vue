@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       searchByPath: Paths.pages.searchBy,
-      title:'喜欢关注的厂商',
+      title:'喜欢关注的品牌',
       companys: []
     };
   },
