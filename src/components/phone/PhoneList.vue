@@ -35,12 +35,11 @@ export default {
   components: {
     PopBox
   },
-  props: ["url"],
+  props: ["url", "params"],
   data() {
     return {
       phones: [],
       loadStatus: { status: true, text: loadText.waiting },
-      hoverPhone: {},
       popBox: { showDetail: false, position: {} },
       phoneDetailPath: Paths.pages.phoneDetail
     };
@@ -48,52 +47,41 @@ export default {
   methods: {
     loadMore: function() {
       this.loadStatus.text = loadText.loading;
-      window.setTimeout(this.addPage, 500);
-    },
-    addPage: function() {
-      let size = this.phones.length + 5;
-      for (var index = this.phones.length; index < size; index++) {
-        let rate = 10 - index * 0.4;
-        let p = Data.clone();
-        p.id = index;
-        p.name = p.name + index;
-        p.rank = rate;
-        this.phones.push(p);
-      }
-
-      this.loadStatus.text = loadText.waiting;
+      this.getData();
     },
     enableDetail: function(e, p, i) {
       if (this.$refs.popBox)
         this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
     },
     init() {
-      let url = this.$config.dataURL + "/p";
+      this.params.start=0;
+      this.phones=[];
+      this.getData();
+    },
+    getData: function() {
+      let url = this.$config.dataURL + this.url;
       let that = this;
-      this.$post(url, function(res) {
-        res.data.image=that.$config.rootURL+'/'+res.data.image;
-        that.phones = [res.data];
-       
-      });
+      this.$post(
+        url,this.params ,
+        function(res) {
+          let list = res.data;
+          that.params.start += list.length;
+          for (var p in list) {
+            list[p].image = that.$config.rootURL + "/" + list[p].image;
+            that.phones.push(list[p]);
+          }
+          if(list.length==that.params.limit){
+             that.loadStatus.status=true;
+             that.loadStatus.text = loadText.waiting;
+          } 
+          else
+            that.loadStatus.status=false;
+        }
+      );
     }
   },
   created() {
-    for (var index = 0; index < 8; index++) {
-      let rate = 10 - index * 0.4;
-      let p = Data.clone();
-      p.id = index;
-      p.name = p.name + index;
-      p.rank = rate;
-      this.phones.push(p);
-    }
-
-    this.hoverPhone = Data.clone();
-   // this.init();
-  },
-  watch: {
-    url: function(o, n) {
-      //alert(o+n);
-    }
+    this.init();
   }
 };
 </script>
@@ -113,10 +101,11 @@ export default {
   cursor: pointer;
   overflow: hidden;
   border: 1px solid transparent;
-  margin: 10px 0px;
+  padding: 0.5em 0px 0.5em;
+  
 }
 
-.phone_class1:hover {
+.phone_class:hover {
   border-color: gray;
   border-radius: 5px;
 }
@@ -133,14 +122,19 @@ export default {
 }
 
 .phone_class > div {
-  width: 100%;
+  width: 85%;
+  margin: 0px auto;
   font-size: 1.2em;
   /* padding-bottom: 4px; */
   height: 2.5em;
   overflow: hidden;
   text-align: left;
 }
-
+.phone_name {
+  font-size: 1em;
+  /* word-break: break-all;
+   word-wrap: break-word; */
+}
 span.subject-rate {
   color: #e09015;
 }
@@ -163,4 +157,5 @@ span.subject-rate {
   background: #eee;
   color: #37a;
 }
+
 </style>

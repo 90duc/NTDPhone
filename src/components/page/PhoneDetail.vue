@@ -3,24 +3,24 @@
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
       <div class="phone_title">
         <span>{{phone.name}}</span>
-        <span class="year">({{phone.year}})</span>
-        <router-link :to='pic3DPath'>
+        <span class="year">({{getYear(phone.year)}})</span>
+        <router-link :to='pic3DPath+"?id="+phone.pid'>
           <span style="color:green;padding-left:5px;font-size:.5em;">3D展示</span>
         </router-link>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 logo_frame" id='logo'>
           <div class="left_arrow" @click="left"></div>
-          <a v-for="index in 12" :key="index" class="default_img" ref='images'>
-            <img :src="'./static/'+(index-1)+'.jpg'">
+          <a v-for="img in imgs" :key="img" class="default_img" ref='images'>
+            <img :src="img">
           </a>
           <div class="right_arrow" @click="right"></div>
-          <div class="page_size">{{imageIndex+1}}/{{imageSize}}</div>
+          <div class="page_size">{{imageIndex+1}}/{{imgs.length}}</div>
         </div>
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-              <p>品牌：{{phone.company}}</p>
+              <p>品牌：<router-link :to="searchByPath+'/company/'+getCompany(phone.cid)+'?id='+getCid(phone.cid)">{{getCompany(phone.cid)}}</router-link></p>
               参考报价：
               <span class='price'>￥{{phone.price}}</span>
             </div>
@@ -68,67 +68,97 @@ export default {
     return {
       id:this.$route.params.id,
       phone:{},
+      imgs:[],
       remarks:[],
-      images:[],
-      imageSize:12,
       imageIndex:0,
       speed:600,
       pic3DPath:Paths.roots.picture3D,
+      searchByPath: Paths.pages.searchBy,
       showRemarkBox:'show-remark-box',
       showWantBox:'show-want-box'
     }
   },
   methods:{
-      left:function () {
-          clearInterval(this.autoPlayTimer);
-         this.moveToRight();
-         this.autoPlayTimer=setTimeout(this.autoPlay,2000);
-      },
-      right:function () {
-          clearInterval(this.autoPlayTimer);
-          this.moveToLeft();
-          this.autoPlayTimer=setTimeout(this.autoPlay,2000);
-      },
-      moveToLeft:function () {
-         var $old=$(this.images[this.imageIndex]);        
-         if(this.imageIndex==this.imageSize-1)
-          this.imageIndex=0;
-        else
-         this.imageIndex++;
-         var $new=$(this.images[this.imageIndex]);
-         $new.css('left',$old.width()+'px');
-         $new.show();
-         $new.animate({left: '0px'}, this.speed);
-         $old.animate({left: -$old.width()+'px'},this.speed,function () {
-             $old.hide();
-         });
-      },
-      moveToRight:function () {
-         var $old=$(this.images[this.imageIndex]);  
-         if(this.imageIndex==0)
-          this.imageIndex=this.imageSize-1;
-        else
-         this.imageIndex--;     
-         var $new=$(this.images[this.imageIndex]);
-         $new.css('left',-$old.width()+'px');  
-         $new.show();
-         $new.animate({left: '0px'}, this.speed);
-         $old.animate({left: $old.width()+'px'}, this.speed,function () {
-             $old.hide();
-         });
-      },
-      autoPlay:function () {
-         this.moveToLeft();
-         this.autoPlayTimer=setTimeout(this.autoPlay,2000);
+    getYear:function (v) {
+      if(v)
+      return v.split('年')[0];
+    },
+    getCompany:function (v) {
+      if(v)
+      return v.name;
+    },
+    getCid:function (v) {
+      if(v)
+      return v.cid;
+    },
+    left:function () {
+      clearInterval(this.autoPlayTimer);
+      this.moveToRight();
+      this.autoPlayTimer=setTimeout(this.autoPlay,2000);
+    },
+    right:function () {
+      clearInterval(this.autoPlayTimer);
+      this.moveToLeft();
+       this.autoPlayTimer=setTimeout(this.autoPlay,2000);
+    },
+    moveToLeft:function () {
+      let images=this.$refs.images;
+      var $old=$(images[this.imageIndex]);        
+      if(this.imageIndex==this.imgs.length-1)
+        this.imageIndex=0;
+      else
+        this.imageIndex++;
+      var $new=$(images[this.imageIndex]);
+      $new.css('left',$old.width()+'px');
+      $new.show();
+      $new.animate({left: '0px'}, this.speed);
+      $old.animate({left: -$old.width()+'px'},this.speed,function () {
+        $old.hide();
+      });
+    },
+    moveToRight:function () {
+      let images=this.$refs.images;
+      var $old=$(images[this.imageIndex]);  
+      if(this.imageIndex==0)
+        this.imageIndex=this.imageSize-1;
+      else
+        this.imageIndex--;     
+      var $new=$(images[this.imageIndex]);
+      $new.css('left',-$old.width()+'px');  
+      $new.show();
+      $new.animate({left: '0px'}, this.speed);
+      $old.animate({left: $old.width()+'px'}, this.speed,function () {
+        $old.hide();
+      });
+    },
+    autoPlay:function () {
+      this.moveToLeft();
+      this.autoPlayTimer=setTimeout(this.autoPlay,2000);
+    },
+    getData: function() {
+      let url = this.$config.dataURL + this.$URL.phone.detail;
+      let that = this;
+      this.$post(url, {id:this.id }, function(res) {
+        let data = res.data;   
+        that.phone=data.phone;
+        for(var i in data.images)
+          that.imgs.push( that.$config.rootURL + "/" + data.images[i]);
+      });
+    },
+    init(){
+      let images=this.$refs.images;
+      if(!images){
+        setTimeout(this.init, 100);
+      }else{
+       images[this.imageIndex].style.left='0px';
+       images[this.imageIndex].style.display='inline';
       }
-
+        
+    }
   },
- mounted () {  
- 
-    this.phone=Data.clone();
-    this.images=this.$refs.images;
-    this.images[this.imageIndex].style.left='0px';
-    this.images[this.imageIndex].style.display='inline';
+ created () {  
+    this.getData();
+    setTimeout(this.init, 100);
     this.autoPlayTimer=setTimeout(this.autoPlay,2000);
   },
   beforeDestroy () {
@@ -190,7 +220,8 @@ export default {
   position: relative;
   height: 14em;
 }
-
+#logo a:first-child {
+}
 .logo_frame img {
   width: 100%;
   height: 100%;

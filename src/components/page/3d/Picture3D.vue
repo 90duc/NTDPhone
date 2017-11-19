@@ -8,26 +8,27 @@
     </div>
 </template>
 <script>
-var images=[];
-for (var i=0;i<12;i++) {
-  images[i] = i + ".jpg";
-}
-var imagesPath = "./static/";
+
 import Pic from "./js/init.js";
 
 export default {
-    data(){
-        return{
-     
-        }
-    },
+  
   methods: {
     return_bt: function() {
       window.history.back();
-    }
+    },
+    getData: function() {
+      let url = this.$config.dataURL + this.$URL.phone.images;
+      let that = this;
+      this.$post(url, {id:this.$route.query.id }, function(res) {
+        let data = res.data;   
+         Pic.init(data, that.$config.rootURL+"/" );
+      });
+    },
+
   },
   mounted () {
-    Pic.init(images, imagesPath);
+    this.getData();
   }
 };
 </script>
@@ -38,7 +39,7 @@ export default {
   left: 0px;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #e5e5e5;
 }
 
 .return_bt {

@@ -8,7 +8,7 @@
 
         </div>
       </div>
-      <phone-list :url='url'></phone-list>
+      <phone-list :url='url' :params='params' ref='phoneList'></phone-list>
     </div>
     <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company"></company>
     <div class="clearfix"></div>
@@ -19,7 +19,8 @@ import PhoneList from "@/components/phone/PhoneList.vue";
 import Company from "@/components/phone/Company.vue";
 import Paths from "@/config/path.js";
 
-let types = [ "高分辨率","多核","电池容量大", "运行内存大"];
+let types = ["高分辨率", "后置摄像头", "电池容量大", "运行内存大"];
+let titleNames = ["pixels", "backcamera", "battery", "ram"];
 export default {
   components: {
     PhoneList,
@@ -27,29 +28,40 @@ export default {
   },
   data() {
     return {
-      url: "select/",
       types: types,
-      focusedIndex: 0
+      focusedIndex: 0,
+      url: this.$URL.phone.hobby,
+      params: {
+        type: "",
+        start: 0,
+        limit: 10
+      }
     };
   },
   methods: {
     select: function(i) {
       this.focusedIndex = i;
-      this.$router.push({ path: Paths.pages.hobbyList+`/${this.types[i]}`});
+      this.$router.push({ path: Paths.pages.hobbyList + `/${this.types[i]}` });
+      this.init();
     },
     getClass: function(i) {
       let a = "";
       if (this.focusedIndex == i) a = "focused";
       return a;
+    },
+    init: function() {
+      let type = this.$route.params.type;
+      for (var i in this.types) {
+        if (this.types[i] == type) {
+          this.focusedIndex = i;
+          this.params.type = titleNames[i];
+          if (this.$refs.phoneList) this.$refs.phoneList.init();
+        }
+      }
     }
   },
   created() {
-    let type = this.$route.params.type;
-    for (var i in this.types) {
-      if (this.types[i] == type) {
-        this.focusedIndex = i;
-      }
-    }
+    this.init();
   }
 };
 </script>

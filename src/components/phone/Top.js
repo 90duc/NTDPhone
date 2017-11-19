@@ -1,19 +1,8 @@
 let typeList = {
-    top: { type: 'top', name: '口碑', url: 'topwurl' },
-    hot: { type: 'hot', name: '热门', url: 'hoturl' },
-    new: { type: 'new', name: '新品', url: 'newurl' }  
+    top: { type: 'top', name: '口碑' },
+    hot: { type: 'hot', name: '热门' },
+    new: { type: 'new', name: '新品' }  
 };
-
-function getUrl(value) {
-    var res = '';
-    for (var name in typeList) {
-        if (typeList[name].type == value) {
-            res = typeList[name].url;
-            break;
-        }
-    }
-    return res;
-}
 
 function getType(value) {
     var res = null;
@@ -27,6 +16,5 @@ function getType(value) {
 }
 export default {
     typeList: typeList,
-    getUrl: getUrl,
     getType: getType
 }

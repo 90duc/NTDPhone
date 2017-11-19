@@ -1,13 +1,13 @@
 <template>
-    <div class="meta">
-         <h2>{{title}}· · · · · · </h2>
-        <span v-for='c in companys' :key="c">
-            <router-link :to="searchByPath+'/company/'+c"  >
-                <span class="tag_attr" :class="getRandomColor()">{{c}}</span>
-            </router-link>
-        </span>
-        <div class="clearfix"></div>
-    </div>
+  <div class="meta">
+    <h2>{{title}}· · · · · · </h2>
+    <span v-for='c in companys' :key="c.cid">
+      <router-link :to="searchByPath+'/company/'+c.name+'?id='+c.cid">
+        <span class="tag_attr" :class="getRandomColor()">{{c.name}}</span>
+      </router-link>
+    </span>
+    <div class="clearfix"></div>
+  </div>
 </template>
 <script>
 import Paths from "@/config/path.js";
@@ -16,28 +16,29 @@ export default {
   data() {
     return {
       searchByPath: Paths.pages.searchBy,
-      title:'喜欢关注的品牌',
+      title: "喜欢关注的品牌",
       companys: []
     };
   },
   methods: {
     getRandomColor: function() {
-     // if (!this.autoColor) return "default_color";
+      // if (!this.autoColor) return "default_color";
       let index = 0;
       index = Math.floor(Math.random() * 6);
       return "c" + index;
     },
+    getData: function() {
+      let url = this.$config.dataURL + this.$URL.phone.company;
+      let that = this;
+      this.$post(url, { start: 0, limit: 10 }, function(res) {
+        let list = res.data;   
+        that.companys=list;
+       
+      });
+    }
   },
   created() {
-      this.companys.push('Apple');
-      this.companys.push('华为');
-      this.companys.push('三星');
-      this.companys.push('中兴');
-      this.companys.push('小米');
-      this.companys.push('锤子');
-      this.companys.push('vivo');
-      this.companys.push('oppo');
-      this.companys.push('有米');
+    this.getData();
   }
 };
 </script>
@@ -48,13 +49,13 @@ export default {
   padding-bottom: 10px;
 }
 .meta h2 {
-    text-align: left;
-    padding-left: 5px;
-    padding-bottom:10px;
-    color:#072;
-    border-bottom: 1px solid #eaeaea;
-    font-size: 1.2em ;
-    margin-bottom: 20px;
+  text-align: left;
+  padding-left: 5px;
+  padding-bottom: 10px;
+  color: #072;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 1.2em;
+  margin-bottom: 20px;
 }
 .tag_attr {
   float: left;

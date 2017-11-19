@@ -8,7 +8,7 @@
           <span>{{name}}</span>
         </div>
       </div>
-      <phone-list :url='url'></phone-list>
+      <phone-list :url='url' :params='params' ref='phoneList'></phone-list>
     </div>
     <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company"></company>
     <div class="clearfix"></div>
@@ -50,7 +50,13 @@ export default {
     return {
       type: "",
       name: "",
-      url:''
+      url: this.$URL.phone.searchBy,
+      params: {
+        key: "",
+        value: "",
+        start: 0,
+        limit: 10
+      }
     };
   },
   methods: {
@@ -62,6 +68,10 @@ export default {
           this.type = types[i];
           break;
         }
+      this.params.key = type;
+      this.params.value = this.name;
+      if (type == "company") this.params.value = this.$route.query.id;
+      if (this.$refs.phoneList) this.$refs.phoneList.init();
     }
   },
   watch: {
@@ -96,6 +106,6 @@ export default {
   color: #666;
   font-size: 1.1em;
   padding-top: 5px;
-  padding-left:10px;
+  padding-left: 10px;
 }
 </style>

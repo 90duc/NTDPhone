@@ -1,22 +1,24 @@
 <template>
-    <transition name='fade' v-if="popBox.showDetail">
-        <div id='popBox' class="detail_pop container" :style="popBox.position">
-            <div  @mouseleave="disableDetail($event)">
-              <router-link :to="phoneDetailPath+'/'+phone.id">
-                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_frame"></div>
-              </router-link>
-              <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 wrap">
-                <div class="info">
-                    <h3>
-                        <router-link :to="phoneDetailPath+'/'+phone.id">{{phone.name}}</router-link>
-                    </h3>
-                    <star-bar class="detail" type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
-                    <tag-attr :phone='phone' auto-color='true'></tag-attr>
-                </div>
-              </div>
+  <transition name='fade' v-if="popBox.showDetail">
+    <div id='popBox' class="detail_pop" :style="popBox.position">
+      <div @mouseleave="disableDetail($event)" class="container">
+        <div class='col-sx-12 col-sm-12 col-md-9 col-lg-9 none_padding'>
+          <router-link :to="phoneDetailPath+'/'+phone.pid">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_frame"></div>
+          </router-link>
+          <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 wrap">
+            <div class="info">
+              <h3>
+                <router-link :to="phoneDetailPath+'/'+phone.pid">{{phone.name}}</router-link>
+              </h3>
+              <star-bar class="detail" type="m" :rank="phone.rank" :commentSize="phone.commentSize"></star-bar>
+              <tag-attr :phone='phone' auto-color='true'></tag-attr>
             </div>
+          </div>
         </div>
-    </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
 import StarBar from "@/components/base/StarBar.vue";
@@ -34,7 +36,8 @@ export default {
     return {
       phone: {},
       popBox: { showDetail: false, position: {} },
-      phoneDetailPath: Paths.pages.phoneDetail
+      phoneDetailPath: Paths.pages.phoneDetail,
+      detail:{}
     };
   },
   methods: {
@@ -44,18 +47,24 @@ export default {
       else rate = Math.floor(rank);
       return -15 * (10 - rate);
     },
-    enableDetail: function(e, p,o) {
-      this.showDetail(e, p, o);
+    enableDetail: function(e, p, o) {
+      this.detail= {e, p, o};
+      this.detail.timer=setTimeout(this.showDetail,1000);
+    
     },
-    showDetail: function(event, p, o) {
-      this.popBox.showDetail = true;
-      var $o=$(o);
+    showDetail: function() {
+      //let event=this.detail.e;
+      let p=this.detail.p;
+      let o=this.detail.o; 
+      var $o = $(o);
       var x = $o.position().left-15;
-      var y =$o.position().top;
+      var y = $o.position().top;
       this.popBox.position = { left: x + "px", top: y + "px" };
       this.phone = p;
+      this.popBox.showDetail = true;
     },
     disableDetail: function(e1) {
+      clearTimeout(this.detail.timer);
       this.popBox.showDetail = false;
     }
   },
@@ -72,14 +81,14 @@ export default {
 .detail_pop {
   position: absolute;
   z-index: 99;
-  width: 100%;
+  width: 37em;
+  overflow: hidden;
   /* height:100%; */
 }
-a{
-  text-decoration:none;
+a {
+  text-decoration: none;
 }
 .detail_pop .wrap {
- 
   float: left;
   background: #fff;
   border: 1px solid #999;
@@ -93,7 +102,7 @@ a{
 }
 .detail_pop .phone_frame {
   float: left;
-  height: 15em;
+  height: 14.9em;
   cursor: pointer;
   border: 1px solid gray;
   border-radius: 5px;
@@ -107,7 +116,11 @@ a{
 span.subject-rate {
   color: #e09015;
 }
-
+.info h3 {
+  font-size: 1.3em;
+  width: 100%;
+  overflow: hidden;
+}
 .allstar35 {
   background: url(../../assets/middle_star.png) no-repeat;
   width: 75px;

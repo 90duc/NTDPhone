@@ -66,7 +66,7 @@ export default {
 
         },
         getData(v){
-            return v.split(',');
+            return v.split(/[,，]/);
         }
     },
     created() {

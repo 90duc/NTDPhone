@@ -1,17 +1,50 @@
 <template>
+  <div>
+    <search v-on:searchevent="search" class="search"></search>
     <div>
-        <search v-on:searchevent="search" class="search"></search>
-        <div>
-            <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
-                <phone-list :url='url'></phone-list>
-                <hobby-list></hobby-list>
-            </div>
-            <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
-            <div class="clearfix"></div>
-        </div>
-
+      <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
+        <phone-list :url='url' :params='params'></phone-list>
+        <hobby-list></hobby-list>
+      </div>
+      <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
+      <div class="clearfix"></div>
     </div>
+
+  </div>
 </template>
+<script>
+import Search from "@/components/base/Search.vue";
+import PhoneList from "@/components/phone/PhoneList.vue";
+import TopList from "@/components/base/TopList.vue";
+import HobbyList from "@/components/base/HobbyList.vue";
+import Top from "@/components/phone/Top.js";
+
+export default {
+  components: {
+    Search,
+    PhoneList,
+    TopList,
+    HobbyList
+  },
+  data() {
+    return {
+      topInfo: Top.typeList,
+      url: this.$URL.phone.search,
+      params: {
+        text: "",
+        start: 0,
+        limit: 10
+      }
+    };
+  },
+  methods: {
+    search: function(text) {
+      this.params.text = text;
+    }
+  },
+  created() {}
+};
+</script>
 <style scoped>
 .search {
   padding: 10px 0px;
@@ -30,34 +63,3 @@
   float: left;
 }
 </style>
-
-<script>
-import Search from "@/components/base/Search.vue";
-import PhoneList from "@/components/phone/PhoneList.vue";
-import TopList from "@/components/base/TopList.vue";
-import HobbyList from "@/components/base/HobbyList.vue";
-import Top from "@/components/phone/Top.js";
-
-export default {
-  components: {
-    Search,
-    PhoneList,
-    TopList,
-    HobbyList
-  },
-  data() {
-    return {
-      topInfo: Top.typeList,
-      url: "data/p"
-    };
-  },
-  methods: {
-    search: function(text) {
-      this.url = "url/" + text;
-    } 
-  },
-  created() {
-    
-  }
-};
-</script>
