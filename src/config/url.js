@@ -1,6 +1,11 @@
 
+let personPath='';
 let person={
-
+    checkLogin:personPath+'/checkLogin',
+    login:personPath+'/login',
+    logout:personPath+'/logout',
+    register:personPath+'/register',
+    userInfo:personPath+'/userInfo',
 };
 
 let phonePath=''

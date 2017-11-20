@@ -17,7 +17,9 @@ export default {
     return {
       searchByPath: Paths.pages.searchBy,
       title: "喜欢关注的品牌",
-      companys: []
+      companys: [],
+       start: 0, 
+       limit: 20
     };
   },
   methods: {
@@ -30,7 +32,7 @@ export default {
     getData: function() {
       let url = this.$config.dataURL + this.$URL.phone.company;
       let that = this;
-      this.$post(url, { start: 0, limit: 10 }, function(res) {
+      this.$post(url, { start:this.start, limit:this.limit }, function(res) {
         let list = res.data;   
         that.companys=list;
        

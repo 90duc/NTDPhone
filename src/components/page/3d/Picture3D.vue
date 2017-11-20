@@ -22,7 +22,7 @@ export default {
       let that = this;
       this.$post(url, {id:this.$route.query.id }, function(res) {
         let data = res.data;   
-         Pic.init(data, that.$config.rootURL+"/" );
+         Pic.init(data, that.$config.imageURL+"/" );
       });
     },
 

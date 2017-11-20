@@ -2,7 +2,7 @@
   <div>
     <div class='aside col-xs-5 col-sm-4 col-md-3 col-lg-3 none_padding'>
       <div class='logo'>
-        <img :src='user.image' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+        <img :src='getIcon(user.image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 info">
           <h2 class='name'>{{user.name}}</h2>
           <router-link :to='nicknamePath'>
@@ -30,7 +30,7 @@
           <h3>
             <span class='icon email'></span>登录邮箱</h3>
           <div>
-            <div class='col-xs-offset-1 col-xs-9 none_padding text'>{{user.account}}</div>
+            <div class='col-xs-offset-1 col-xs-9 none_padding text'>{{user.email}}</div>
             <router-link :to="userEmailPath">
               <div class='col-xs-2 none_padding modify'>修改</div>
             </router-link>
@@ -41,28 +41,34 @@
     <div class=' col-xs-7 col-sm-8 col-md-9 col-lg-9 '>
       <div class='right_info'>
         <div>
-          <span>性别</span><span>：</span>
-          <span>{{user.sex}}</span>
+          <span>性别</span>
+          <span>：</span>
+          <span>{{userInfo.sex}}</span>
         </div>
         <div>
-          <span>生日</span><span>：</span>
-          <span>{{user.birthday}}</span>
+          <span>生日</span>
+          <span>：</span>
+          <span>{{userInfo.birthday}}</span>
         </div>
         <div>
-          <span>年龄</span><span>：</span>
+          <span>年龄</span>
+          <span>：</span>
           <span>{{dataInfo.age}}</span>
         </div>
         <div>
-          <span>生肖</span><span>：</span>
+          <span>生肖</span>
+          <span>：</span>
           <span>{{dataInfo.animal}}</span>
         </div>
         <div>
-          <span>星座</span><span>：</span>
+          <span>星座</span>
+          <span>：</span>
           <span>{{dataInfo.star}}</span>
         </div>
         <div>
-          <span>个人签名</span><span>：</span>
-          <span>{{user.info}}</span>
+          <span>个人签名</span>
+          <span>：</span>
+          <span>{{dataInfo.info}}</span>
         </div>
       </div>
     </div>
@@ -81,22 +87,38 @@ export default {
       userPasswordPath: Paths.userSecuritys.userPassword,
       util: this.$root,
       user: null,
+      userInfo:{},
       dataInfo: {}
     };
   },
   methods: {
+    getIcon: function(v) {
+      if (!v) v = "./static/0.jpg";
+      return v;
+    },
+    getData: function() {
+      this.user = this.util.getUser();
+      let url = this.$config.dataURL + this.$URL.person.userInfo;
+      let that = this;
+      this.$post(url, {}, function(res) {
+           let data=res.data;
+          that.userInfo=data;
+          that.init();
+      });
+    },
     init: function() {
-      if (this.user.birthday == null || this.user.birthday == "") return;
-      let d=new Date(this.user.birthday);
+      if (this.userInfo.birthday == null || this.userInfo.birthday == "") return;
+      let d = new Date(this.userInfo.birthday);
 
       this.dataInfo.age = DateInfo.getAge(d.getFullYear());
       this.dataInfo.animal = DateInfo.getAnimal(d.getFullYear());
-      this.dataInfo.star = DateInfo.getStar(d.getMonth(),d.getDay());
+      this.dataInfo.star = DateInfo.getStar(d.getMonth(), d.getDay());
     }
   },
   created() {
-    this.user = this.util.getUser();
-    this.init();
+   
+    this.getData();
+    
   }
 };
 </script>
@@ -196,10 +218,10 @@ a:hover {
 .right_info > div {
   padding: 5px;
 }
-.right_info >div>span:first-child{
+.right_info > div > span:first-child {
   display: inline-block;
   width: 4em;
-  text-align:justify-all;
-  text-align-last:justify;
+  text-align: justify-all;
+  text-align-last: justify;
 }
 </style>

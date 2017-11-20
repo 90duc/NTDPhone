@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div class="searchbox">
     <pop-box ref='popBox'></pop-box>
     <div class="row">
       <router-link :to='phoneDetailPath+"/"+phone.pid' v-for="(phone,i) in phones" :key="i">
-        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
-          <div class="image">
-            <img :src="phone.image" />
+          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" @mouseleave="disableDetail()" ref='phoneList'>
+            <div class="image">
+              <img :src="phone.image" />
+            </div>
+            <div>
+              <span class="phone_name">{{phone.name}}</span>
+              <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
+            </div>
           </div>
-          <div>
-            <span class="phone_name">{{phone.name}}</span>
-            <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
-          </div>
-        </div>
       </router-link>
       <div class="clearfix"></div>
     </div>
@@ -53,31 +53,29 @@ export default {
       if (this.$refs.popBox)
         this.$refs.popBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
     },
+    disableDetail: function(e, p, i) {
+      if (this.$refs.popBox) this.$refs.popBox.$emit("pop-box-hide", true);
+    },
     init() {
-      this.params.start=0;
-      this.phones=[];
+      this.params.start = 0;
+      this.phones = [];
       this.getData();
     },
     getData: function() {
       let url = this.$config.dataURL + this.url;
       let that = this;
-      this.$post(
-        url,this.params ,
-        function(res) {
-          let list = res.data;
-          that.params.start += list.length;
-          for (var p in list) {
-            list[p].image = that.$config.rootURL + "/" + list[p].image;
-            that.phones.push(list[p]);
-          }
-          if(list.length==that.params.limit){
-             that.loadStatus.status=true;
-             that.loadStatus.text = loadText.waiting;
-          } 
-          else
-            that.loadStatus.status=false;
+      this.$post(url, this.params, function(res) {
+        let list = res.data;
+        that.params.start += list.length;
+        for (var p in list) {
+          list[p].image = that.$config.imageURL + "/" + list[p].image;
+          that.phones.push(list[p]);
         }
-      );
+        if (list.length == that.params.limit) {
+          that.loadStatus.status = true;
+          that.loadStatus.text = loadText.waiting;
+        } else that.loadStatus.status = false;
+      });
     }
   },
   created() {
@@ -93,6 +91,9 @@ export default {
   padding-left: 8px;
   padding-right: 8px;
 }
+.searchbox {
+  min-height: 32em;
+}
 .remark_bar {
   padding: 7px 0px;
 }
@@ -102,7 +103,6 @@ export default {
   overflow: hidden;
   border: 1px solid transparent;
   padding: 0.5em 0px 0.5em;
-  
 }
 
 .phone_class:hover {
@@ -157,5 +157,4 @@ span.subject-rate {
   background: #eee;
   color: #37a;
 }
-
 </style>

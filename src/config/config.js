@@ -1,11 +1,11 @@
 export default {
 
 
-	rootURL: 'http://localhost:8080/NTDPhone',
-	URL: 'http://localhost:8080/NTDPhone',
+	roo1tURL: 'http://localhost:8080/NTDPhone',
+	imageURL: 'http://localhost:8080/NTDPhone',
     dataURL:'http://localhost:8080/NTDPhone/data'
 	// rootURL: '/NTDPhone',
-	// URL: '/NTDPhone',
+	// imageURL: '/NTDPhone',
 	//dataURL:'/NTDPhone/data'
 
 }

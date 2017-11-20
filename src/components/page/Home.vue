@@ -1,9 +1,9 @@
 <template>
   <div>
-    <search v-on:searchevent="search" class="search"></search>
+    <search v-on:searchevent="search" class="search" :text="params.text"></search>
     <div>
       <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
-        <phone-list :url='url' :params='params'></phone-list>
+        <phone-list :url='url' :params='params' ref="phoneList"></phone-list>
         <hobby-list></hobby-list>
       </div>
       <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
@@ -39,10 +39,17 @@ export default {
   },
   methods: {
     search: function(text) {
-      this.params.text = text;
+      this.params.text=text;
+      this.$router.replace({path:this.$route.path,query:{text:text}});
+      this.$refs.phoneList.init();
     }
   },
-  created() {}
+  created() {
+
+   let text= this.$route.query.text;
+   if(text)
+   this.params.text=text;
+  }
 };
 </script>
 <style scoped>

@@ -6,6 +6,23 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+ 
+  props: ["text"],
+  data() {
+    return {
+      inputText: this.text
+    };
+  },
+  methods: {
+    searchEvent: function() {
+      this.$emit("searchevent", this.inputText);
+    }
+  }
+
+};
+</script>
 <style scoped>
 .input_frame {
   width: 512px;
@@ -78,17 +95,4 @@ input {
   background: transparent;
 }
 </style>
-<script>
-export default {
-  data() {
-    return {
-      inputText: ""
-    };
-  },
-  methods: {
-    searchEvent: function() {
-      this.$emit("searchevent", this.inputText);
-    }
-  }
-};
-</script>
+

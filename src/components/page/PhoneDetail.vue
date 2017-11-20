@@ -142,7 +142,7 @@ export default {
         let data = res.data;   
         that.phone=data.phone;
         for(var i in data.images)
-          that.imgs.push( that.$config.rootURL + "/" + data.images[i]);
+          that.imgs.push( that.$config.imageURL + "/" + data.images[i]);
       });
     },
     init(){

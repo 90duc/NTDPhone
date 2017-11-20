@@ -117,6 +117,7 @@ export default {
   background: #afafaf;
   display: inline-block;
   color: white;
+  padding-top: 2px;
 }
 
 #billboard .tag:hover .fouse {

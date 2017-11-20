@@ -8,7 +8,7 @@
         <div class='lb_content'>
           <div class="lb_title">修改邮箱</div>
           <div class="lb_field" style='height:2em;'>
-            <span>原邮箱：</span><span>{{user.account}}</span>
+            <span>原邮箱：</span><span>{{user.email}}</span>
           </div>
           <div class="lb_field">
             <input class="login_pwd" type="text"  placeholder="新邮箱">
@@ -46,6 +46,14 @@ export default {
     },
     check:function(){
        this.text='密码不正确';
+    },
+    checkEmail: function(value) {
+      if (value == null || value == "") return 0;
+      let regx = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+      let res = regx.test(value);
+      if (!res) return 1;
+
+      return -1;
     },
     close: function() {
      

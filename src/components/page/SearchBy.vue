@@ -24,7 +24,7 @@ let types = [
   "CPU频率",
   "CPU品牌",
   "ROM容量",
-  "网络类型",
+  "内存",
   "电池容量",
   "电池类型",
   "出厂年份"
@@ -34,8 +34,8 @@ let tagAttr = [
   "core",
   "coreRate",
   "coreType",
-  "ROM",
-  "networkType",
+  "rom",
+  "ram",
   "battery",
   "batteryType",
   "year"
@@ -55,7 +55,7 @@ export default {
         key: "",
         value: "",
         start: 0,
-        limit: 10
+        limit: 18
       }
     };
   },

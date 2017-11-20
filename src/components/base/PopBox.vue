@@ -1,8 +1,8 @@
 <template>
   <transition name='fade' v-if="popBox.showDetail">
-    <div id='popBox' class="detail_pop" :style="popBox.position">
-      <div @mouseleave="disableDetail($event)" class="container">
-        <div class='col-sx-12 col-sm-12 col-md-9 col-lg-9 none_padding'>
+    <div id='popBox' class="detail_pop" :style="popBox.position" @mouseleave="disableDetail($event)">
+      <div  class="container">
+        <div class='col-sx-12 col-sm-12 col-md-9 col-lg-9 none_padding' >
           <router-link :to="phoneDetailPath+'/'+phone.pid">
             <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_frame"></div>
           </router-link>
@@ -37,7 +37,7 @@ export default {
       phone: {},
       popBox: { showDetail: false, position: {} },
       phoneDetailPath: Paths.pages.phoneDetail,
-      detail:{}
+      detail: {}
     };
   },
   methods: {
@@ -48,32 +48,41 @@ export default {
       return -15 * (10 - rate);
     },
     enableDetail: function(e, p, o) {
-      this.detail= {e, p, o};
-      this.detail.timer=setTimeout(this.showDetail,1000);
-    
+      this.detail.show = true;
+      this.detail.p = p;
+      this.detail.o = o;
+      this.detail.timer = setTimeout(this.showDetail, 1000);
     },
     showDetail: function() {
-      //let event=this.detail.e;
-      let p=this.detail.p;
-      let o=this.detail.o; 
+      if (!this.detail.show) return;
+    
+      let p = this.detail.p;
+      let o = this.detail.o;
       var $o = $(o);
-      var x = $o.position().left-15;
+      var x = $o.position().left - 15;
       var y = $o.position().top;
       this.popBox.position = { left: x + "px", top: y + "px" };
       this.phone = p;
       this.popBox.showDetail = true;
     },
-    disableDetail: function(e1) {
-      clearTimeout(this.detail.timer);
-      this.popBox.showDetail = false;
+    disableDetail: function(e) {
+      if (e === true) {
+        this.detail.show = false;
+        clearTimeout(this.detail.timer);
+      } else {
+        this.detail.show = false;
+        this.popBox.showDetail = false;
+      }
     }
   },
   created() {
     this.$on("pop-box-show", this.enableDetail);
+    this.$on("pop-box-hide", this.disableDetail);
     //this.hoverPhone = Data.clone();
   },
   beforeDestroy() {
     this.$off("pop-box-show", this.enableDetail);
+    this.$off("pop-box-hide", this.disableDetail);
   }
 };
 </script>

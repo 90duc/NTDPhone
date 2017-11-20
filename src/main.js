@@ -15,19 +15,19 @@ import '@/assets/bootstrap/css/bootstrap.min.css'
 import 'babel-polyfill'
 
 axios.defaults.withCredentials = true;
-Vue.prototype.$post = function (url,params, func) {
+Vue.prototype.$post = function (url, params, func) {
   let param = new URLSearchParams();
-  for(var i in params)
-   param.append(i, params[i]);
+  for (var i in params)
+    param.append(i, params[i]);
 
-  axios.post(url,param).then(func)
+  axios.post(url, param).then(func)
     .catch(function (error) {
       console.error(error);
     });
 }
 Vue.prototype.$get = axios.get;
 Vue.prototype.$config = Config;
-Vue.prototype.$URL=URL; 
+Vue.prototype.$URL = URL;
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -62,18 +62,37 @@ new Vue({
     checkLogin: function () {
       return this.loginInfo.status;
     },
-    login: function (data) {
-      let url=this.$config.dataURL+this.$URL.person.login;
-     
-      this.$post(url,data,function(res){
+    login: function (data, func) {
+      let url = this.$config.dataURL + this.$URL.person.login;
+      let that = this;
+      this.$post(url, data, function (res) {
+        let data = res.data;
+        that.loginInfo.status = data.status;
+        that.loginInfo.user = data.user;
+        func(data);
+      });
 
-        this.loginInfo.status = true;
-        this.loginInfo.user = data;
-      });  
+    },
+    register: function (data, func) {
+      let url = this.$config.dataURL + this.$URL.person.register;
+      let that = this;
+      this.$post(url, data, function (res) {
+        let data = res.data;
+        that.loginInfo.status = data.status;
+        that.loginInfo.user = data.user;
+        func(data);
+      });
     },
     logout: function () {
-      this.loginInfo.status = false;
-      this.$emit('logout');
+      let url = this.$config.dataURL + this.$URL.person.logout;
+      let that = this;
+      this.$post(url, {}, function (res) {
+
+        that.loginInfo.status = false;
+        that.loginInfo.user = null;
+        that.$emit('logout');
+      });
+
     },
     getUser: function () {
       return this.loginInfo.user;
@@ -81,27 +100,42 @@ new Vue({
     getLoginInfo: function () {
       return this.loginInfo;
     },
-    getSafeData: function(data){
-      let sha1=SHA1.sha1(data.password);
-     
-      let sAcount=SHA1.sha1(data.account);
+    getSafeData: function (data) {
+      let sha1 = SHA1.sha1(data.password);
+
+      let sAcount = SHA1.sha1(data.account);
       document.writeln(sAcount);
-      let msAcount=MD5.md5(sAcount);
-      let time=new Date().getMilliseconds()+'';
-      let stime=MD5.md5(time);
-      let pass=Base64.encode(msAcount+sha1+'0000'+stime);
-      data.password=pass;
+      let msAcount = MD5.md5(sAcount);
+      let time = new Date().getMilliseconds() + '';
+      let stime = MD5.md5(time);
+      let pass = Base64.encode(msAcount + sha1 + '0000' + stime);
+      data.password = pass;
+    },
+    getData: function () {
+
+      let url = this.$config.dataURL + this.$URL.person.checkLogin;
+      let that = this;
+      $.ajax({
+        type: "post",
+        url: url,
+        cache: false,
+        xhrFields: {
+          withCredentials: true
+        },
+        crossDomain: true,
+        async: false,
+        success: function (data) {
+          that.loginInfo.status = data.status;
+          that.loginInfo.user = data.user;
+        }
+      });
     }
+
   },
   components: { App },
   created() {
-    let data={
-      account:'张三',
-      password:'123456'
-    };
-    this.getSafeData(data);
+    this.getData();
 
-   
   }
 
 }).$mount('#apps');

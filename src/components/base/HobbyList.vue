@@ -16,7 +16,7 @@
       <pop-box ref='PopBox'></pop-box>
       <div class="row">
         <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in hobbyList" :key="i">
-          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" ref='phoneList'>
+          <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" @mouseleave="disableDetail()" ref='phoneList'>
             <div class="image">
               <img :src="phone.image" />
             </div>
@@ -58,12 +58,15 @@ export default {
       if (this.$refs.PopBox)
         this.$refs.PopBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
     },
+    disableDetail: function(e, p, i) {
+      if (this.$refs.PopBox) this.$refs.PopBox.$emit("pop-box-hide", true);
+    },
     selectTitle: function(index) {
       this.title_index = index;
       this.getData();
     },
     getData: function() {
-      this.hobbyList=[];
+      this.hobbyList = [];
       let url = this.$config.dataURL + this.$URL.phone.hobby;
       let that = this;
       this.$post(
@@ -76,7 +79,7 @@ export default {
         function(res) {
           let list = res.data;
           for (var p in list) {
-            list[p].image = that.$config.rootURL + "/" + list[p].image;
+            list[p].image = that.$config.imageURL + "/" + list[p].image;
             that.hobbyList.push(list[p]);
           }
         }
@@ -98,6 +101,7 @@ export default {
 }
 .recom {
   text-align: left;
+  height: 40em;
 }
 .title {
   display: inline-block;
@@ -142,14 +146,17 @@ h2 .title_list {
   top: 0px;
   right: 0px;
 }
-
 .phone_class {
   cursor: pointer;
   overflow: hidden;
   border: 1px solid transparent;
-  margin: 10px 0px;
+  padding: 0.5em 0px 0.45em;
 }
 
+.phone_class:hover {
+  border-color: gray;
+  border-radius: 5px;
+}
 .phone_class div.image {
   width: 100%;
   height: 9em;
@@ -163,32 +170,22 @@ h2 .title_list {
 }
 
 .phone_class > div {
-  width: 100%;
+  width: 85%;
+  margin: 0px auto;
   font-size: 1.2em;
   /* padding-bottom: 4px; */
   height: 2.5em;
   overflow: hidden;
   text-align: left;
-  /* color:black; */
+}
+.phone_name {
+  font-size: 1em;
+  /* word-break: break-all;
+   word-wrap: break-word; */
 }
 
 .clearfix {
   clear: both;
-}
-
-.more {
-  margin: 0px auto 10px auto;
-  /* width: 480px; */
-  background: #f7f7f7;
-  border-radius: 5px;
-  text-align: center;
-  line-height: 30px;
-  margin-bottom: 60px;
-}
-
-.more:hover {
-  background: #eee;
-  color: #37a;
 }
 
 span.subject-rate {

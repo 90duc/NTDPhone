@@ -79,7 +79,7 @@ export default {
         let list = res.data;
         that.params.start += list.length;
         for (var p in list) {
-          list[p].image = that.$config.rootURL + "/" + list[p].image;
+          list[p].image = that.$config.imageURL + "/" + list[p].image;
           that.phones.push(list[p]);
         }
         if (list.length == that.params.limit) {

@@ -64,22 +64,30 @@ export default {
       logo: logo,
       path: path,
       dataInfo: {
-        account: "",
-        password: ""
+        account: "12@qq.com",
+        password: "123456"
       },
       tipInfo: "",
-      util:this.$root
+      util: this.$root
     };
   },
   methods: {
     login: function() {
       //if (!this.check()) return;
-      this.util.login(Data.user);
-
-      var url = this.$route.params.redirect;
-      if (url) this.$router.push({ path: url.path, query: url.query });
-      else this.$router.push({ path: "/" });
-      
+      let data={
+        account:this.dataInfo.account,
+        password:this.dataInfo.password
+      }
+      let that = this;
+      this.util.login(data, function(data) {
+        if (data.status) {
+          var url = that.$route.params.redirect;
+          if (url) that.$router.push({ path: url.path, query: url.query });
+          else that.$router.push({ path: "/" });
+        }else{
+          that.tipInfo=data.msg;
+        }
+      });
     },
     register: function() {
       var url = this.$route.params.redirect;

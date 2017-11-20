@@ -2,7 +2,7 @@
   <div class='right_frame'>
     <h3>登录邮箱</h3>
     <div class='email'>
-      <span class='green'>{{user.account}}</span>
+      <span class='green'>{{user.email}}</span>
       <a @click="modify">修改</a>
       <email-box v-if='emailBoxShow' v-model="emailBoxShow"></email-box>
     </div>

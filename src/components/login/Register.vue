@@ -21,13 +21,13 @@
             </span>
             <span class='tip' :class='data.color'>{{data.text[data.index]}}</span>
           </p>
-
+          <div class='row none_margin top_padding tip warn_text'>{{tipInfo}}</div>
           <div class='row none_margin  top_padding'>
             <button @click="register" class="btn btn-success col-xs-offset-1 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-10 col-sm-8 col-md-8 col-lg-8">提交</button>
           </div>
           <div class='row none_margin  top_padding'>
             <span class='col-xs-offset-6 col-sm-offset-5 col-md-offset-5 col-lg-offset-5 col-xs-5 col-sm-5 col-md-5 col-lg-5 none_padding' style='text-align:right;padding-right:10px;'>
-              <span class='like_a '  @click='login'>已注册，请登录</span>
+              <span class='like_a ' @click='login'>已注册，请登录</span>
             </span>
           </div>
         </div>
@@ -59,8 +59,9 @@ export default {
     return {
       logo: logo,
       path: path,
-      util:this.$root,
+      util: this.$root,
       focusItem: null,
+      tipInfo:'',
       dataInfo: {
         email: {
           name: "邮箱",
@@ -103,15 +104,27 @@ export default {
   },
   methods: {
     login: function() {
-       var url = this.$route.params.redirect;
+      var url = this.$route.params.redirect;
       this.util.toLogin(url);
     },
     register: function() {
-     // if (!this.check()) return;
-      var url = this.$route.params.redirect;
-      if (url) this.$router.push({ path: url.path, query: url.query });
-      else this.$router.push({ path: "/" });
-      
+      // if (!this.check()) return;
+      let that = this;
+      let data = {
+        account: this.dataInfo.email.value,
+        userName:this.dataInfo.user.value,
+        password: this.dataInfo.password.value,
+        password2: this.dataInfo.password2.value
+      };
+      this.util.register(data, function(data) {
+        if (data.status) {
+          var url = that.$route.params.redirect;
+          if (url) that.$router.push({ path: url.path, query: url.query });
+          else that.$router.push({ path: "/" });
+        }else{
+           that.tipInfo=data.msg;
+        }
+      });
     },
     opBlur: function(value) {
       if (value == null) return;
@@ -152,10 +165,10 @@ export default {
         this.checkPassword,
         this.checkPassword2
       ];
-      for(var i=0;i<da.length;i++){
+      for (var i = 0; i < da.length; i++) {
         let value = da[i];
         let res = op[i](value.value);
-        result = result && res<0;
+        result = result && res < 0;
         this.setColor(value, res);
       }
       return result;
@@ -220,12 +233,16 @@ export default {
   text-align: right;
   margin-right: 0.5em;
 }
+div.warn_text{
+  padding-left: 5.7em;
+   color: red;
+}
 .tip {
   display: inline-block;
   margin-left: 5.5em;
   outline: none;
 }
-.tip.warn {
+.tip.warn{
   color: red;
 }
 .tip,

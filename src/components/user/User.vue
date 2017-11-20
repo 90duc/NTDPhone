@@ -74,14 +74,12 @@ export default {
     }
   },
   created() {
-    // if (!this.util.checkLogin()) {
-    //   this.util.toLogin(this.$route);
-    //   return;
-    // }
+    if (!this.util.checkLogin()) {
+      this.util.toLogin(this.$route);
+      return;
+    }
     this.init();
     //this.focusedIndex = 1;
-    this.util.login(Data.user);
-
     let that = this;
     this.util.$on("logout", () => {
       that.util.toLogin(that.$route);
