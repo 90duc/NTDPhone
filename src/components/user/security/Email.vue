@@ -2,7 +2,7 @@
   <div class='right_frame'>
     <h3>登录邮箱</h3>
     <div class='email'>
-      <span class='green'>{{user.email}}</span>
+      <span class='green'>{{getUser().email}}</span>
       <a @click="modify">修改</a>
       <email-box v-if='emailBoxShow' v-model="emailBoxShow"></email-box>
     </div>
@@ -26,7 +26,6 @@ export default {
   },
   data() {
     return {
-      user: null,
       util: this.$root,
       emailBoxShow:false
     };
@@ -34,7 +33,10 @@ export default {
   methods: {
     modify:function(){
       this.emailBoxShow=true;
-    }
+    },
+    getUser: function() {
+      return this.util.getUser();
+    },
   },
   created() {
     //this.emailBoxShow=true;

@@ -29,60 +29,12 @@ import Data from "@/components/default/data.js";
 let email = ["新邮箱为空", "新邮箱格式有误", "新旧邮箱相同"];
 export default {
   model: {
-    prop: "emailBoxShow",
-    event: "emailBoxShow"
+    prop: "tipBoxShow",
+    event: "tipBoxShow"
   },
-  data() {
-    return {
-      util: this.$root,
-      newEmail: "",
-      text: ""
-    };
-  },
-  methods: {
-    getUser: function() {
-      return this.util.getUser();
-    },
-    modify: function() {
-      if(!this.check()){
-        return;
-      }
-      let that = this;
-      let url = this.$config.dataURL + this.$URL.person.modifyEmail;
-      this.util.$post(
-        url,
-        {
-          old: this.user.email,
-          new1: this.newEmail
-        },
-        function(res) {
-          let data = res.data;
-          if (data.status) {
-            window.location.reload();
-          } else {
-            that.text = data.msg;
-          }
-        }
-      );
-    },
-    check: function() {
-      let res = this.checkEmail(this.newEmail, this.user.email);
-      if (res >= 0) {
-        this.text = email[res];
-        return false;
-      }
-      return true;
-    },
-    checkEmail: function(value, old) {
-      if (value == null || value == "") return 0;
-      let regx = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
-      let res = regx.test(value);
-      if (!res) return 1;
-      if (value == old) return 2;
-      return -1;
-    },
+ methods: {
     close: function() {
-      this.$emit("emailBoxShow", false);
+      this.$emit("tipBoxShow", false);
     }
   },
   created() {

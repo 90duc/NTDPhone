@@ -26,21 +26,23 @@
           <option :value='i' v-for='i in date.day' :key='i'>{{i}}</option>
         </select>
       </div>
-      <div>
-        <label>年龄：</label>
-        <span>{{userInfo.age}}</span>
-      </div>
-      <div>
-        <label>生肖：</label>
-        <span>{{userInfo.animal}}</span>
-      </div>
-      <div>
-        <label>星座：</label>
-        <span>{{userInfo.star}}</span>
-      </div>
-      <div>
-        <label>个性签名：</label>
-        <textarea v-model="userInfo.info"></textarea>
+      <div v-if="hasBirthday">
+        <div>
+          <label>年龄：</label>
+          <span>{{userInfo.age}}</span>
+        </div>
+        <div>
+          <label>生肖：</label>
+          <span>{{userInfo.animal}}</span>
+        </div>
+        <div>
+          <label>星座：</label>
+          <span>{{userInfo.star}}</span>
+        </div>
+        <div>
+          <label>个性签名：</label>
+          <textarea v-model="userInfo.info"></textarea>
+        </div>
       </div>
       <div class='btn_bar'>
         <button class='cbtn' @click="save">保存修改</button>
@@ -58,7 +60,6 @@ export default {
   data() {
     return {
       modfiyPasswordPath: Paths.userSecuritys.userPassword,
-      user: null,
       util: this.$root,
       date: {
         year: new Date().getFullYear() > 1990 ? new Date().getFullYear() : 2017,
@@ -66,6 +67,7 @@ export default {
         month: 12,
         day: 30
       },
+      hasBirthday: true,
       userInfo: {
         birthday: {
           year: "",
@@ -82,9 +84,27 @@ export default {
   },
   methods: {
     save: function() {
-      this.userInfo.age = this.getAge();
-      this.userInfo.animal = this.getAnimal();
-      this.userInfo.star = this.getStar();
+      if(!this.check()){
+        return;
+      }
+      this.initOther();
+    },
+    check: function() {
+      let birthday = this.userInfo.birthday;
+      let month = birthday.month;
+      let year = birthday.year;
+      let day = birthday.day;
+      if (year == "" && month == "" && day == "") {
+        this.hasBirthday = false;
+        return true;
+      }
+
+      if (year != "" && month != "" && day != "") {
+        this.hasBirthday = true;
+        return true;
+      }
+      alert('生日')
+      return false;
     },
     getYear: function(i) {
       return this.date.year - i + 1;
@@ -118,10 +138,39 @@ export default {
         this.userInfo.birthday.month,
         this.userInfo.birthday.day
       );
+    },
+    getData: function() {
+      let url = this.$config.dataURL + this.$URL.person.userInfo;
+      let that = this;
+      this.$post(url, {}, function(res) {
+        let data = res.data;
+        that.initData(data);
+      });
+    },
+    initData: function(data) {
+      if (data.birthday) {
+        let d = new Date(data.birthday);
+        let year = d.getFullYear();
+        let month = d.getMonth() + 1;
+        let day = d.getDate();
+        this.userInfo.birthday = { year, month, day };
+        this.hasBirthday = true;
+      } else {
+        this.hasBirthday = false;
+      }
+      this.userInfo.sex = data.sex;
+      this.userInfo.info = data.info;
+      this.initOther();
+    },
+    initOther: function() {
+      if (!this.hasBirthday) return;
+      this.userInfo.age = this.getAge();
+      this.userInfo.animal = this.getAnimal();
+      this.userInfo.star = this.getStar();
     }
   },
   created() {
-    this.user = this.util.getUser();
+    this.getData();
   }
 };
 </script>
@@ -137,6 +186,5 @@ textarea {
   border-radius: 3px;
   padding: 2px 3px;
   resize: none;
- 
 }
 </style>

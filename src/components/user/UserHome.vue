@@ -2,9 +2,9 @@
   <div>
     <div class='aside col-xs-5 col-sm-4 col-md-3 col-lg-3 none_padding'>
       <div class='logo'>
-        <img :src='getIcon(user.image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+        <img :src='getIcon(getUser().image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 info">
-          <h2 class='name'>{{user.name}}</h2>
+          <h2 class='name'>{{getUser().name}}</h2>
           <router-link :to='nicknamePath'>
             <div>修改昵称</div>
           </router-link>
@@ -30,7 +30,7 @@
           <h3>
             <span class='icon email'></span>登录邮箱</h3>
           <div>
-            <div class='col-xs-offset-1 col-xs-9 none_padding text'>{{user.email}}</div>
+            <div class='col-xs-offset-1 col-xs-9 none_padding text'>{{getUser().email}}</div>
             <router-link :to="userEmailPath">
               <div class='col-xs-2 none_padding modify'>修改</div>
             </router-link>
@@ -86,8 +86,8 @@ export default {
       userEmailPath: Paths.userSecuritys.userEmail,
       userPasswordPath: Paths.userSecuritys.userPassword,
       util: this.$root,
-      user: null,
-      userInfo:{},
+      user: {},
+      userInfo: {},
       dataInfo: {}
     };
   },
@@ -96,18 +96,21 @@ export default {
       if (!v) v = "./static/0.jpg";
       return v;
     },
+    getUser: function() {
+      return this.util.getUser();
+    },
     getData: function() {
-      this.user = this.util.getUser();
       let url = this.$config.dataURL + this.$URL.person.userInfo;
       let that = this;
       this.$post(url, {}, function(res) {
-           let data=res.data;
-          that.userInfo=data;
-          that.init();
+        let data = res.data;
+        that.userInfo = data;
+        that.initInfo();
       });
     },
-    init: function() {
-      if (this.userInfo.birthday == null || this.userInfo.birthday == "") return;
+    initInfo: function() {
+      if (this.userInfo.birthday == null || this.userInfo.birthday == "")
+        return;
       let d = new Date(this.userInfo.birthday);
 
       this.dataInfo.age = DateInfo.getAge(d.getFullYear());
@@ -116,9 +119,7 @@ export default {
     }
   },
   created() {
-   
     this.getData();
-    
   }
 };
 </script>
@@ -214,14 +215,21 @@ a:hover {
     padding-left: 10%;
     padding-right: 10%;
   }
+  div.right_info > div > span:first-child {
+    display: inline-block;
+    width: 4em;
+    text-align: justify-all;
+    text-align-last: justify;
+  }
 }
 .right_info > div {
   padding: 5px;
 }
 .right_info > div > span:first-child {
   display: inline-block;
-  width: 4em;
-  text-align: justify-all;
-  text-align-last: justify;
+  width: 2.1em;
+}
+span {
+  vertical-align: middle;
 }
 </style>

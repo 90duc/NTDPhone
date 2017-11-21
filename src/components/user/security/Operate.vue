@@ -21,7 +21,7 @@
             <td>{{info.date}}</td>
             <td>{{info.time}}</td>
             <td>{{info.ip}}</td>
-            <td> {{info.local}}</td>
+            <td> {{info.city}}</td>
             <td>{{info.operate}}</td>
           </tr>
         </tbody>
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import Paths from '@/config/path.js'
+import Paths from "@/config/path.js";
 
 export default {
   data() {
@@ -41,16 +41,39 @@ export default {
       modifyInfos: []
     };
   },
+  methods: {
+    initData: function(data) {
+      for (var i in data) {
+        let d = new Date(data[i].sensitiveOperationPK.time);
+        let date =
+          d.getFullYear() + "年" +(d.getMonth()+1)  + "月" + d.getDate() + "日";
+        let time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        let p = {
+          date: date,
+          time: time,
+          ip: data[i].ip,
+          city: data[i].city,
+          operate: data[i].operation
+        };
+        this.modifyInfos.push(p);
+      }
+    },
+    getData: function() {
+      this.user = this.util.getUser();
+
+      let that = this;
+      let url = this.$config.dataURL + this.$URL.person.sensitiveOperation;
+      this.util.$post(url, {}, function(res) {
+        let data = res.data;
+        if (data.status) {
+          that.initData(data.operate);
+        } else {
+        }
+      });
+    }
+  },
   created() {
-    this.user = this.util.getUser();
-    let a = {
-      date: "2017年07月25日",
-      time: "09:17:39",
-      ip: "183.63.*.*",
-      local: "广东 广州",
-      operate: "修改密码"
-    };
-    this.modifyInfos.push(a);
+    this.getData();
   }
 };
 </script>

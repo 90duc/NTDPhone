@@ -49,7 +49,7 @@ export default {
   methods: {
     select: function(i) {
       this.focusedIndex = i;
-      this.$router.push({ path: this.paths[i] });
+      this.$router.push({ path: this.paths[i]});
     },
     getClass: function(i) {
       let clas = "";
@@ -74,12 +74,11 @@ export default {
     }
   },
   created() {
-    if (!this.util.checkLogin()) {
+    if (this.util.isNoLogin()) {
       this.util.toLogin(this.$route);
       return;
     }
     this.init();
-    //this.focusedIndex = 1;
     let that = this;
     this.util.$on("logout", () => {
       that.util.toLogin(that.$route);

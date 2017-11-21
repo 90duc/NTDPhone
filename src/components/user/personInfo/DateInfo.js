@@ -33,9 +33,9 @@ function getAnimal(year) {
 function getStar(month, day) {
     let d = new Date();
     if (month == null || month == '')
-        month = d.getMonth();
+        month = d.getMonth()+1;
     if (day == null || day == '')
-        day = d.getDay();
+        day = d.getDate();
     let index = month - 1;
     if (day >= starsDay[index]) index = (index + 1) % 12;
     return stars[index];

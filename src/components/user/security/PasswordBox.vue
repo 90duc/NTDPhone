@@ -8,13 +8,13 @@
         <div class='lb_content'>
           <div class="lb_title">修改密码</div>
           <div class="lb_field">
-            <input type="password" name="name" placeholder="旧密码">
+            <input type="password" name="name" v-model="oldPassword" placeholder="旧密码">
           </div>
           <div class="lb_field">
-            <input class="login_pwd" type="password" name="password" placeholder="新密码">
+            <input class="login_pwd" type="password" v-model="newPassword" placeholder="新密码">
           </div>
           <div class="lb_field">
-            <input class="login_pwd" type="password" name="password" placeholder="确认密码">
+            <input class="login_pwd" type="password" v-model="newPassword2" placeholder="确认密码">
           </div>
           <div class='warn'>{{text}}</div>
           <div class="lb_field">
@@ -26,8 +26,10 @@
   </div>
 </template>
 <script>
-
 import Data from "@/components/default/data.js";
+
+let password = ["新密码为空", "新密码长度应为6-20个字符", "新密码不能全为相同字符"];
+let password2 = ["确认密码为空", "两次新密码输入不一致"];
 
 export default {
   model: {
@@ -37,19 +39,72 @@ export default {
   data() {
     return {
       util: this.$root,
-      text:''
+      oldPassword: "",
+      newPassword: "",
+      newPassword2: "",
+      text: ""
     };
   },
   methods: {
     modify: function() {
-      this.check();
-      //this.close();
+      if(!this.check()){
+        return;
+      }
+      let that=this;
+      let url = this.$config.dataURL + this.$URL.person.modifyPassword;
+      this.util.$post(
+        url,
+        {
+          old: this.oldPassword,
+          new1: this.newPassword,
+          new2: this.newPassword2
+        },
+        function(res) {
+          let data=res.data;
+          if(data.status){
+              that.close();
+          }else{
+            that.text=data.msg;
+          }
+
+        }
+      );
+    
     },
-    check:function(){
-       this.text='密码不正确';
+    check: function() {
+      if (this.oldPassword == "") {
+        this.text = "旧密码不能为空";
+        return false;
+      }
+      let res = this.checkPassword(this.newPassword);
+      if (res >= 0) {
+        this.text = password[res];
+        return false;
+      }
+      res = this.checkPassword2(this.newPassword, this.newPassword2);
+      if (res >= 0) {
+        this.text = password2[res];
+        return false;
+      }
+      return true;
+    },
+    checkPassword: function(value) {
+      if (value == null || value == "") return 0;
+      let regx = /^\w{6,20}$/;
+      let res = regx.test(value);
+      if (!res) return 1;
+
+      regx = /^(\w)\1{1,}$/;
+      res = regx.test(value);
+      if (res) return 2;
+      return -1;
+    },
+    checkPassword2: function(v1, v2) {
+      if (v2 == null || v2 == "") return 0;
+      if (v1 != v2) return 1;
+      return -1;
     },
     close: function() {
-     
       this.$emit("passwordBoxShow", false);
     }
   }
@@ -143,7 +198,7 @@ export default {
   cursor: pointer;
 }
 
-.warn{
+.warn {
   color: red;
   padding-left: 1em;
 }

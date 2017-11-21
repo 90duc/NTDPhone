@@ -63,7 +63,8 @@ export default {
       return this.util.checkLogin();
     },
     getUser: function() {
-      return this.util.getUser();
+      
+      return this.util.getUserInfo();
     },
     showBox: function() {
       $(this.$refs.userItem).fadeIn("slow");

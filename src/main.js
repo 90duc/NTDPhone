@@ -31,11 +31,12 @@ Vue.prototype.$URL = URL;
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+let vm=new Vue({
   router,
   template: '<App/>',
   data() {
     return {
+      isInit:false,
       loginInfo: {
         status: false,
         user: null
@@ -60,8 +61,16 @@ new Vue({
       });
     },
     checkLogin: function () {
+     
       return this.loginInfo.status;
     },
+    isNoLogin: function () {
+       if(this.isInit)
+        return !this.loginInfo.status;
+        else{
+          return false;
+        }
+     },
     login: function (data, func) {
       let url = this.$config.dataURL + this.$URL.person.login;
       let that = this;
@@ -95,6 +104,19 @@ new Vue({
 
     },
     getUser: function () {
+      if(!this.isInit){
+         return {};
+      }
+      else if(this.loginInfo.user==null){
+        this.toLogin(this.$route);
+        return;
+      }
+      return this.loginInfo.user;
+    },
+    getUserInfo: function () {
+      if(this.loginInfo.user==null){
+         return {};
+      }    
       return this.loginInfo.user;
     },
     getLoginInfo: function () {
@@ -112,30 +134,21 @@ new Vue({
       data.password = pass;
     },
     getData: function () {
-
       let url = this.$config.dataURL + this.$URL.person.checkLogin;
       let that = this;
-      $.ajax({
-        type: "post",
-        url: url,
-        cache: false,
-        xhrFields: {
-          withCredentials: true
-        },
-        crossDomain: true,
-        async: false,
-        success: function (data) {
+      this.$post(url,{}, function (res) {
+        let data=res.data;
+          that.isInit=true;
           that.loginInfo.status = data.status;
           that.loginInfo.user = data.user;
         }
-      });
+      );
     }
 
   },
   components: { App },
   created() {
     this.getData();
-
   }
-
-}).$mount('#apps');
+});
+vm.$mount('#apps');

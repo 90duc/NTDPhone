@@ -6,6 +6,11 @@ let person={
     logout:personPath+'/logout',
     register:personPath+'/register',
     userInfo:personPath+'/userInfo',
+    modifyPassword:personPath+'/password',
+    modifyEmail:personPath+'/email',
+    loginInfo:personPath+'/loginInfo',
+    sensitiveOperation:personPath+'/operate',
+    modifyUserName:personPath+'/nickname',
 };
 
 let phonePath=''
@@ -17,6 +22,7 @@ let phone={
    company:phonePath+'/company',
    detail:phonePath+'/detail',
    images:phonePath+'/images',
+   
 };
 export default{
     person:person,
