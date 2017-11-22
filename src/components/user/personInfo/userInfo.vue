@@ -39,11 +39,12 @@
           <label>星座：</label>
           <span>{{userInfo.star}}</span>
         </div>
-        <div>
-          <label>个性签名：</label>
-          <textarea v-model="userInfo.info"></textarea>
-        </div>
       </div>
+      <div>
+        <label>个性签名：</label>
+        <textarea v-model="userInfo.info"></textarea>
+      </div>
+      <tip-box v-if='tipBoxShow' v-model="tipBoxShow" :text='text'></tip-box>
       <div class='btn_bar'>
         <button class='cbtn' @click="save">保存修改</button>
       </div>
@@ -53,10 +54,14 @@
   </div>
 </template>
 <script>
+import TipBox from "./TipBox.vue";
 import Paths from "@/config/path.js";
 import DateInfo from "./DateInfo.js";
 
 export default {
+  components: {
+    TipBox
+  },
   data() {
     return {
       modfiyPasswordPath: Paths.userSecuritys.userPassword,
@@ -67,7 +72,9 @@ export default {
         month: 12,
         day: 30
       },
-      hasBirthday: true,
+      hasBirthday: false,
+      tipBoxShow: false,
+      text: "",
       userInfo: {
         birthday: {
           year: "",
@@ -77,17 +84,41 @@ export default {
         age: 1,
         animal: "",
         star: "",
-        sex: "男",
+        sex: "",
         info: ""
       }
     };
   },
   methods: {
     save: function() {
-      if(!this.check()){
+      if (!this.check()) {
         return;
       }
-      this.initOther();
+
+      let url = this.$config.dataURL + this.$URL.person.modifyInfo;
+      let that = this;
+
+      let b = this.userInfo.birthday;
+      let birthday = null;
+      if (b.year) {
+        birthday = b.year + "-" + b.month + "-" + b.day;
+      }
+      let sex = this.userInfo.sex;
+      let info = this.userInfo.info;
+
+      this.$post(url, { birthday, sex, info }, function(res) {
+        let data = res.data;
+        if (data.status) {
+          that.initOther();
+          that.showBox("修改成功");
+        } else {
+          that.showBox(data.msg);
+        }
+      });
+    },
+    showBox: function(text) {
+      this.text = text;
+      this.tipBoxShow = true;
     },
     check: function() {
       let birthday = this.userInfo.birthday;
@@ -103,7 +134,8 @@ export default {
         this.hasBirthday = true;
         return true;
       }
-      alert('生日')
+
+      this.showBox("请选择正确的日期");
       return false;
     },
     getYear: function(i) {
@@ -148,6 +180,7 @@ export default {
       });
     },
     initData: function(data) {
+      if (!data) return;
       if (data.birthday) {
         let d = new Date(data.birthday);
         let year = d.getFullYear();

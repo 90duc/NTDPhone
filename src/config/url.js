@@ -11,6 +11,8 @@ let person={
     loginInfo:personPath+'/loginInfo',
     sensitiveOperation:personPath+'/operate',
     modifyUserName:personPath+'/nickname',
+    modifyInfo:personPath+'/modifyInfo',
+    modifyDetail:personPath+'/modifyDetail',
 };
 
 let phonePath=''

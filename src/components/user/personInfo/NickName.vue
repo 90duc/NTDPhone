@@ -23,10 +23,9 @@ export default {
   data() {
     return {
       modfiyPasswordPath: Paths.userSecuritys.userPassword,
-      util: this.$root,
-      user: null,   
-      text: null,
-      nickname: null
+      util: this.$root, 
+      text: "",
+      nickname: ""
     };
   },
   methods: {
@@ -38,13 +37,13 @@ export default {
       this.util.$post(
         url,
         {
-          oldName: this.user.name,
+          oldName: this.getUser().name,
           newName: this.nickname
         },
         function(res) {
           let data = res.data;
           if (data.status) {
-           that.name=that.nickname;
+           that.getUser().name=that.nickname;
            that.init();
           } else {
             that.text = data.msg;

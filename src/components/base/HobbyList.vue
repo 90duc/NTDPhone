@@ -101,7 +101,7 @@ export default {
 }
 .recom {
   text-align: left;
-  height: 40em;
+  min-height: 40em;
 }
 .title {
   display: inline-block;

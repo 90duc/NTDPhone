@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     getIcon: function(v) {
-      if (!v) v = "./static/0.jpg";
+      if (!v) v = "./static/default.jpg";
       return v;
     },
     getUser: function() {

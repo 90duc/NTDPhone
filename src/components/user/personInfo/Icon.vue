@@ -3,7 +3,7 @@
     <h3>修改头像</h3>
     <div>
       <div class='icon col-xs-12 col-sm-4 col-md-3 col-lg-3 none_padding'>
-        <img :src='user.image' />
+        <img :src='getIcon(user.image)' />
       </div>
       <div class='col-xs-12 col-sm-5 col-md-4 col-lg-4 none_padding'>
         <input type='file' @change="change($event)">
@@ -30,6 +30,10 @@ export default {
     },
     change:function(e){
         alert(e.target.value);
+    },
+    getIcon: function(v) {
+      if (!v) v = "./static/default.jpg";
+      return v;
     }
   },
   created() {

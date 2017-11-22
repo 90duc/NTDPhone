@@ -89,7 +89,7 @@ let vm=new Vue({
         let data = res.data;
         that.loginInfo.status = data.status;
         that.loginInfo.user = data.user;
-        func(data);
+        func(res);
       });
     },
     logout: function () {

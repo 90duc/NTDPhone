@@ -17,7 +17,7 @@
             <label class='label_n' @click="opBlur(data)">{{data.name}}</label>
             <span class='input_field'>
               <input type="text" v-if='data.type=="text"' v-model='data.value' :placeholder="data.placeHolder" class="form-control" :class='data.color' @click="opFocus($event,data)" />
-              <input type=" password " v-else v-model='data.value' :placeholder="data.placeHolder " class="form-control " :class='data.color' @click="opFocus($event,data)" />
+              <input type="password" v-else v-model='data.value' :placeholder="data.placeHolder " class="form-control " :class='data.color' @click="opFocus($event,data)" />
             </span>
             <span class='tip' :class='data.color'>{{data.text[data.index]}}</span>
           </p>

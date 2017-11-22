@@ -3,21 +3,11 @@
     <div class="lb_b">
     </div>
     <div class='lb_form '>
-      <div class='lb_box col-xs-offset-1 col-sm-offset-3 col-md-offset-3 col-lg-offset-4 col-xs-10 col-sm-6 col-md-5 col-lg-4'>
+      <div class='lb_box col-xs-offset-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-5 col-xs-8 col-sm-5 col-md-4 col-lg-3 none_padding'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
+        <div class="back"></div>
         <div class='lb_content'>
-          <div class="lb_title">修改邮箱</div>
-          <div class="lb_field" style='height:2em;'>
-            <span>原邮箱：</span>
-            <span>{{getUser().email}}</span>
-          </div>
-          <div class="lb_field">
-            <input class="login_pwd" type="text" v-model="newEmail" placeholder="新邮箱">
-          </div>
-          <div class='warn'>{{text}}</div>
-          <div class="lb_field">
-            <input class="btn btn-movie" type="button" value="修改" @click="modify">
-          </div>
+          {{text}}
         </div>
       </div>
     </div>
@@ -32,13 +22,21 @@ export default {
     prop: "tipBoxShow",
     event: "tipBoxShow"
   },
- methods: {
+  props: {
+    text: {
+      type: String
+    },
+    tipBoxShow:{
+      type:Boolean
+    }
+  },
+  methods: {
     close: function() {
       this.$emit("tipBoxShow", false);
     }
   },
-  created() {
-
+  watch: {
+    tipBoxShow:close
   }
 };
 </script>
@@ -62,17 +60,23 @@ export default {
   height: 100%;
   overflow: hidden;
 }
+.back {
+  background: linear-gradient(to bottom, #eee, rgba(255, 255, 255, 1));
+  height: 3em;
+}
 .lb_box {
-  height: 20em;
-  margin-top: calc((100vh - 25em) / 2);
+  text-align: center;
+  font-size: 1.2em;
+  height: 10em;
+  margin-top: calc((100vh - 10em) / 2);
   /* margin-bottom: calc((100vh - 422px) / 2); */
-  background: white;
+  background: #fff;
   border: 1px solid #bbb;
   border-radius: 5px;
 }
 .lb_box > a {
   position: absolute;
-  top: 1em;
+  top: 0.5em;
   right: 1.1em;
   font-size: 1.2em;
   color: #b4b4b4;
