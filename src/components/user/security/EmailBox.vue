@@ -52,7 +52,7 @@ export default {
       this.util.$post(
         url,
         {
-          old: this.user.email,
+          old: this.getUser().email,
           new1: this.newEmail
         },
         function(res) {
@@ -66,7 +66,7 @@ export default {
       );
     },
     check: function() {
-      let res = this.checkEmail(this.newEmail, this.user.email);
+      let res = this.checkEmail(this.newEmail, this.getUser().email);
       if (res >= 0) {
         this.text = email[res];
         return false;

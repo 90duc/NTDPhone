@@ -8,10 +8,13 @@
         <div class='lb_content'>
           <div class="lb_title">欢迎来到{{title}}，请登录</div>
           <div class="lb_field">
-            <input type="text" name="name" placeholder="邮箱">
+            <input type="text" name="name" v-model='account' placeholder="邮箱">
           </div>
           <div class="lb_field">
-            <input class="login_pwd" type="password" name="password" placeholder="密码">
+            <input class="login_pwd" type="password" v-model='password' placeholder="密码">
+          </div>
+          <div class="warn">
+            {{text}}
           </div>
           <div class="lb_field">
             <input class="btn btn-movie" type="submit" value="登录" @click="login">
@@ -33,6 +36,10 @@
 <script>
 var title = "NTD Phone";
 import Data from "@/components/default/data.js";
+import Verify from "./verify.js";
+
+let emailTexts = ["邮箱为空", "邮箱格式有误", "该邮箱已经注册"];
+let passwordTexts = ["密码为空", "密码长度应为6-20个字符", "密码不能全为相同字符"];
 
 export default {
   model: {
@@ -42,23 +49,50 @@ export default {
   data() {
     return {
       title: title,
-      util:this.$root
+      util: this.$root,
+      account: "",
+      password: "",
+      text: ""
     };
   },
   methods: {
     login: function() {
-      this.util.login(Data.user);
-      this.close();
+      if (!this.check()) return;
+
+      let that = this;
+      let data = { account: this.account, password: this.password };
+      this.util.login(data, function(data) {
+        if (data.status) {
+          that.close();
+        } else {
+          that.text = data.msg;
+        }
+      });
     },
     check: function() {
-      
+      let res = Verify.checkEmail(this.account);
+      if (res >= 0) {
+        this.text = emailTexts[res];
+        return false;
+      }
+
+      res = Verify.checkPassword(this.password);
+      if (res >= 0) {
+        this.text = passwordTexts[res];
+        return false;
+      }
+      return true;
     },
     close: function() {
       this.$emit("loginBoxShow", false);
     },
-    register:function(){     
+    register: function() {
       this.util.toRegister(this.$route);
     }
+  },
+  created() {
+    this.account = "12@qq.com";
+    this.password = "123456";
   }
 };
 </script>
@@ -121,7 +155,11 @@ export default {
   margin-top: 10px;
   /* overflow: hidden; */
 }
-
+.warn {
+  color: red;
+  padding-left: 10px;
+  height: 1.2em;
+}
 .lb_field input[type="text"],
 .lb_field input[type="password"] {
   border: 1px solid #ccc;
@@ -140,7 +178,6 @@ export default {
   background-color: green;
 }
 .lb_field .btn {
-  margin-top: 10px;
   border: none;
   width: 100%;
   height: 2.5em;
@@ -151,7 +188,6 @@ export default {
 }
 
 .lb_field-remember {
-  padding-top: 10px;
   color: #666;
   font-size: 14px;
   width: 100%;

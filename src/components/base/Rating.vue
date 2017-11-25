@@ -5,7 +5,7 @@
                 NTD评分
             </div>
             <div class="rating_self" typeof="v:Rating">
-                <strong class="ll rating_num" property="v:average">7.9</strong>
+                <strong class="ll rating_num" property="v:average">{{phone.rank}}</strong>
                 <span property="v:best" content="10.0"></span>
                 <div class="rating_right ">
                     <star type="m" :rank="phone.rank"></star>

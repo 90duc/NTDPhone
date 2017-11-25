@@ -41,6 +41,7 @@
 import myFooter from "@/components/footer/Footer.vue";
 import logo from "@/assets/logo_account.png";
 import Paths from "@/config/path.js";
+import Verify from "./verify.js";
 
 let path = {
   homePath: Paths.pages.home,
@@ -67,7 +68,7 @@ export default {
           name: "邮箱",
           placeHolder: "请输入邮箱作为账号",
           type: "text",
-          text: ["请输入您的常用邮箱", "邮箱格式有误", "该邮箱已经注册", ""],
+          text: ["请输入您的常用邮箱", "邮箱格式有误", "该邮箱已经注册"],
           value: "",
           index: 0,
           color: ""
@@ -108,7 +109,7 @@ export default {
       this.util.toLogin(url);
     },
     register: function() {
-      // if (!this.check()) return;
+       if (!this.check()) return;
       let that = this;
       let data = {
         account: this.dataInfo.email.value,
@@ -132,16 +133,16 @@ export default {
       let data = this.dataInfo;
       switch (value) {
         case data.email:
-          res = this.checkEmail(value.value);
+          res = Verify.checkEmail(value.value);
           break;
         case data.user:
-          res = this.checkUser(value.value);
+          res = Verify.checkUser(value.value);
           break;
         case data.password:
-          res = this.checkPassword(value.value);
+          res = Verify.checkPassword(value.value);
           break;
         case data.password2:
-          res = this.checkPassword2(value.value);
+          res = Verify.checkPassword2(value.value,data.password.value);
           break;
       }
       if (res < 0) res = 0;
@@ -160,14 +161,14 @@ export default {
       let data = this.dataInfo;
       let da = [data.email, data.user, data.password, data.password2];
       let op = [
-        this.checkEmail,
-        this.checkUser,
-        this.checkPassword,
-        this.checkPassword2
+        Verify.checkEmail,
+        Verify.checkUser,
+        Verify.checkPassword,
+        Verify.checkPassword2
       ];
       for (var i = 0; i < da.length; i++) {
         let value = da[i];
-        let res = op[i](value.value);
+        let res = op[i](value.value,da[2].value);
         result = result && res < 0;
         this.setColor(value, res);
       }
@@ -177,38 +178,8 @@ export default {
       value.index = res < 0 ? 0 : res;
       if (res < 0) value.color = colors.default;
       else value.color = colors.warn;
-    },
-    checkEmail: function(value) {
-      if (value == null || value == "") return 0;
-      let regx = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
-      let res = regx.test(value);
-      if (!res) return 1;
-
-      return -1;
-    },
-    checkUser: function(value) {
-      if (value == null || value == "") return 0;
-      let regx = /^[\u4e00-\u9fa5a-zA-Z0-9_]{2,14}$/;
-      let res = regx.test(value);
-      if (!res) return 1;
-      return -1;
-    },
-    checkPassword: function(value) {
-      if (value == null || value == "") return 0;
-      let regx = /^\w{6,20}$/;
-      let res = regx.test(value);
-      if (!res) return 1;
-
-      regx = /^(\w)\1{1,}$/;
-      res = regx.test(value);
-      if (res) return 2;
-      return -1;
-    },
-    checkPassword2: function(v2) {
-      if (v2 == null || v2 == "") return 0;
-      if (this.dataInfo.password.value != v2) return 1;
-      return -1;
     }
+    
   }
 };
 </script>

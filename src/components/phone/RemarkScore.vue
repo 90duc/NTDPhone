@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <button class="btn btn-success" @click="wantBuy">想买</button>
-    <button class="btn btn-warning" @click="hasBuy">已买</button>
+  <div v-if='noWant||noBuy'>
+    <button class="btn btn-success" v-if="noWant" @click="wantBuy">想买</button>
+    <button class="btn btn-warning" v-if="noBuy" @click="hasBuy">已买</button>
     <score-star type='hover' @on-click="hasBuy"></score-star>
     <transition name="tsfade" mode="out-in">
       <remark-box v-if="remarkBoxShow" v-model="remarkBoxShow" :phone="phone"></remark-box>
@@ -20,30 +20,72 @@ export default {
     RemarkBox,
     WantBox
   },
-  props: ["phone"],
+  props: ["phone", "status"],
   data() {
     return {
+      util: this.$root,
       remarkBoxShow: false,
-      wantBoxShow: false
+      wantBoxShow: false,
+      noWant: true,
+      noBuy: true
     };
   },
   methods: {
     wantBuy: function() {
-       if (!this.$root.requestLogin()) return;
-        this.wantBoxShow = true;
+      if (!this.util.requestLogin()) return;
+      this.wantBoxShow = true;
     },
     hasBuy: function(c) {
-      if (!this.$root.requestLogin()) return;
+      if (!this.util.requestLogin()) return;
       this.remarkBoxShow = true;
+    },
+    getData: function() {
+      if (!this.phone.pid) {
+        setTimeout(() => {
+          this.getData();
+        }, 50);
+        return;
+      }
+      this.initWant();
+      this.initBuy();
+    },
+    initWant: function() {
+      var url = this.$config.dataURL + this.$URL.phone.checkWanterRemark;
+      let that = this;
+
+      let data = { id: this.phone.pid };
+      this.$post(url, data, function(res) {
+        let data = res.data;
+        that.noWant = !data.status;
+      });
+    },
+    initBuy: function() {
+      var url = this.$config.dataURL + this.$URL.phone.checkBuyerRemark;
+      let that = this;
+      var data = { id: this.phone.pid };
+      this.$post(url, data, function(res) {
+        let data = res.data;
+        that.noBuy = !data.status;
+      });
+    }
+  },
+  watch: {
+    status(n, o) {
+      this.getData();
     }
   },
   created() {
-    this.$root.$on("show-remark-box", this.hasBuy);
-    this.$root.$on("show-want-box", this.wantBuy);
+    this.getData();
+    this.util.$on("wanter-refresh", this.initWant);
+    this.util.$on("buyer-refresh", this.initBuy);
+    this.util.$on("show-remark-box", this.hasBuy);
+    this.util.$on("show-want-box", this.wantBuy);
   },
   beforeDestroy() {
-    this.$root.$off("show-remark-box");
-    this.$root.$off("show-want-box");
+    this.util.$off("wanter-refresh");
+    this.util.$off("buyer-refresh");
+    this.util.$off("show-remark-box");
+    this.util.$off("show-want-box");
   }
 };
 </script>

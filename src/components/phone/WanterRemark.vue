@@ -1,9 +1,9 @@
 <template>
   <div>
-    
+
     <div class="title_remark">
-      <span>{{phone.name}}的短评 · · · · · · </span>
-      <div @click="remark" >我要写短评</div>
+      <span>{{phone.name}} 期待愿望</span>
+      <div @click="remark" v-if='noRemark'>我要写期望</div>
     </div>
     <div class="item_frame">
       <div class="item_remark" v-for="r in remarks" :key='r.name'>
@@ -30,39 +30,70 @@ export default {
   components: {
     Star
   },
-  props: ["phone",'showBox'],
+  props: ["phone", "showBox",'status'],
   data() {
-    return {    
+    return {
+      util: this.$root,
       remarks: [],
-      types: ["想买", "已买"]
+      types: ["想买", "已买"],
+      noRemark: true,
+      start: 0,
+      limit: 10
     };
   },
   methods: {
     agree: function(r) {
       r.agree++;
     },
-    remark:function(){
-       this.$root.$emit(this.showBox);
+    remark: function() {
+      this.util.$emit(this.showBox);
+    },
+    getData: function() {
+      if (!this.phone.pid) {
+        setTimeout(() => {
+          this.getData();
+        }, 50);
+        return;
+      }
+      var url = this.$config.dataURL + this.$URL.phone.checkWanterRemark;
+      let that = this;
+
+      let data = { id: this.phone.pid };
+      this.$post(url, data, function(res) {
+        let data = res.data;
+        that.noRemark = !data.status;
+      });
+       this.getRemarks();
+    },
+    getRemarks: function() {
+      let url = this.$config.dataURL + this.$URL.phone.wanterRemark;
+      let that = this;
+      this.$post(
+        url,
+        { id: this.phone.pid, start: this.start, limit: this.limit },
+        function(res) {
+          let data = res.data;
+          that.remarks = data;
+        }
+      );
+     
     }
   },
-  mounted() {
-    var p = {
-      id: 1,
-      name: "张三",
-      type: 0,
-      rank: 8.7,
-      time: "2017-8-9",
-      agree: 178,
-      text: "很好，非常好"
-    };
-    this.remarks.push(Data.cloneObject(p));
-    this.remarks.push(Data.cloneObject(p));
-    this.remarks.push(Data.cloneObject(p));
+   watch: {
+    status(n,o){
+      this.getData();
+    }
+  },
+  created() {
+    this.getData();
+    this.util.$on("wanter-refresh", this.getData);
+  },
+  beforeDestroy() {
+    this.util.$off("wanter-refresh");
   }
 };
 </script>
 <style scoped>
-
 .title_remark {
   padding-top: 20px;
 }
@@ -78,18 +109,20 @@ export default {
   line-height: 26px;
   color: #ca6445;
   background: #fae9da;
-  cursor:pointer;
+  cursor: pointer;
 }
 .title_remark div:hover {
   color: #d9896a;
 }
 .item_frame {
-  padding-top: 10px;
+  margin-top: 10px;
+  margin-bottom: 2em;
+  border-top: 1px solid #ddd;
 }
 .item_remark {
   color: #494949;
   padding: 15px 0px;
-  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 .remark_header {
   font-size: 13px;

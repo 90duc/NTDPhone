@@ -24,6 +24,12 @@ let phone={
    company:phonePath+'/company',
    detail:phonePath+'/detail',
    images:phonePath+'/images',
+   saveBuyerRemark:phonePath+'/saveBuyer',
+   saveWanterRemark:phonePath+'/saveWanter',
+   wanterRemark:phonePath+'/wanterRemark',
+   checkWanterRemark:phonePath+'/checkWanter',
+   buyerRemark:phonePath+'/buyerRemark',
+   checkBuyerRemark:phonePath+'/checkBuyer',
    
 };
 export default{

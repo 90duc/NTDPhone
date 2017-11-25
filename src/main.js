@@ -14,6 +14,22 @@ import '@/assets/bootstrap/js/bootstrap.min.js'
 import '@/assets/bootstrap/css/bootstrap.min.css'
 import 'babel-polyfill'
 
+function bodySize() {
+  let w = document.body.clientWidth;
+  let size;
+  if (w >= 1200) {
+    size = 6;
+  } else if (w >= 992) {
+    size = 6;
+  } else if (w >= 768) {
+    size = 4;
+  }else{
+    size = 3;
+  }
+  return size;
+}
+Config.lineNumber=bodySize();
+
 axios.defaults.withCredentials = true;
 Vue.prototype.$post = function (url, params, func) {
   let param = new URLSearchParams();
@@ -31,12 +47,12 @@ Vue.prototype.$URL = URL;
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-let vm=new Vue({
+let vm = new Vue({
   router,
   template: '<App/>',
   data() {
     return {
-      isInit:false,
+      isInit: false,
       loginInfo: {
         status: false,
         user: null
@@ -61,16 +77,16 @@ let vm=new Vue({
       });
     },
     checkLogin: function () {
-     
+
       return this.loginInfo.status;
     },
     isNoLogin: function () {
-       if(this.isInit)
+      if (this.isInit)
         return !this.loginInfo.status;
-        else{
-          return false;
-        }
-     },
+      else {
+        return false;
+      }
+    },
     login: function (data, func) {
       let url = this.$config.dataURL + this.$URL.person.login;
       let that = this;
@@ -79,6 +95,7 @@ let vm=new Vue({
         that.loginInfo.status = data.status;
         that.loginInfo.user = data.user;
         func(data);
+
       });
 
     },
@@ -89,7 +106,8 @@ let vm=new Vue({
         let data = res.data;
         that.loginInfo.status = data.status;
         that.loginInfo.user = data.user;
-        func(res);
+        func(data);
+
       });
     },
     logout: function () {
@@ -100,23 +118,24 @@ let vm=new Vue({
         that.loginInfo.status = false;
         that.loginInfo.user = null;
         that.$emit('logout');
+
       });
 
     },
     getUser: function () {
-      if(!this.isInit){
-         return {};
+      if (!this.isInit) {
+        return {};
       }
-      else if(this.loginInfo.user==null){
+      else if (this.loginInfo.user == null) {
         this.toLogin(this.$route);
         return;
       }
       return this.loginInfo.user;
     },
     getUserInfo: function () {
-      if(this.loginInfo.user==null){
-         return {};
-      }    
+      if (this.loginInfo.user == null) {
+        return {};
+      }
       return this.loginInfo.user;
     },
     getLoginInfo: function () {
@@ -136,12 +155,12 @@ let vm=new Vue({
     getData: function () {
       let url = this.$config.dataURL + this.$URL.person.checkLogin;
       let that = this;
-      this.$post(url,{}, function (res) {
-        let data=res.data;
-          that.isInit=true;
-          that.loginInfo.status = data.status;
-          that.loginInfo.user = data.user;
-        }
+      this.$post(url, {}, function (res) {
+        let data = res.data;
+        that.isInit = true;
+        that.loginInfo.status = data.status;
+        that.loginInfo.user = data.user;
+      }
       );
     }
 

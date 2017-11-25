@@ -29,7 +29,7 @@
 import Config from "@/config/config";
 import LogoPNG from "@/assets/logo.png";
 import Paths from "@/config/path.js";
-import LoginBox from "@/components/phone/LoginBox.vue";
+import LoginBox from "@/components/login/LoginBox.vue";
 
 let logo_var = {
   logo_path: LogoPNG,

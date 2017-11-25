@@ -36,7 +36,9 @@ export default {
     }
   },
   watch: {
-    tipBoxShow:close
+    tipBoxShow(v){
+      alert('a');
+    }
   }
 };
 </script>

@@ -15,6 +15,9 @@ import StarWhite from "@/assets/star_hollow_hover.png";
 import StarYellow from "@/assets/star_onmouseover.png";
 
 export default {
+  model:{
+    event:'score'
+  },
   props:['type'],
   data() {
     return {
@@ -41,6 +44,7 @@ export default {
       }
         
       this.fouseIndex = i;
+      this.$emit("score",i*2);
       this.fouse(i);
     },
     clear: function() {

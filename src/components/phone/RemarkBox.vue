@@ -4,16 +4,17 @@
       <div class="lb_border"></div>
       <div class='lb_box'>
         <a class="j_close_dialog dui-dialog-close" @click="close">X</a>
-        <div class="lb_title">评价{{phone.name+'/'+phone.company}}</div>
+        <div class="lb_title">评价{{phone.name+'/'+phone.cid.name}}</div>
         <div class="lb_field">
           <div class="score">
             <span>评分：</span>
-            <score-star></score-star>
+            <score-star v-model="score"></score-star>
           </div>
           <div>写下你的评论：</div>
-          <textarea :placeholder='phone.name'></textarea>
+          <textarea :placeholder='phone.name' v-model="info"></textarea>
         </div>
         <div class="lb_save">
+          <span style='color:red'>{{text}}</span>
           <button class="btn btn-success" @click="finish">保存</button>
         </div>
       </div>
@@ -23,7 +24,6 @@
 <script>
 import ScoreStar from "@/components/base/ScoreStar.vue";
 
-
 export default {
   components: {
     ScoreStar
@@ -32,18 +32,51 @@ export default {
     prop: "remarkBoxShow",
     event: "remarkBoxShow"
   },
-  props:['phone'],
+  props: ["phone"],
   data() {
     return {
+      util: this.$root,
+      info: "",
+      score: 0,
+      text: ""
     };
   },
   methods: {
-    check: function() {},
+    check: function() {
+      if (this.score == 0) {
+        this.text = "给下您的评分";
+        return false;
+      }
+      if (this.info == "") {
+        this.text = "写下您的评论";
+        return false;
+      }
+
+      return true;
+    },
     close: function() {
       this.$emit("remarkBoxShow", false);
     },
     finish: function() {
-      this.close();
+      // if (!this.check()) return;
+
+      let data = {
+        pid: this.phone.pid,
+        uid: this.util.getUser().uid,
+        text: this.info,
+        rank: this.score
+      };
+      let url = this.$config.dataURL + this.$URL.phone.saveBuyerRemark;
+      let that = this;
+      this.$post(url, data, function(res) {
+        let data = res.data;
+        if (data.status) {        
+          that.close();
+          that.util.$emit("buyer-refresh");
+        } else {
+          that.text = data.msg;
+        }
+      });
     }
   }
 };
@@ -104,23 +137,21 @@ export default {
   color: #072;
 }
 .lb_field {
-  padding:10px 20px;
+  padding: 10px 20px;
   height: calc(100% - 6em);
   overflow: hidden;
 }
-.lb_field .score{
-  padding-bottom:10px;
+.lb_field .score {
+  padding-bottom: 10px;
   vertical-align: center;
-  
 }
-textarea{
-  margin-top:5px;
+textarea {
+  margin-top: 5px;
   width: 100%;
   height: 13em;
   resize: none;
-  border-radius:4px; 
+  border-radius: 4px;
   padding: 2px 5px;
-  
 }
 
 .lb_save {

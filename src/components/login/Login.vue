@@ -64,8 +64,8 @@ export default {
       logo: logo,
       path: path,
       dataInfo: {
-        account: "12@qq.com",
-        password: "123456"
+        account: "",
+        password: ""
       },
       tipInfo: "",
       util: this.$root
@@ -74,18 +74,18 @@ export default {
   methods: {
     login: function() {
       //if (!this.check()) return;
-      let data={
-        account:this.dataInfo.account,
-        password:this.dataInfo.password
-      }
+      let data = {
+        account: this.dataInfo.account,
+        password: this.dataInfo.password
+      };
       let that = this;
       this.util.login(data, function(data) {
         if (data.status) {
           var url = that.$route.params.redirect;
           if (url) that.$router.push({ path: url.path, query: url.query });
           else that.$router.push({ path: "/" });
-        }else{
-          that.tipInfo=data.msg;
+        } else {
+          that.tipInfo = data.msg;
         }
       });
     },
@@ -126,6 +126,10 @@ export default {
       if (res) return 2;
       return -1;
     }
+  },
+  created() {
+    this.dataInfo.account = "12@qq.com";
+    this.dataInfo.password = "123456";
   }
 };
 </script>
