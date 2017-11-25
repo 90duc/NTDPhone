@@ -55,7 +55,7 @@ export default {
         key: "",
         value: "",
         start: 0,
-        limit: 18
+        limit: this.$config.lineNumber*2
       }
     };
   },

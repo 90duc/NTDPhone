@@ -50,7 +50,7 @@ export default {
       title_index: 0,
       hobbyList: [],
       start: 0,
-      limit: 10
+      limit: this.$config.lineNumber*2
     };
   },
   methods: {
@@ -101,7 +101,7 @@ export default {
 }
 .recom {
   text-align: left;
-  min-height: 40em;
+  min-height: 30em;
 }
 .title {
   display: inline-block;

@@ -33,7 +33,7 @@ export default {
       params: {
         text: "",
         start: 0,
-        limit: 18
+        limit: this.$config.lineNumber*3
       }
     };
   },

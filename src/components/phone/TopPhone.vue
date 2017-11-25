@@ -7,14 +7,14 @@
                 <tbody>
                     <tr class="item">
                         <td class="col-xs-5 col-sm-4 col-md-4 col-lg-4 " valign="top" style="padding-left:0px;">
-                            <router-link :to="paths.phoneDetail+'/'+phone.id">
+                            <router-link :to="phoneDetailPath+'/'+phone.pid">
                                 <img :src="phone.image" width="100%">
                             </router-link>
                         </td>
                         <td class="col-xs-7 col-sm-8 col-md-8 col-lg-8 no_padding" valign="top">
                             <div class="pl2">
                                 <span class="no_class">No{{i+1}}</span>
-                                <router-link :to="paths.phoneDetail+'/'+phone.id">
+                                <router-link :to="phoneDetailPath+'/'+phone.pid">
                                     {{phone.company}} /
                                     <span>{{phone.name}}</span>
                                 </router-link>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       phones: [],
-      paths: Paths,
+      phoneDetailPath: Paths.pages.phoneDetail,
       loadStatus: { status: true, text: loadText.waiting },
       params: {
         type: this.type,
