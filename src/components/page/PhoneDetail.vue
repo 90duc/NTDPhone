@@ -5,7 +5,7 @@
         <span>{{phone.name}}</span>
         <span class="year">({{getYear(phone.year)}})</span>
         <router-link :to='pic3DPath+"?id="+phone.pid'>
-          <span style="color:green;padding-left:5px;font-size:.5em;">3D展示</span>
+          <span style="color:green;padding-left:5px;font-size:.5em;display:inline-block">3D展示</span>
         </router-link>
       </div>
       <div class="row">

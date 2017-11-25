@@ -2,7 +2,7 @@
   <div v-if='noWant||noBuy'>
     <button class="btn btn-success" v-if="noWant" @click="wantBuy">想买</button>
     <button class="btn btn-warning" v-if="noBuy" @click="hasBuy">已买</button>
-    <score-star type='hover' @on-click="hasBuy"></score-star>
+    <score-star type='hover' @on-click="find"></score-star>
     <transition name="tsfade" mode="out-in">
       <remark-box v-if="remarkBoxShow" v-model="remarkBoxShow" :phone="phone"></remark-box>
       <Want-box v-if="wantBoxShow" v-model="wantBoxShow" :phone="phone"></Want-box>
@@ -35,9 +35,13 @@ export default {
       if (!this.util.requestLogin()) return;
       this.wantBoxShow = true;
     },
-    hasBuy: function(c) {
+    hasBuy: function() {
       if (!this.util.requestLogin()) return;
       this.remarkBoxShow = true;
+    },
+    find: function() {
+      if (this.noBuy) this.hasBuy();
+      else this.wantBuy();
     },
     getData: function() {
       if (!this.phone.pid) {

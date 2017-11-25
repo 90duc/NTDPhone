@@ -15,7 +15,7 @@
     <div id="billboard">
       <pop-box ref='PopBox'></pop-box>
       <div class="row">
-        <router-link :to='phoneDetailPath+"/"+phone.id' v-for="(phone,i) in hobbyList" :key="i">
+        <router-link :to='phoneDetailPath+"/"+phone.pid' v-for="(phone,i) in hobbyList" :key="i">
           <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" @mouseleave="disableDetail()" ref='phoneList'>
             <div class="image">
               <img :src="phone.image" />

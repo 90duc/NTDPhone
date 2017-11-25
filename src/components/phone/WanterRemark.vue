@@ -3,7 +3,8 @@
 
     <div class="title_remark">
       <span>{{phone.name}} 期待愿望</span>
-      <div @click="remark" v-if='noRemark'>我要写期望</div>
+      <div @click="remark" class="button" v-if='noRemark'>我要写期望</div>
+      <div class="clearfix"></div>
     </div>
     <div class="item_frame">
       <div class="item_remark" v-for="r in remarks" :key='r.name'>
@@ -102,7 +103,7 @@ export default {
   font-size: 18px;
   line-height: 26px;
 }
-.title_remark div {
+.title_remark .button {
   float: right;
   height: 26px;
   padding: 0 12px;
