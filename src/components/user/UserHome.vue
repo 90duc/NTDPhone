@@ -2,7 +2,7 @@
   <div>
     <div class='aside col-xs-5 col-sm-4 col-md-3 col-lg-3 none_padding'>
       <div class='logo'>
-        <img :src='getIcon(getUser().image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+        <img id='imageIcon' :src='getIcon(getUser().image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 " onerror="javascript:this.src='./static/default.jpg'">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 info">
           <h2 class='name'>{{getUser().name}}</h2>
           <router-link :to='nicknamePath'>
@@ -94,7 +94,7 @@ export default {
   methods: {
     getIcon: function(v) {
       if (!v) v = "./static/default.jpg";
-      return v;
+      return this.$config.imageURL+'/'+v;
     },
     getUser: function() {
       return this.util.getUser();
@@ -117,6 +117,9 @@ export default {
       this.dataInfo.animal = DateInfo.getAnimal(d.getFullYear());
       this.dataInfo.star = DateInfo.getStar(d.getMonth(), d.getDay());
     }
+  },
+  mounted () {
+     $('#imageIcon').height($('#imageIcon').width());
   },
   created() {
     this.getData();
@@ -149,7 +152,7 @@ export default {
   }
 }
 .name {
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: 400;
   color: #444;
   font-size: 1.2em;

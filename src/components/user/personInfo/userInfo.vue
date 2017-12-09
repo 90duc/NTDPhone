@@ -159,10 +159,10 @@ export default {
       this.date.day = day;
     },
 
-    getAge() {
+    getAge: function() {
       return DateInfo.getAge(this.userInfo.birthday.year);
     },
-    getAnimal() {
+    getAnimal: function() {
       return DateInfo.getAnimal(this.userInfo.birthday.year);
     },
     getStar: function() {

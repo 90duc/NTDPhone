@@ -42,6 +42,21 @@ Vue.prototype.$post = function (url, params, func) {
     });
 }
 Vue.prototype.$get = axios.get;
+Vue.prototype.$formPost=function (url, params, func) {
+  
+    let formdata = new FormData();
+    for (var i in params)
+    formdata.append(i,params[i]);
+
+    axios({
+        url:url,
+        method:'post',
+        data:formdata,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(func).catch(function (error) {
+      console.error(error);
+    });
+}
 Vue.prototype.$config = Config;
 Vue.prototype.$URL = URL;
 Vue.config.productionTip = false

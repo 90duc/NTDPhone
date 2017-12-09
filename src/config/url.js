@@ -13,6 +13,7 @@ let person={
     modifyUserName:personPath+'/nickname',
     modifyInfo:personPath+'/modifyInfo',
     modifyDetail:personPath+'/modifyDetail',
+    uploadIcon:personPath+'/uploadIcon',
 };
 
 let phonePath=''
