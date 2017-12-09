@@ -143,7 +143,7 @@ let vm = new Vue({
       }
       else if (this.loginInfo.user == null) {
         this.toLogin(this.$route);
-        return;
+        return {};
       }
       return this.loginInfo.user;
     },

@@ -2,7 +2,12 @@
   <div>
     <div class='aside col-xs-5 col-sm-4 col-md-3 col-lg-3 none_padding'>
       <div class='logo'>
-        <img id='imageIcon' :src='getIcon(getUser().image)' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 " onerror="javascript:this.src='./static/default.jpg'">
+        <div id='imageIcon' class="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+          <img :src='getIcon(getUser().image)' onerror="javascript:this.src='./static/default.jpg'">
+          <router-link :to="modifyIconPath">
+            <div class='modify_icon'>修改头像</div>
+          </router-link>
+        </div>
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 info">
           <h2 class='name'>{{getUser().name}}</h2>
           <router-link :to='nicknamePath'>
@@ -85,6 +90,7 @@ export default {
       userInfoPath: Paths.userInfos.userInfo,
       userEmailPath: Paths.userSecuritys.userEmail,
       userPasswordPath: Paths.userSecuritys.userPassword,
+      modifyIconPath: Paths.userInfos.userIcon,
       util: this.$root,
       user: {},
       userInfo: {},
@@ -94,7 +100,7 @@ export default {
   methods: {
     getIcon: function(v) {
       if (!v) v = "./static/default.jpg";
-      return this.$config.imageURL+'/'+v;
+      return this.$config.imageURL + "/" + v;
     },
     getUser: function() {
       return this.util.getUser();
@@ -118,8 +124,11 @@ export default {
       this.dataInfo.star = DateInfo.getStar(d.getMonth(), d.getDay());
     }
   },
-  mounted () {
-     $('#imageIcon').height($('#imageIcon').width());
+  mounted() {
+    $("#imageIcon").height($("#imageIcon").width());
+    window.onresize = function() {
+      $("#imageIcon").height($("#imageIcon").width());
+    };
   },
   created() {
     this.getData();
@@ -137,12 +146,28 @@ export default {
   border-bottom: 1px solid #ddd;
   padding: 7% 5%;
 }
-.logo img {
+#imageIcon {
   padding: 0px;
-  height: 30vw;
-  max-height: 10em;
   margin-right: 12px;
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
+#imageIcon img {
+  width: 100%;
+  height: 100%;
+}
+.modify_icon {
+  position: absolute;
+  bottom: 0;
+  height: 25px;
+  background: #000;
+  color: #fff;
+  opacity: 0.4;
+  text-align: center;
+  width: 100%;
+}
+
 .info {
   padding: 0px;
 }
@@ -162,7 +187,8 @@ export default {
 .info div {
   padding: 5px 0px;
 }
-a:hover {
+a:hover,
+.modify_icon:hover {
   color: #1eb009;
 }
 

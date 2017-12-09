@@ -1,9 +1,10 @@
 <template>
     <div class='logo_frame' id='logo'>
         <div class="left_arrow" @click="left"></div>
-        <a v-for="img in imgs" :key="img" class="default_img" ref='images'>
-            <img :src="img">
+        <a v-for="i in imgs.length" :key="i" class="default_img" ref='images'>         
+            <img  :src="imgs[i-1]">
         </a>
+      
         <div class="right_arrow" @click="right"></div>
         <div class="page_size">{{imageIndex+1}}/{{imgs.length}}</div>
     </div>

@@ -17,8 +17,8 @@
 let items=[
     'screenSize', 
     'pixels',
-    'forecamera',
     'backcamera',
+    'forecamera',
     'battery',
     'batteryType',
     'core',

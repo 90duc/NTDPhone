@@ -49,6 +49,9 @@ export default {
   },
   mounted () {
     $('#imageIcon').height($('#imageIcon').width()*0.8);
+     window.onresize = function() {
+      $('#imageIcon').height($('#imageIcon').width()*0.8);
+    };
   }
 };
 </script>

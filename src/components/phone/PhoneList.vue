@@ -9,7 +9,7 @@
             </div>
             <div>
               <span class="phone_name">{{phone.name}}</span>
-              <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
+              <span class="subject-rate">{{getRank(phone.rank)}}</span>
             </div>
           </div>
       </router-link>
@@ -45,6 +45,11 @@ export default {
     };
   },
   methods: {
+    getRank:function(v){
+      if(v){
+        return v.toFixed(1);
+      }
+    },
     loadMore: function() {
       this.loadStatus.text = loadText.loading;
       this.getData();

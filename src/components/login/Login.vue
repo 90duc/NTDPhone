@@ -128,8 +128,8 @@ export default {
     }
   },
   created() {
-    this.dataInfo.account = "12@qq.com";
-    this.dataInfo.password = "123456";
+    // this.dataInfo.account = "12@qq.com";
+    // this.dataInfo.password = "123456";
   }
 };
 </script>

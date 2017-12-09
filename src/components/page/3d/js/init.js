@@ -454,6 +454,7 @@ function getData(){
 function init(images, imagesPath){
     var  data=getData();
     for (var i in images) {
+       
         data.imgdata[i].img = images[i];
       }
     data.options.imagesPath = imagesPath;
