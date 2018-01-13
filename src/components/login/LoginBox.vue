@@ -52,6 +52,7 @@ export default {
       util: this.$root,
       account: "",
       password: "",
+      preLogin:"",
       text: ""
     };
   },
@@ -60,8 +61,12 @@ export default {
       if (!this.check()) return;
 
       let that = this;
-      let data = { account: this.account, password: this.password };
-      this.util.login(data, function(data) {
+      let data = {
+        account: this.account,
+        password: this.password,
+        time:new Date().getTime()
+      };
+      this.util.login(data,this.preLogin,function(data) {
         if (data.status) {
           that.close();
         } else {
@@ -91,8 +96,12 @@ export default {
     }
   },
   created() {
-    this.account = "12@qq.com";
-    this.password = "123456";
+    //this.account = "12@qq.com";
+    //this.password = "123456";
+    var that=this;
+    this.util.preLogin(function(p){
+       that.preLogin=p;
+    });
   }
 };
 </script>

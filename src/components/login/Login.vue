@@ -68,6 +68,7 @@ export default {
         password: ""
       },
       tipInfo: "",
+      preLogin:"",
       util: this.$root
     };
   },
@@ -76,10 +77,11 @@ export default {
       //if (!this.check()) return;
       let data = {
         account: this.dataInfo.account,
-        password: this.dataInfo.password
+        password: this.dataInfo.password,
+        time:new Date().getTime()
       };
       let that = this;
-      this.util.login(data, function(data) {
+      this.util.login(data, this.preLogin,function(data) {
         if (data.status) {
           var url = that.$route.params.redirect;
           if (url) that.$router.push({ path: url.path, query: url.query });
@@ -128,7 +130,11 @@ export default {
     }
   },
   created() {
-    // this.dataInfo.account = "12@qq.com";
+    var that=this;
+    this.util.preLogin(function(p){
+       that.preLogin=p;
+    })
+    //this.dataInfo.account = "12@qq.com";
     // this.dataInfo.password = "123456";
   }
 };

@@ -2,6 +2,7 @@
 let personPath='';
 let person={
     checkLogin:personPath+'/checkLogin',
+    preLogin:personPath+'/preLogin',
     login:personPath+'/login',
     logout:personPath+'/logout',
     register:personPath+'/register',

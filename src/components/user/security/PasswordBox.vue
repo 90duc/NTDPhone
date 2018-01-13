@@ -27,6 +27,7 @@
 </template>
 <script>
 import Data from "@/components/default/data.js";
+import MD5 from '@/util/md5.js';
 
 let password = ["新密码为空", "新密码长度应为6-20个字符", "新密码不能全为相同字符"];
 let password2 = ["确认密码为空", "两次新密码输入不一致"];
@@ -42,6 +43,7 @@ export default {
       oldPassword: "",
       newPassword: "",
       newPassword2: "",
+      preLogin:"",
       text: ""
     };
   },
@@ -52,12 +54,15 @@ export default {
       }
       let that=this;
       let url = this.$config.dataURL + this.$URL.person.modifyPassword;
+      var time =new Date().getTime();
+      var mdp=this.util.getSafeData(this.oldPassword,this.preLogin,time);
       this.util.$post(
         url,
         {
-          old: this.oldPassword,
-          new1: this.newPassword,
-          new2: this.newPassword2
+          old:mdp ,
+          time:time, 
+          new1: MD5.md5(this.newPassword).toUpperCase(),
+          new2: MD5.md5(this.newPassword2).toUpperCase()
         },
         function(res) {
           let data=res.data;
@@ -86,6 +91,12 @@ export default {
         this.text = password2[res];
         return false;
       }
+
+       res = this.checkPassword2(this.oldPassword, this.newPassword2);
+      if (res < 0) {
+        this.text = "新旧密码相同^^";
+        return false;
+      }
       return true;
     },
     checkPassword: function(value) {
@@ -107,6 +118,11 @@ export default {
     close: function() {
       this.$emit("passwordBoxShow", false);
     }
+  },created () {
+     var that=this;
+     this.util.preLogin(function(p){
+       that.preLogin=p;
+    });
   }
 };
 </script>

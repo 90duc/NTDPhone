@@ -102,8 +102,17 @@ let vm = new Vue({
         return false;
       }
     },
-    login: function (data, func) {
+    preLogin:function(func){
+      let url = this.$config.dataURL + this.$URL.person.preLogin;
+      let that = this;
+      this.$post(url,{}, function (res) {
+
+        func(res.data);
+      });
+    },
+    login: function (data, preLogin,func) {
       let url = this.$config.dataURL + this.$URL.person.login;
+      data.password=this.getSafeData(data.password,preLogin,data.time);
       let that = this;
       this.$post(url, data, function (res) {
         let data = res.data;
@@ -117,6 +126,8 @@ let vm = new Vue({
     register: function (data, func) {
       let url = this.$config.dataURL + this.$URL.person.register;
       let that = this;
+      data.password=MD5.md5(data.password).toUpperCase();
+      data.password2=MD5.md5(data.password2).toUpperCase();
       this.$post(url, data, function (res) {
         let data = res.data;
         that.loginInfo.status = data.status;
@@ -156,16 +167,9 @@ let vm = new Vue({
     getLoginInfo: function () {
       return this.loginInfo;
     },
-    getSafeData: function (data) {
-      let sha1 = SHA1.sha1(data.password);
-
-      let sAcount = SHA1.sha1(data.account);
-      document.writeln(sAcount);
-      let msAcount = MD5.md5(sAcount);
-      let time = new Date().getMilliseconds() + '';
-      let stime = MD5.md5(time);
-      let pass = Base64.encode(msAcount + sha1 + '0000' + stime);
-      data.password = pass;
+    getSafeData: function (password,preLogin,time) {
+       password=MD5.md5(password).toUpperCase();
+       return MD5.md5(password+preLogin+time).toUpperCase();
     },
     getData: function () {
       let url = this.$config.dataURL + this.$URL.person.checkLogin;
@@ -182,6 +186,7 @@ let vm = new Vue({
   },
   components: { App },
   created() {
+
     this.getData();
   }
 });

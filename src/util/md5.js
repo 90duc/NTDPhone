@@ -1,5 +1,4 @@
 
-
 /*
  * JavaScript MD5
  * https://github.com/blueimp/JavaScript-MD5
@@ -20,8 +19,7 @@
  */
 
 /* global define */
-let MD5={};
-
+var MD5={};
 ;(function ($) {
   'use strict'
 
@@ -282,6 +280,5 @@ let MD5={};
   }
 })(MD5);
 
-export default{
-   md5:MD5.md5
-}
+
+export default { md5:MD5.md5 };
