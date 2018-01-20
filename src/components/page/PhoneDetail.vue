@@ -28,8 +28,7 @@
       </div>
       <remark-score :phone="phone" :status='util.checkLogin()' class="remark-score"></remark-score>
       <tag-list :phone='phone'></tag-list>
-      <buyer-remark :phone="phone" :status='util.checkLogin()' :showBox='showRemarkBox' ></buyer-remark>
-      <wanter-remark :phone="phone" :status='util.checkLogin()' :showBox='showWantBox' ></wanter-remark>
+      <remark :phone="phone" :status='util.checkLogin()' :showBox='showRemarkBox' ></remark>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="tags">
@@ -51,15 +50,14 @@ import TagAttr from '@/components/base/TagAttr.vue'
 import TagList from '@/components/base/TagList.vue'
 import Rating from '@/components/base/Rating.vue'
 import RemarkScore from '@/components/phone/RemarkScore.vue'
-import WanterRemark from '@/components/phone/WanterRemark.vue'
-import BuyerRemark from '@/components/phone/BuyerRemark.vue'
+import Remark from '@/components/phone/BuyerRemark.vue'
 import ImgFrame from '@/components/phone/ImgFrame.vue'
 import Data from '@/components/default/data.js'
 import Paths from "@/config/path.js";
 
 export default {
   components: {
-        TagAttr,TagList,Rating,WanterRemark,BuyerRemark,RemarkScore,ImgFrame
+        TagAttr,TagList,Rating,Remark,RemarkScore,ImgFrame
   },
   data () {
     return {

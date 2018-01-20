@@ -28,10 +28,8 @@ let phone={
    images:phonePath+'/images',
    saveBuyerRemark:phonePath+'/saveBuyer',
    saveWanterRemark:phonePath+'/saveWanter',
-   wanterRemark:phonePath+'/wanterRemark',
-   checkWanterRemark:phonePath+'/checkWanter',
-   buyerRemark:phonePath+'/buyerRemark',
-   checkBuyerRemark:phonePath+'/checkBuyer',
+   remark:phonePath+'/remark',
+   checkRemark:phonePath+'/checkRemark',
    
 };
 export default{

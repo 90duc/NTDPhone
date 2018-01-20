@@ -2,14 +2,13 @@
   <div>
     <div class="title_remark">
       <span>{{phone.name}} 专属评价</span>
-      <div @click="remark" class="button" v-if='noRemark'>我要写评论</div>
       <div class="clearfix"></div>
     </div>
     <div class="item_frame">
       <div class="item_remark" v-for="r in remarks" :key='r.name'>
         <div class="remark_header">
           <span>
-            <span class="r_blue">{{r.name}}</span>&nbsp;{{types[r.type]}}&nbsp;
+            <span class="r_blue">{{r.name}}</span>&nbsp;&nbsp;<span style="color:#5cb85c">{{types[r.type]}}</span>&nbsp;&nbsp;
             <star type='s' :rank="r.rank"></star>&nbsp;
             <span class="r_time">{{r.time}}</span>
           </span>
@@ -55,7 +54,7 @@ export default {
         }, 50);
         return;
       }
-      var url = this.$config.dataURL + this.$URL.phone.checkBuyerRemark;
+      var url = this.$config.dataURL + this.$URL.phone.checkRemark;
       let that = this;
 
       let data = { id: this.phone.pid };
@@ -67,7 +66,7 @@ export default {
      this.getRemarks();
     },
     getRemarks:function () {
-      let url = this.$config.dataURL + this.$URL.phone.buyerRemark;
+      let url = this.$config.dataURL + this.$URL.phone.remark;
       let that=this;
       this.$post(
         url,
@@ -86,10 +85,10 @@ export default {
   },
   created() {
     this.getData();
-   this.util.$on("buyer-refresh", this.getData);
+   this.util.$on("remark-refresh", this.getData);
   },
   beforeDestroy() {
-    this.util.$off("buyer-refresh");
+    this.util.$off("remark-refresh");
   }
 };
 </script>

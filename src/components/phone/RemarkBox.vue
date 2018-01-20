@@ -72,7 +72,7 @@ export default {
         let data = res.data;
         if (data.status) {        
           that.close();
-          that.util.$emit("buyer-refresh");
+          that.util.$emit("remark-refresh");
         } else {
           that.text = data.msg;
         }
