@@ -9,7 +9,7 @@
         <div class="remark_header">
           <span>
             <span class="r_blue">{{r.name}}</span>&nbsp;&nbsp;<span style="color:#5cb85c">{{types[r.type]}}</span>&nbsp;&nbsp;
-            <star type='s' :rank="r.rank"></star>&nbsp;
+            <star type='s' :rank="r.rank*2"></star>&nbsp;
             <span class="r_time">{{r.time}}</span>
           </span>
           <div class="r_agree">{{r.agree}}&nbsp;
@@ -34,6 +34,7 @@ export default {
     return {
       util: this.$root,
       remarks: [],
+      totalSize:0,
       types: ["想买", "已买"],
       noRemark: true,
       start: 0,
@@ -73,7 +74,8 @@ export default {
         { id: this.phone.pid, start: this.start, limit: this.limit },
         function(res) {
           let data = res.data;
-          that.remarks = data;
+          that.totalSize=data.size;
+          that.remarks = data.list;
         }
       );
     }
