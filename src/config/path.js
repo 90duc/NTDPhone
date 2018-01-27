@@ -14,6 +14,7 @@ let pages={
     topDetail: homePath + '/topList',
     searchBy: homePath + '/searchBy',
     hobbyList: homePath + '/hobbyList',
+    remarkPhone:homePath + '/remarkPhone'
 };
 
 let users={

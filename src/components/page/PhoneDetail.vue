@@ -3,21 +3,24 @@
     <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
       <div class="phone_title">
         <span>{{phone.name}}</span>
-        <span class="year">({{getYear(phone.year)}})</span>
+        <span class="year" v-if='getYear(phone.year)'>({{getYear(phone.year)}})</span>
         <router-link :to='pic3DPath+"?id="+phone.pid'>
           <span style="color:green;padding-left:5px;font-size:.5em;display:inline-block">3D展示</span>
         </router-link>
       </div>
       <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4 none_padding">
-         <img-frame :imgs="imgs"></img-frame>
+          <img-frame :imgs="imgs"></img-frame>
         </div>
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
           <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-              <p>品牌：<router-link :to="searchByPath+'/company/'+getCompany(phone.cid)+'?id='+getCid(phone.cid)">{{getCompany(phone.cid)}}</router-link></p>
+              <p>品牌：
+                <router-link :to="searchByPath+'/company/'+getCompany(phone.cid)+'?id='+getCid(phone.cid)">{{getCompany(phone.cid)}}</router-link>
+              </p>
               参考报价：
-              <span class='price'>￥{{phone.price}}</span>
+              <span class='price' v-if='phone.price'>￥{{phone.price}}</span>
+              <span class='price' style="color:gray" v-else>暂无数据</span>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
               <rating :phone="phone"></rating>
@@ -28,7 +31,8 @@
       </div>
       <remark-score :phone="phone" :status='util.checkLogin()' class="remark-score"></remark-score>
       <tag-list :phone='phone'></tag-list>
-      <remark :phone="phone" :status='util.checkLogin()' :showBox='showRemarkBox' ></remark>
+      <recommend :url='recommend.url' :params='recommend.params'></recommend>
+      <remark :phone="phone" :status='util.checkLogin()' :showBox='showRemarkBox'></remark>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
       <div class="tags">
@@ -52,15 +56,23 @@ import Rating from '@/components/base/Rating.vue'
 import RemarkScore from '@/components/phone/RemarkScore.vue'
 import Remark from '@/components/phone/BuyerRemark.vue'
 import ImgFrame from '@/components/phone/ImgFrame.vue'
+import Recommend from "@/components/base/Recommend.vue";
 import Data from '@/components/default/data.js'
 import Paths from "@/config/path.js";
 
 export default {
   components: {
-        TagAttr,TagList,Rating,Remark,RemarkScore,ImgFrame
+        TagAttr,TagList,Rating,Remark,RemarkScore,ImgFrame,Recommend
   },
   data () {
     return {
+       recommend: {
+        url: this.$URL.phone.recommend,
+        params:{
+          start:0,
+          limit: this.$config.lineNumber * 2
+        }
+      },
       id:this.$route.params.id,
       util:this.$root,
       phone:{},
@@ -114,7 +126,6 @@ export default {
   font-size: 1.6em;
   padding-bottom: 20px;
 }
-
 
 .info_frame {
   width: calc(100% - 425px);

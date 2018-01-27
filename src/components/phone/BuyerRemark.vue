@@ -8,8 +8,9 @@
       <div class="item_remark" v-for="r in remarks" :key='r.name'>
         <div class="remark_header">
           <span>
-            <span class="r_blue">{{r.name}}</span>&nbsp;&nbsp;<span style="color:#5cb85c">{{types[r.type]}}</span>&nbsp;&nbsp;
-            <star type='s' :rank="r.rank*2"></star>&nbsp;
+            <span class="r_blue">{{r.name}}</span>&nbsp;&nbsp;
+            <span style="color:#5cb85c">{{types[r.type]}}</span>&nbsp;&nbsp;
+            <star type='s' :rank="r.rank"></star>&nbsp;
             <span class="r_time">{{r.time}}</span>
           </span>
           <div class="r_agree">{{r.agree}}&nbsp;
@@ -18,6 +19,9 @@
         </div>
         <div class="r_text">{{r.text}}</div>
       </div>
+      <div class="more" @mousedown="loadMore()" v-if="loadStatus.status">
+        {{loadStatus.text}}
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +29,7 @@
 import Star from "@/components/base/Star.vue";
 import Data from "@/components/default/data.js";
 
+let loadText = { loading: "载入中...", waiting: "加载更多" };
 export default {
   components: {
     Star
@@ -33,8 +38,8 @@ export default {
   data() {
     return {
       util: this.$root,
+      loadStatus: { status: true, text: loadText.waiting },
       remarks: [],
-      totalSize:0,
       types: ["想买", "已买"],
       noRemark: true,
       start: 0,
@@ -47,6 +52,10 @@ export default {
     },
     remark: function() {
       this.$root.$emit(this.showBox);
+    },
+    loadMore: function() {
+      this.loadStatus.text = loadText.loading;
+      this.getRemarks();
     },
     getData: function() {
       if (!this.phone.pid) {
@@ -64,30 +73,37 @@ export default {
         that.noRemark = !data.status;
       });
 
-     this.getRemarks();
+      this.getRemarks();
     },
-    getRemarks:function () {
+    getRemarks: function() {
       let url = this.$config.dataURL + this.$URL.phone.remark;
-      let that=this;
+      let that = this;
       this.$post(
         url,
         { id: this.phone.pid, start: this.start, limit: this.limit },
         function(res) {
-          let data = res.data;
-          that.totalSize=data.size;
-          that.remarks = data.list;
+          let list = res.data.list;
+          if(!list||list.length==0){
+             return ;
+          }
+          that.start += list.length;
+          for (var i in list) that.remarks.push(list[i]);
+          if (list.length == that.limit) {
+            that.loadStatus.status = true;
+            that.loadStatus.text = loadText.waiting;
+          } else that.loadStatus.status = false;
         }
       );
     }
   },
   watch: {
-    status(n,o){
+    status(n, o) {
       this.getData();
     }
   },
   created() {
     this.getData();
-   this.util.$on("remark-refresh", this.getData);
+    this.util.$on("remark-refresh", this.getData);
   },
   beforeDestroy() {
     this.util.$off("remark-refresh");
@@ -144,5 +160,20 @@ export default {
   word-break: break-word;
   overflow: hidden;
   line-height: 1.5;
+}
+
+.more {
+  margin: 10px auto 10px auto;
+  /* width: 480px; */
+  background: #f7f7f7;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2.2em;
+  margin-bottom: 60px;
+}
+
+.more:hover {
+  background: #eee;
+  color: #37a;
 }
 </style>

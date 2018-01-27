@@ -2,13 +2,10 @@
   <div class="recom">
     <h2>
       <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 none_padding">
-        <div class='title'>最近热门手机</div>
+        <span class='title'>手机智能推荐</span>
       </div>
-      <div class="title_list col-xs-12 col-sm-8 col-md-8 col-lg-5">
-        <span :class="i==title_index?'fouse_font':''" @click='selectTitle(i)' v-for="(title,i) in title_list" :key="title">{{title}}</span>
-      </div>
-      <div class="more_list">
-        <router-link :to="hobbyListPath+'/'+title_list[title_index]">更多»</router-link>
+      <div class="more_list" v-if="hasUser()">
+        <router-link :to="remarkPhonePath">已关注过的手机»</router-link>
       </div>
       <div class="clearfix"></div>
     </h2>
@@ -17,6 +14,7 @@
       <div class="row">
         <router-link :to='phoneDetailPath+"/"+phone.pid' v-for="(phone,i) in hobbyList" :key="i">
           <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 phone_class" @mouseenter="enableDetail($event,phone,i)" @mouseleave="disableDetail()" ref='phoneList'>
+            <!-- <div class="recommend">5.0</div> -->
             <div class="image">
               <img :src="phone.image" />
             </div>
@@ -36,18 +34,16 @@ import PopBox from "@/components/base/PopBox.vue";
 import Data from "@/components/default/data.js";
 import Paths from "@/config/path.js";
 
-let title = ["高分辨率", "后置摄像头", "电池容量大", "运行内存大"];
-let titleNames = ["pixels", "backcamera", "battery", "ram"];
 export default {
   components: {
     PopBox
   },
+  props: ["url","params"],
   data() {
     return {
       phoneDetailPath: Paths.pages.phoneDetail,
-      hobbyListPath: Paths.pages.hobbyList,
-      title_list: title,
-      title_index: 0,
+      remarkPhonePath: Paths.pages.remarkPhone,
+      util:this.$root,
       hobbyList: [],
       start: 0,
       limit: this.$config.lineNumber*2
@@ -61,21 +57,13 @@ export default {
     disableDetail: function(e, p, i) {
       if (this.$refs.PopBox) this.$refs.PopBox.$emit("pop-box-hide", true);
     },
-    selectTitle: function(index) {
-      this.title_index = index;
-      this.getData();
-    },
     getData: function() {
       this.hobbyList = [];
-      let url = this.$config.dataURL + this.$URL.phone.hobby;
+      let url = this.$config.dataURL + this.url;
       let that = this;
       this.$post(
         url,
-        {
-          type: titleNames[this.title_index],
-          start: this.start,
-          limit: this.limit
-        },
+        that.params,
         function(res) {
           let list = res.data;
           for (var p in list) {
@@ -84,6 +72,9 @@ export default {
           }
         }
       );
+    },
+    hasUser:function(){
+        return this.util.checkLogin();
     }
   },
   created() {
@@ -106,6 +97,7 @@ export default {
 .title {
   display: inline-block;
   padding: 0px 0px 0.5em 10px;
+  color:green;
 }
 .recom h2 {
   position: relative;
@@ -120,11 +112,6 @@ export default {
   color: #9b9b9b;
   cursor: pointer;
   display: inline-block;
-}
-
-.recom h2 span:hover {
-  color: white;
-  background-color: #37a;
 }
 
 .recom a {
@@ -151,11 +138,24 @@ h2 .title_list {
   overflow: hidden;
   border: 1px solid transparent;
   padding: 0.5em 0px 0.45em;
+  position: relative;
 }
 
 .phone_class:hover {
   border-color: gray;
   border-radius: 5px;
+}
+
+.phone_class .recommend{
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 25px;
+  height: 25px;
+  color: #ed724b;
+  
+  font-size: 18px;
+  z-index: 10;
 }
 .phone_class div.image {
   width: 100%;

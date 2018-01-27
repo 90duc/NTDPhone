@@ -30,6 +30,9 @@ let phone={
    saveWanterRemark:phonePath+'/saveWanter',
    remark:phonePath+'/remark',
    checkRemark:phonePath+'/checkRemark',
+   remarkRange:phonePath+'/remarkRange',
+   recommend:phonePath+'/recommend',
+   remarkPhone:phonePath+'/remarkPhone',
    
 };
 export default{

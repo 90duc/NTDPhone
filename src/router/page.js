@@ -3,6 +3,7 @@ import PhoneDetail from '@/components/page/PhoneDetail.vue'
 import TopDetail from '@/components/page/TopDetail.vue'
 import SearchBy from '@/components/page/SearchBy.vue'
 import HobbyList from '@/components/page/HobbyList.vue'
+import RemarkPhone from '@/components/page/RemarkPhone.vue'
 
 import Paths from '@/config/path.js'
 
@@ -33,6 +34,11 @@ let pageRoutes = [
         path: pages.hobbyList + '/:type',
         name: 'hobbyList',
         component: HobbyList
+    },
+    {
+        path: pages.remarkPhone,
+        name: 'remarkPhone',
+        component: RemarkPhone
     }
 
 ];
