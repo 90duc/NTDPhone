@@ -64,6 +64,10 @@ export default {
         }, 50);
         return;
       }
+      this.loadStatus= { status: true, text: loadText.waiting };
+      this.remarks=[];
+      this.start=0;
+      
       var url = this.$config.dataURL + this.$URL.phone.checkRemark;
       let that = this;
 

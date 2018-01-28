@@ -11,6 +11,6 @@ export default {
 	
 	// rootURL: '/NTDPhone',
 	// imageURL: '/NTDPhone',
-	//dataURL:'/NTDPhone/data'
+	// dataURL:'/NTDPhone/data'
 
 }
