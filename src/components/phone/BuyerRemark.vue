@@ -103,6 +103,9 @@ export default {
   watch: {
     status(n, o) {
       this.getData();
+    },
+    phone(n, o) {
+      this.getData();
     }
   },
   created() {

@@ -1,13 +1,13 @@
 <template>
-    <div class='logo_frame' id='logo'>
-        <div class="left_arrow" @click="left"></div>
-        <a v-for="i in imgs.length" :key="i" class="default_img" ref='images'>         
-            <img  :src="imgs[i-1]">
-        </a>
-      
-        <div class="right_arrow" @click="right"></div>
-        <div class="page_size">{{imageIndex+1}}/{{imgs.length}}</div>
-    </div>
+  <div class='logo_frame' id='logo'>
+    <div class="left_arrow" @click="left"></div>
+    <a v-for="i in imgs.length" :key="i" class="default_img" ref='images'>
+      <img :src="imgs[i-1]">
+    </a>
+
+    <div class="right_arrow" @click="right"></div>
+    <div class="page_size">{{imageIndex+1}}/{{imgs.length}}</div>
+  </div>
 </template>
 <script>
 export default {
@@ -65,29 +65,32 @@ export default {
       this.moveToLeft();
       this.autoPlayTimer = setTimeout(this.autoPlay, 2000);
     },
-     init(){
-      let images=this.$refs.images;
-      if(!images){
+    init() {
+      let images = this.$refs.images;
+      if (!images) {
         setTimeout(this.init, 100);
-      }else{
-       images[this.imageIndex].style.left='0px';
-       images[this.imageIndex].style.display='inline';
+      } else {
+        this.imageIndex = 0;
+        images[this.imageIndex].style.left = "0px";
+        images[this.imageIndex].style.display = "inline";
       }
-        
     }
   },
-  created () {  
-    setTimeout(this.init, 100);
-    this.autoPlayTimer=setTimeout(this.autoPlay,2000);
+  watch: {
+    imgs: function() {
+      clearInterval(this.autoPlayTimer);
+      setTimeout(this.init, 100);
+      this.autoPlayTimer = setTimeout(this.autoPlay, 2000);
+    }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.autoPlayTimer);
   }
 };
 </script>
 <style lang="scss" scoped>
-.logo_frame{
-    width: 100%;
+.logo_frame {
+  width: 100%;
 }
 .left_arrow,
 .right_arrow {

@@ -31,7 +31,7 @@
       </div>
       <remark-score :phone="phone" :status='util.checkLogin()' class="remark-score"></remark-score>
       <tag-list :phone='phone'></tag-list>
-      <recommend :url='recommend.url' :params='recommend.params'></recommend>
+      <recommend :url='recommend.url' :params='recommend.params' ></recommend>
       <remark :phone="phone" :status='util.checkLogin()' :showBox='showRemarkBox'></remark>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
@@ -70,16 +70,16 @@ export default {
         url: this.$URL.phone.recommend,
         params:{
           start:0,
-          limit: this.$config.lineNumber * 2
+          limit: this.$config.lineNumber * 2,
+          pid:this.$route.params.id,
+          type:'phone'
         }
       },
       id:this.$route.params.id,
-      util:this.$root,
       phone:{},
       imgs:[],
-      remarks:[],
-      imageIndex:0,
       speed:600,
+       util:this.$root,
       pic3DPath:Paths.roots.picture3D,
       searchByPath: Paths.pages.searchBy,
       showRemarkBox:'show-remark-box',
@@ -100,6 +100,7 @@ export default {
       return v.cid;
     },
     getData: function() {
+     
       let url = this.$config.dataURL + this.$URL.phone.detail;
       let that = this;
       this.$post(url, {id:this.id }, function(res) {
@@ -108,9 +109,21 @@ export default {
         for(var i in data.images)
           that.imgs.push( that.$config.imageURL + "/" + data.images[i]);
       });
+    },
+    init:function () {
+      let that = this;
+      that.imgs=[];
+      that.id=this.$route.params.id;
+      that.recommend.params.pid=that.id;
+       this.getData();
     }
   },
- created () {  
+  watch: {
+   $route: function() {
+       this.init();
+    }
+  },
+ created() {  
     this.getData();
   }
 

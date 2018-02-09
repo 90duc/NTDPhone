@@ -42,7 +42,8 @@ export default {
         url: this.$URL.phone.recommend,
         params:{
           start:0,
-          limit: this.$config.lineNumber * 2
+          limit: this.$config.lineNumber * 2,
+          type:'user'
         }
       }
     };

@@ -44,9 +44,7 @@ export default {
       phoneDetailPath: Paths.pages.phoneDetail,
       remarkPhonePath: Paths.pages.remarkPhone,
       util:this.$root,
-      hobbyList: [],
-      start: 0,
-      limit: this.$config.lineNumber*2
+      hobbyList: []
     };
   },
   methods: {
@@ -77,9 +75,15 @@ export default {
         return this.util.checkLogin();
     }
   },
-  created() {
+  watch: {
+    "params.pid"(o,n){
+       this.getData();
+    }
+  },
+  created () {
     this.getData();
   }
+ 
 };
 </script>
 <style scoped>
