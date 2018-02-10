@@ -1,10 +1,10 @@
 <template>
   <div>
-    <search v-on:searchevent="search" class="search" :text="params.text"></search>
+    <search v-on:searchevent="search" class="search" :text="searchData.params.text"></search>
     <div>
       <div class="col-sx-12 col-sm-12 col-md-9 col-lg-9">
-        <phone-list :url='url' :params='params' ref="phoneList"></phone-list>
-        <recommend :url='recommend.url' :params='recommend.params'></recommend>
+        <phone-list :dataInfo="searchData" ref="phoneList"></phone-list>
+        <recommend :url='recommend.url' :params='recommend.params' :type='true'></recommend>
         <hobby-list style="padding-top:40px;"></hobby-list>
       </div>
       <top-list class="col-sx-12 col-sm-12 col-md-3 col-lg-3" :title="topInfo.top.name+'推荐'" :type="topInfo.top.type"></top-list>
@@ -32,32 +32,34 @@ export default {
   data() {
     return {
       topInfo: Top.typeList,
-      url: this.$URL.phone.search,
-      params: {
-        text: "",
-        start: 0,
-        limit: this.$config.lineNumber * 3
+      searchData: {
+        url: this.$URL.phone.search,
+        params: {
+          text: "",
+          start: 0,
+          limit: this.$config.lineNumber * 3
+        }
       },
       recommend: {
         url: this.$URL.phone.recommend,
-        params:{
-          start:0,
+        params: {
+          start: 0,
           limit: this.$config.lineNumber * 2,
-          type:'user'
+          type: "user"
         }
       }
     };
   },
   methods: {
     search: function(text) {
-      this.params.text = text;
+      this.searchData.params.text = text;
       this.$router.replace({ path: this.$route.path, query: { text: text } });
       this.$refs.phoneList.init();
     }
   },
   created() {
     let text = this.$route.query.text;
-    if (text) this.params.text = text;
+    if (text) this.searchData.params.text = text;
   }
 };
 </script>

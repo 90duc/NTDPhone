@@ -8,9 +8,9 @@
 
         </div>
       </div>
-      <phone-list :url='url' :params='params' ref='phoneList'></phone-list>
+      <phone-list :dataInfo='typeData' ref='phoneList'></phone-list>
     </div>
-    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company"></company>
+    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company" :dataInfo='companyData'></company>
     <div class="clearfix"></div>
   </div>
 </template>
@@ -30,11 +30,24 @@ export default {
     return {
       types: types,
       focusedIndex: 0,
-      url: this.$URL.phone.hobby,
-      params: {
-        type: "",
-        start: 0,
-        limit: this.$config.lineNumber*3
+      typeData: {
+        url: this.$URL.phone.hobby,
+        params: {
+          type: "",
+          start: 0,
+          limit: this.$config.lineNumber * 3
+        },
+        refresh: true
+      },
+      companyData: {
+        url: this.$URL.phone.company,
+        params: {
+          type: "hobby",
+          key: "",
+          start: 0,
+          limit: 20
+        },
+        refresh: true
       }
     };
   },
@@ -54,7 +67,9 @@ export default {
       for (var i in this.types) {
         if (this.types[i] == type) {
           this.focusedIndex = i;
-          this.params.type = titleNames[i];
+          this.typeData.params.type = titleNames[i];
+          this.companyData.params.key = titleNames[i];
+          this.companyData.refresh = !this.companyData.refresh;
           if (this.$refs.phoneList) this.$refs.phoneList.init();
         }
       }

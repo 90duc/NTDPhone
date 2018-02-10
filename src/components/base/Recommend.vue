@@ -4,6 +4,9 @@
       <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 none_padding">
         <span class='title'>手机智能推荐</span>
       </div>
+      <div v-if="type" class="title_list col-xs-12 col-sm-8 col-md-8 col-lg-5">
+        <span :class="i==title_index?'fouse_font':''" @click='selectTitle(i)' v-for="(title,i) in title_list" :key="title">{{title}}</span>
+      </div>
       <div class="more_list" v-if="hasUser()">
         <router-link :to="remarkPhonePath">已关注过的手机»</router-link>
       </div>
@@ -34,16 +37,20 @@ import PopBox from "@/components/base/PopBox.vue";
 import Data from "@/components/default/data.js";
 import Paths from "@/config/path.js";
 
+let title = ["基于用户协同过滤", "基于物品协同过滤"];
+let titleNames = ["user", "item"];
 export default {
   components: {
     PopBox
   },
-  props: ["url","params"],
+  props: ["url","params","type"],
   data() {
     return {
       phoneDetailPath: Paths.pages.phoneDetail,
       remarkPhonePath: Paths.pages.remarkPhone,
       util:this.$root,
+      title_list: title,
+      title_index: 0,
       hobbyList: []
     };
   },
@@ -54,6 +61,11 @@ export default {
     },
     disableDetail: function(e, p, i) {
       if (this.$refs.PopBox) this.$refs.PopBox.$emit("pop-box-hide", true);
+    },
+    selectTitle: function(index) {
+      this.title_index = index;
+      this.params.type=titleNames[index];
+      this.init();
     },
     getData: function() {
       this.hobbyList = [];
@@ -73,11 +85,17 @@ export default {
     },
     hasUser:function(){
         return this.util.checkLogin();
+    },
+    init:function(){
+      //if (this.$refs.PopBox)
+      this.$refs.PopBox.$emit("pop-box-hide");
+      this.getData();
+
     }
   },
   watch: {
     "params.pid"(o,n){
-       this.getData();
+       this.init();
     }
   },
   created () {
@@ -102,6 +120,7 @@ export default {
   display: inline-block;
   padding: 0px 0px 0.5em 10px;
   color:green;
+  font-size: 1.2em;
 }
 .recom h2 {
   position: relative;
@@ -116,8 +135,13 @@ export default {
   color: #9b9b9b;
   cursor: pointer;
   display: inline-block;
+  padding:0.4em 0.6em;
+  border-radius: 0.2em;
 }
-
+.title_list span:hover{
+  color: white;
+  background-color: #37a;
+}
 .recom a {
   color: #37a;
 }
@@ -128,8 +152,10 @@ h2 .title_list {
   padding: 0px 0px 0.5em 10px;
 }
 
-.recom h2 .fouse_font {
-  color: green;
+.title_list span.fouse_font,.title_list span.fouse_font:hover {
+  color: white; 
+  background: #f60;
+  
 }
 
 .more_list {

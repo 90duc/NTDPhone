@@ -1,6 +1,6 @@
 <template>
   <transition name='fade' v-if="popBox.showDetail">
-    <div id='popBox' class="detail_pop" :style="popBox.position" @mouseleave="disableDetail($event)">
+    <div id='popBox' class="detail_pop" :style="popBox.position" @mouseleave="disableDetail()">
       <div  class="container">
         <div class='col-sx-12 col-sm-12 col-md-9 col-lg-9 none_padding' >
           <router-link :to="phoneDetailPath+'/'+phone.pid">
@@ -48,6 +48,7 @@ export default {
       return -15 * (10 - rate);
     },
     enableDetail: function(e, p, o) {
+      this.disableDetail();
       this.detail.show = true;
       this.detail.p = p;
       this.detail.o = o;
@@ -65,11 +66,12 @@ export default {
       this.phone = p;
       this.popBox.showDetail = true;
     },
-    disableDetail: function(e) {
-      if (e === true) {
-        this.detail.show = false;
+    disableDetail: function(op) {
+      if(op==true){
+          clearTimeout(this.detail.timer);
+          this.detail.show = false;
+      }else{
         clearTimeout(this.detail.timer);
-      } else {
         this.detail.show = false;
         this.popBox.showDetail = false;
       }

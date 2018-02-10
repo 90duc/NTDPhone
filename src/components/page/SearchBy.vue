@@ -8,9 +8,9 @@
           <span>{{name}}</span>
         </div>
       </div>
-      <phone-list :url='url' :params='params' ref='phoneList'></phone-list>
+      <phone-list :dataInfo='phoneData' ref='phoneList'></phone-list>
     </div>
-    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company"></company>
+    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company" :dataInfo='companyData'></company>
     <div class="clearfix"></div>
   </div>
 </template>
@@ -50,12 +50,25 @@ export default {
     return {
       type: "",
       name: "",
-      url: this.$URL.phone.searchBy,
-      params: {
-        key: "",
-        value: "",
-        start: 0,
-        limit: this.$config.lineNumber*2
+      phoneData: {
+        url: this.$URL.phone.searchBy,
+        params: {
+          key: "",
+          value: "",
+          start: 0,
+          limit: this.$config.lineNumber * 2
+        }
+      },
+      companyData: {
+        url: this.$URL.phone.company,
+        params: {
+          type: "config",
+          key: "",
+          value: "",
+          start: 0,
+          limit: 20
+        },
+        refresh: true
       }
     };
   },
@@ -68,9 +81,16 @@ export default {
           this.type = types[i];
           break;
         }
-      this.params.key = type;
-      this.params.value = this.name;
-      if (type == "company") this.params.value = this.$route.query.id;
+      this.phoneData.params.key = type;
+      this.phoneData.params.value = this.name;
+      this.companyData.params.key = type;
+      this.companyData.params.value = this.name;
+      if (type == "company") {
+        this.phoneData.params.value = this.$route.query.id;
+        this.companyData.params.value = this.$route.query.id;
+      }
+      this.companyData.refresh = !this.companyData.refresh;
+
       if (this.$refs.phoneList) this.$refs.phoneList.init();
     }
   },

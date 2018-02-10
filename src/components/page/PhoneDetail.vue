@@ -115,7 +115,7 @@ export default {
       that.imgs=[];
       that.id=this.$route.params.id;
       that.recommend.params.pid=that.id;
-       this.getData();
+      this.getData();
     }
   },
   watch: {

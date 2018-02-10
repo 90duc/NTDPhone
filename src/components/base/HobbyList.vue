@@ -4,7 +4,7 @@
       <div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 none_padding">
         <div class='title'>最近热门手机</div>
       </div>
-      <div class="title_list col-xs-12 col-sm-8 col-md-8 col-lg-5">
+      <div class="title_list col-xs-12 col-sm-8 col-md-8 col-lg-8">
         <span :class="i==title_index?'fouse_font':''" @click='selectTitle(i)' v-for="(title,i) in title_list" :key="title">{{title}}</span>
       </div>
       <div class="more_list">
@@ -106,6 +106,8 @@ export default {
 .title {
   display: inline-block;
   padding: 0px 0px 0.5em 10px;
+  color:green;
+  font-size: 1.2em;
 }
 .recom h2 {
   position: relative;
@@ -120,6 +122,8 @@ export default {
   color: #9b9b9b;
   cursor: pointer;
   display: inline-block;
+  padding:0.4em 0.6em;
+  border-radius: 0.2em;
 }
 
 .recom h2 span:hover {
@@ -137,8 +141,10 @@ h2 .title_list {
   padding: 0px 0px 0.5em 10px;
 }
 
-.recom h2 .fouse_font {
-  color: green;
+.recom h2 .fouse_font,.title_list span.fouse_font:hover {
+  color: white; 
+  background: #f60;
+  
 }
 
 .more_list {

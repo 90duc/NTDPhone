@@ -13,13 +13,12 @@
 import Paths from "@/config/path.js";
 
 export default {
+  props: ["dataInfo"],
   data() {
     return {
       searchByPath: Paths.pages.searchBy,
       title: "喜欢关注的品牌",
-      companys: [],
-       start: 0, 
-       limit: 20
+      companys: []
     };
   },
   methods: {
@@ -30,13 +29,19 @@ export default {
       return "c" + index;
     },
     getData: function() {
-      let url = this.$config.dataURL + this.$URL.phone.company;
+      this.companys= [];
+      let url = this.$config.dataURL + this.dataInfo.url;
       let that = this;
-      this.$post(url, { start:this.start, limit:this.limit }, function(res) {
+      this.$post(url,  this.dataInfo.params, function(res) {
         let list = res.data;   
         that.companys=list;
        
       });
+    }
+  },
+  watch: {
+    "dataInfo.refresh":function(o,n){
+       this.getData();
     }
   },
   created() {

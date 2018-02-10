@@ -4,9 +4,9 @@
       <div class='head row'>
         <div class='title'>已评论的手机</div>
       </div>
-      <phone-list :url='url' :params='params' ref='phoneList'></phone-list>
+      <phone-list :dataInfo='remarkData' ref='phoneList'></phone-list>
     </div>
-    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company"></company>
+    <company class="col-sx-12 col-sm-12 col-md-3 col-lg-3 company" :dataInfo="companyData"></company>
     <div class="clearfix"></div>
   </div>
 </template>
@@ -22,10 +22,21 @@ export default {
   data() {
     return {
       util: this.$root,
-      url: this.$URL.phone.remarkPhone,
-      params: {
-        start: 0,
-        limit: this.$config.lineNumber * 3
+      remarkData: {
+        url: this.$URL.phone.remarkPhone,
+        params: {
+          start: 0,
+          limit: this.$config.lineNumber * 3
+        }
+      },
+      companyData: {
+        url: this.$URL.phone.company,
+        params: {
+          type: "remark",
+          start: 0,
+          limit: 10
+        },
+        refresh: true
       }
     };
   },
@@ -33,8 +44,7 @@ export default {
     init: function() {}
   },
   created() {
-    if (!this.util.checkLogin())
-      this.util.$router.push({ name: "home"});
+    if (this.util.isNoLogin()) this.util.$router.push({ name: "home" });
     this.init();
   }
 };

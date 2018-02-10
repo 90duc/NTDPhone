@@ -35,7 +35,7 @@ export default {
   components: {
     PopBox
   },
-  props: ["url", "params"],
+  props: ["dataInfo"],
   data() {
     return {
       phones: [],
@@ -62,25 +62,31 @@ export default {
       if (this.$refs.popBox) this.$refs.popBox.$emit("pop-box-hide", true);
     },
     init() {
-      this.params.start = 0;
+      if (this.$refs.popBox) this.$refs.popBox.$emit("pop-box-hide");
+      this.dataInfo.params.start = 0;
       this.phones = [];
       this.getData();
     },
     getData: function() {
-      let url = this.$config.dataURL + this.url;
+      let url = this.$config.dataURL + this.dataInfo.url;
       let that = this;
-      this.$post(url, this.params, function(res) {
+      this.$post(url, this.dataInfo.params, function(res) {
         let list = res.data;
-        that.params.start += list.length;
+        that.dataInfo.params.start += list.length;
         for (var p in list) {
           list[p].image = that.$config.imageURL + "/" + list[p].image;
           that.phones.push(list[p]);
         }
-        if (list.length == that.params.limit) {
+        if (list.length == that.dataInfo.params.limit) {
           that.loadStatus.status = true;
           that.loadStatus.text = loadText.waiting;
         } else that.loadStatus.status = false;
       });
+    }
+  },
+  watch: {
+    "dataInfo.refresh":function(o,n){
+       this.init();
     }
   },
   created() {
