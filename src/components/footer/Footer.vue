@@ -22,7 +22,7 @@ export default {
     return{
        name:'NTD Phone',
        time:2017,
-       owner:'XXX'//'潘小华'
+       owner:'潘小华'
 
     };
   }

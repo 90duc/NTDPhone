@@ -73,7 +73,7 @@
         <div>
           <span>个人签名</span>
           <span>：</span>
-          <span>{{dataInfo.info}}</span>
+          <span>{{userInfo.info}}</span>
         </div>
       </div>
     </div>
