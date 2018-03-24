@@ -5,20 +5,18 @@
         NTD评分
       </div>
       <div class="rating_self" typeof="v:Rating">
-        <strong class="ll rating_num" property="v:average">{{phone.rank}}</strong>
+        <strong class="ll rating_num" property="v:average">{{isValidRemark()?getRank(phone.rank):'暂无评分'}}</strong>
         <span property="v:best" content="10.0"></span>
         <div class="rating_right ">
-          <star type="m" :rank="phone.rank"></star>
-          <div class="rating_people">
-            <span>{{phone.commentSize}}</span>人评价</a>
+          <star type="m" :rank="isValidRemark()?phone.rank:0"></star>
+          <div v-show="isValidRemark()" class="rating_people">
+            <span >{{phone.commentSize}}</span>人评价
           </div>
         </div>
         <div class="clearbox"></div>
       </div>
-      <div class="ratings-on-weight">
-
+      <div v-show="isValidRemark()" class="ratings-on-weight">
         <div class="item">
-
           <span class="stars5 starstop" title="力荐">
             5星
           </span>
@@ -75,10 +73,19 @@ export default {
   props: ["phone"],
   data() {
     return {
+      remarkNumber:this.$config.baseRemarkNumber,
       ratingPercent: [15.6, 40.9, 30.2, 10.9, 3.4]
     };
   },
   methods: {
+    isValidRemark:function(){
+      return this.phone.commentSize>=this.remarkNumber;
+    },
+     getRank:function(v){
+      if(v){
+        return v.toFixed(1);
+      }
+    },
     getLength: function(data) {
       return Math.floor(100 * data / 100);
     },

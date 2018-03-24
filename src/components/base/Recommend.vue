@@ -23,7 +23,7 @@
             </div>
             <div>
               <span class="phone_name">{{phone.name}}</span>
-              <span class="subject-rate">{{phone.rank.toFixed(1)}}</span>
+              <span class="subject-rate">{{phone.commentSize>=remarkNumber?getRank(phone.rank):'暂无评分'}}</span>
             </div>
           </div>
         </router-link>
@@ -46,6 +46,7 @@ export default {
   props: ["url","params","type"],
   data() {
     return {
+      remarkNumber:this.$config.baseRemarkNumber,
       phoneDetailPath: Paths.pages.phoneDetail,
       remarkPhonePath: Paths.pages.remarkPhone,
       util:this.$root,
@@ -55,6 +56,11 @@ export default {
     };
   },
   methods: {
+    getRank:function(v){
+      if(v){
+        return v.toFixed(1);
+      }
+    },
     enableDetail: function(e, p, i) {
       if (this.$refs.PopBox)
         this.$refs.PopBox.$emit("pop-box-show", e, p, this.$refs.phoneList[i]);
@@ -220,5 +226,6 @@ h2 .title_list {
 
 span.subject-rate {
   color: #e09015;
+  display: inline-block;
 }
 </style>

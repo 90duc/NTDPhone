@@ -9,7 +9,7 @@
             </div>
             <div>
               <span class="phone_name">{{phone.name}}</span>
-              <span class="subject-rate">{{getRank(phone.rank)}}</span>
+              <span class="subject-rate">{{phone.commentSize>=remarkNumber?getRank(phone.rank):'暂无评分'}}</span>
             </div>
           </div>
       </router-link>
@@ -38,6 +38,7 @@ export default {
   props: ["dataInfo"],
   data() {
     return {
+      remarkNumber:this.$config.baseRemarkNumber,
       phones: [],
       loadStatus: { status: true, text: loadText.waiting },
       popBox: { showDetail: false, position: {} },
@@ -148,6 +149,7 @@ export default {
 }
 span.subject-rate {
   color: #e09015;
+  display: inline-block;
 }
 
 .clearfix {

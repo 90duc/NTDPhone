@@ -9,10 +9,10 @@
  -->
 <template>
     <div :class="clas">
-        <star :type="type" :rank="rank"></star>
-        <span class="rate padding_left">{{getRank(rank)}}</span>
-        <span class='padding_left'>(
-            <span>{{commentSize}}</span>人评价)</span>
+        <star :type="type" :rank="commentSize>=remarkNumber?rank:0"></star>
+        <span class="rate padding_left">{{commentSize>=remarkNumber?getRank(rank):'暂无评分'}}</span>
+        <span v-show="commentSize>=remarkNumber" class='padding_left'>(
+        <span >{{commentSize}}</span>人评价)</span>
     </div>
 </template>
 <script>
@@ -35,6 +35,7 @@ export default {
   },
   data() {
     return {
+      remarkNumber:this.$config.baseRemarkNumber,
       clas: "",
       classList: ["sb_small", "sb_middle", "sb_big"]
     };
